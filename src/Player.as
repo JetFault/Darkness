@@ -7,17 +7,21 @@ package
 	public class Player extends FlxSprite
 	{
 		private var _runspeed:Number;
+		private var controller:PlayerController;
+		private var playerAlive:Boolean;
 		public function Player(x:Number, y:Number)
 		{
 			super(x, y, null);
 			this.x = x;
 			this.y = y;
+			this.playerAlive = true;
 			loadPlayer();
 			maxVelocity.x = 40;
 			maxVelocity.y = 40;
 			_runspeed = 80;
 			drag.x = _runspeed * 4;
 			drag.y = _runspeed * 4;
+			this.controller = new PlayerController(this);
 		}
 		
 		private function loadPlayer():void
@@ -29,7 +33,7 @@ package
 		{
 			//velocity.x = 0;
 			//velocity.y = 0;
-			acceleration.x = 0;
+			/*acceleration.x = 0;
 			acceleration.y = 0;
 			
 			if (FlxG.keys.RIGHT || FlxG.keys.D)
@@ -47,7 +51,21 @@ package
 			if (FlxG.keys.UP || FlxG.keys. W)
 			{
 				acceleration.y += -drag.x
-			}
+			}*/
+			//controller.update();
+		}
+		
+		public function isAlive():Boolean {
+			return this.playerAlive;
+		}
+		
+		override public function kill():void {
+			this.playerAlive = false;
+			super.kill();
+		}
+		
+		public function getController(): BaseController {
+			return this.controller;
 		}
 		
 	}
