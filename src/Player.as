@@ -6,6 +6,10 @@ package
 	
 	public class Player extends FlxSprite
 	{
+		
+		//Sprite sheet
+		[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
+		
 		private var _runspeed:Number;
 		private var controller:PlayerController;
 		private var playerAlive:Boolean;
@@ -26,14 +30,15 @@ package
 		
 		private function loadPlayer():void
 		{
-			super.makeGraphic(10, 10, 0xff007fff);
+			loadGraphic(ImgPlayer, true, true, 12, 9);
+			//super.makeGraphic(10, 10, 0xff007fff);
 		}
 		
-		override public function update():void
+		/*override public function update():void
 		{
 			//velocity.x = 0;
 			//velocity.y = 0;
-			/*acceleration.x = 0;
+			acceleration.x = 0;
 			acceleration.y = 0;
 			
 			if (FlxG.keys.RIGHT || FlxG.keys.D)
@@ -51,9 +56,9 @@ package
 			if (FlxG.keys.UP || FlxG.keys. W)
 			{
 				acceleration.y += -drag.x
-			}*/
+			}
 			//controller.update();
-		}
+		}*/
 		
 		public function isAlive():Boolean {
 			return this.playerAlive;

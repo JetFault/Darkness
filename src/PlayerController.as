@@ -22,18 +22,22 @@ package
 			if (FlxG.keys.RIGHT || FlxG.keys.D)
 			{
 				player.acceleration.x += player.drag.x;
+				player.angle = 90;
 			}
 			if (FlxG.keys.LEFT || FlxG.keys.A)
 			{
 				player.acceleration.x += -player.drag.x;
+				player.angle = 270;
 			}
 			if (FlxG.keys.DOWN || FlxG.keys.S)
 			{
 				player.acceleration.y += player.drag.x;
+				player.angle = 180;
 			}
 			if (FlxG.keys.UP || FlxG.keys. W)
 			{
 				player.acceleration.y += -player.drag.x;
+				player.angle = 0;
 			}
 			
 			super.update();
