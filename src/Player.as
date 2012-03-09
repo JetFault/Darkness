@@ -6,13 +6,13 @@ package
 	
 	public class Player extends FlxSprite
 	{
-		
 		//Sprite sheet
 		[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;
 		private var playerAlive:Boolean;
+		
 		public function Player(x:Number, y:Number)
 		{
 			super(x, y, null);

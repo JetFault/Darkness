@@ -4,6 +4,7 @@ package
 	 * ...
 	 * @author Darkness Team
 	 */
+	import org.flixel.FlxG;
 	public class LightController extends BaseController
 	{
 		private var light:Light;
@@ -15,14 +16,6 @@ package
 		}
 		
 		override public function update():void {
-			
-			if (FlxG.keys.justPressed("SPACE")) {
-				light.toggledraw();
-			}
-			
-			//TODO:  Proper transformations.  Also make angle sensitive to mouse location.
-			light.angle = player.angle;
-			
 			light.x = player.x + 4;
 			light.y = player.y + 5;
 			super.update();
