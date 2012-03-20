@@ -36,6 +36,10 @@ package
 				runTimer = 0;
 			}
 			
+			var velocityp:FlxPoint = new FlxPoint(enemy.velocity.x, enemy.velocity.y);
+			var origin:FlxPoint = new FlxPoint(0, 0);
+			enemy.angle = FlxU.getAngle(origin, velocityp);
+			
 			super.update();
 		}
 	}

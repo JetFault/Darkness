@@ -35,11 +35,11 @@ package
 		public function getController():BaseController {
 			return this.controller;
 		}
-		/*
+		
 		public function toggledraw():void {
 			this.drawLight = !this.drawLight;
 		}
-		*/
+		
 		public function onDraw():void {
 			this.drawLight = true;
 		}

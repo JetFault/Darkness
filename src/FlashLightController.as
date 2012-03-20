@@ -21,10 +21,8 @@ package
 		
 		override public function update():void {
 			
-			if (FlxG.mouse.pressed()) {
-				light.onDraw();
-			} else {
-				light.offDraw();
+			if (FlxG.mouse.justPressed()) {
+				light.toggledraw();
 			}
 
 			var p1:FlxPoint = new FlxPoint(player.x, player.y);
