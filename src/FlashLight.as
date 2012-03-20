@@ -17,10 +17,10 @@ package
 		{
 			super(x, y, FlashLightImageClass);
 			this.darkness = darkness;
-			this.blend = "screen";
+			//this.blend = "screen";
 			this.controller = new FlashLightController(this, player);
 			this.origin.x = 30;
-			this.origin.y = 115;
+			this.origin.y = 118;
 			drawLight = false;
 		}
 		
@@ -35,9 +35,16 @@ package
 		public function getController():BaseController {
 			return this.controller;
 		}
-		
+		/*
 		public function toggledraw():void {
 			this.drawLight = !this.drawLight;
+		}
+		*/
+		public function onDraw():void {
+			this.drawLight = true;
+		}
+		public function offDraw():void {
+			this.drawLight = false;
 		}
 		
 	}

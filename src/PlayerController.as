@@ -35,10 +35,16 @@ package
 			{
 				player.acceleration.y += -player.drag.x;
 			}
-			
+			/*
 			var velocityp:FlxPoint = new FlxPoint(player.velocity.x, player.velocity.y);
 			var origin:FlxPoint = new FlxPoint(0, 0);
 			player.angle = FlxU.getAngle(origin, velocityp);
+			*/
+			
+			var p1:FlxPoint = new FlxPoint(player.x, player.y);
+			var p2:FlxPoint = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
+			player.angle = FlxU.getAngle(p1, p2);
+			
 			
 			super.update();
 		}

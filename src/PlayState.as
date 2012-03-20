@@ -61,7 +61,7 @@ package
 			
 			loadExit();
 
-			
+			 
 			spawnEnemy(234, 12);
 			//enemyTwo = new Enemy(14, 210);
 			//add(enemyTwo);

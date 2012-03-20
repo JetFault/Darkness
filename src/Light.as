@@ -17,7 +17,7 @@ package
 		{
 			super(x, y, LightImageClass);
 			this.darkness = darkness;
-			this.blend = "screen";
+			//this.blend = "screen";
 			this.controller = new LightController(this, player);
 		}
 		
