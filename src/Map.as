@@ -7,10 +7,15 @@ package
 	 */
 	public class Map extends FlxTilemap
 	{
-		
-		public function Map() 
-		{
-			loadLevelData();
+		public function Map(width:uint, height:uint, random:Boolean) {
+			if(random) {
+				var maze:Maze = new Maze(width, height);
+				var levelArray:Array = maze.toArray();
+				loadMap(arrayToCSV(levelArray, maze.getWidth()), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
+			}
+			else {
+				loadLevelData();
+			}
 		}
 		
 		private function loadLevelData():void
@@ -49,6 +54,8 @@ package
 				);			
 				loadMap(arrayToCSV(levelData, 40), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
 		}
+		
+		
 	}
 
 }

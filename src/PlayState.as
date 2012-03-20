@@ -50,8 +50,11 @@ package
 			
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			player = new Player(12, 12);
-			level = new Map();
-			loadDarkness();
+						
+			level = new Map(10,10,true);
+			//level = new Map();
+			
+			//loadDarkness();
 			loadLights();
 			add(level);
 			add(player);
@@ -157,7 +160,9 @@ package
 		
 		override public function draw():void
 		{
-			darkness.fill(0xff000000);
+			if(darkness != null) {
+				darkness.fill(0xff000000);
+			}
 			super.draw();
 		}
 		

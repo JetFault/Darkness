@@ -24,7 +24,9 @@ package
 		override public function draw():void
 		{
 			var screenXY:FlxPoint = getScreenXY();
-			darkness.stamp(this, screenXY.x - this.width / 2, screenXY.y - this.height / 2);
+			if(darkness != null) {
+				darkness.stamp(this, screenXY.x - this.width / 2, screenXY.y - this.height / 2);
+			}
 		}
 		
 		public function getController():BaseController {

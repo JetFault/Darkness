@@ -16,7 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="..\flixel" />
+    <class path="..\..\..\..\lwjgl\AdamAtomic-flixel-8989e50" />
   </classpaths>
   <!-- Build options -->
   <build>
