@@ -7,7 +7,7 @@ package
 	public class CollisionController extends BaseController
 	{
 		
-		public function CollisionController(player:Player, enemy:Enemy, ) 
+		public function CollisionController(player:Player, enemy:Enemy) 
 		{
 				super();
 		}
