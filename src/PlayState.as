@@ -51,7 +51,7 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			player = new Player(12, 12);
 						
-			level = new Map(10,10,true);
+			level = new Map(14,10,true);
 			//level = new Map();
 			
 			//loadDarkness();
@@ -65,18 +65,18 @@ package
 			loadExit();
 
 			 
-			spawnEnemy(234, 12);
+			//spawnEnemy(234, 12);
 			//enemyTwo = new Enemy(14, 210);
 			//add(enemyTwo);
 			
 			musicController = new MusicController(player, enemy, exit);
 
 			add(controllers);
-			controllers.add(player.getController());
-			controllers.add(enemy.getController());
+		//	controllers.add(player.getController());
+		//	controllers.add(enemy.getController());
 			controllers.add(light.getController());
 			controllers.add(flashlight.getController());
-			controllers.add(musicController);
+		//	controllers.add(musicController);
 			add(darkness);
 		}
 		
@@ -112,7 +112,7 @@ package
 			super.update();
 			
 			//Collision Resolution
-			FlxG.collide(player, level);
+	//		FlxG.collide(player, level);
 			
 			
 			

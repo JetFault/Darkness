@@ -7,11 +7,17 @@ package
 	 */
 	public class Map extends FlxTilemap
 	{
+		[Embed(source="../bin/data/autotiles.png")] public var BigTiles:Class;
+		
 		public function Map(width:uint, height:uint, random:Boolean) {
 			if(random) {
 				var maze:Maze = new Maze(width, height);
 				var levelArray:Array = maze.toArray();
-				loadMap(arrayToCSV(levelArray, maze.getWidth()), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
+				trace(levelArray);
+				
+				
+				
+				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
 			}
 			else {
 				loadLevelData();

@@ -31,7 +31,7 @@ package
 			{
 				player.acceleration.y += player.drag.x;
 			}
-			if (FlxG.keys.UP || FlxG.keys. W)
+			if (FlxG.keys.UP || FlxG.keys.W)
 			{
 				player.acceleration.y += -player.drag.x;
 			}

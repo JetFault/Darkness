@@ -43,8 +43,8 @@ package
 		public function toArray():Array {
 			var mazeArr:Array = new Array();
 		
-			for (var i:uint; i < getHeight(); i++) {
-				for (var j:uint; j < getWidth(); j++) {
+			for (var i:uint = 0; i < getHeight(); i++) {
+				for (var j:uint = 0; j < getWidth(); j++) {
 					mazeArr.push(_maze[i][j]);
 				}
 			}
@@ -62,7 +62,7 @@ package
 			_start = new Point(1, 1);
 			
 			_maze	= new Array(_width);
- 
+			
 			for ( var x : int = 0; x < _height; x++ )
 			{
 				_maze[x] = new Array(_height);
