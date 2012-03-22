@@ -19,8 +19,8 @@ package
 		
 		private function loadEnemy():void
 		{
-			loadGraphic(ImgEnemy, true, true, 15, 14);
-			//makeGraphic(10, 10, 0xffCD0000);
+			//loadGraphic(ImgEnemy, true, true, 15, 14);
+			makeGraphic(10, 10, 0xffCD0000);
 		}
 		
 		public function getEnemyRunSpeed():Number {

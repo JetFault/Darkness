@@ -15,7 +15,7 @@ package
 		private var enemy:Enemy;
 		private var exit:FlxSprite;
 		private var light:Light;
-		private var flashlight:FlashLight;
+		//private var flashlight:FlashLight;
 		private var darkness:FlxSprite;
 		
 		
@@ -49,9 +49,10 @@ package
 			FlxG.bgColor = 0xffC9C9C9;
 			
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
-			player = new Player(12, 12);
+			
 						
-			level = new Map(18,14,true);
+			level = new Map(18, 14, true);
+			player = new Player(28, 28);
 			//level = new Map();
 			
 			loadDarkness();
@@ -65,7 +66,9 @@ package
 			loadExit();
 
 			 
-			//spawnEnemy(234, 12);
+			spawnEnemy(234, 12);
+			
+			
 			//enemyTwo = new Enemy(14, 210);
 			//add(enemyTwo);
 			
@@ -77,7 +80,7 @@ package
 			controllers.add(light.getController());
 		//	controllers.add(flashlight.getController());
 		//	controllers.add(musicController);
-			add(darkness);
+		//	add(darkness);
 		}
 		
 		override public function update():void
@@ -183,7 +186,7 @@ package
 		
 		private function loadExit():void
 		{
-			exit = new FlxSprite(340, 267, null);
+			exit = new FlxSprite(370, 267, null);
 			exit.makeGraphic(12, 16, 0xff8B8682);
 			add(exit);
 		}

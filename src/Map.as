@@ -1,5 +1,6 @@
 package  
 {
+	import flash.geom.Point;
 	import org.flixel.FlxTilemap;
 	/**
 	 * ...
@@ -7,14 +8,13 @@ package
 	 */
 	public class Map extends FlxTilemap
 	{
-		[Embed(source="../bin/data/autotiles.png")] public var BigTiles:Class;
+		[Embed(source = "../bin/data/autotiles.png")] public var BigTiles:Class;
 		
 		public function Map(width:uint, height:uint, random:Boolean) {
 			if(random) {
 				var maze:Maze = new Maze(width, height);
 				var levelArray:Array = maze.toArray();
 				trace(levelArray);
-				
 				
 				
 				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
