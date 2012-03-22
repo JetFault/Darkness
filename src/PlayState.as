@@ -15,7 +15,7 @@ package
 		private var enemy:Enemy;
 		private var exit:FlxSprite;
 		private var light:Light;
-		private var flashlight:FlashLight;
+		//private var flashlight:FlashLight;
 		private var darkness:FlxSprite;
 		
 		
@@ -75,7 +75,7 @@ package
 			controllers.add(player.getController());
 			controllers.add(enemy.getController());
 			controllers.add(light.getController());
-			controllers.add(flashlight.getController());
+			//controllers.add(flashlight.getController());
 			controllers.add(musicController);
 			add(darkness);
 		}
@@ -202,10 +202,10 @@ package
 			var lightSize:FlxPoint = new FlxPoint(1, 1);
 			light.scale = lightSize;
 			add(light);
-			flashlight = new FlashLight(12, 12, darkness, player);
+			//flashlight = new FlashLight(12, 12, darkness, player);
 			//var lightSize:FlxPoint = new FlxPoint(1, 1);
 			//light.scale = lightSize;
-			add(flashlight);
+			//add(flashlight);
 		}
 	}
 
