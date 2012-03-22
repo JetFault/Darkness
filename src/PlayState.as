@@ -51,10 +51,10 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			player = new Player(12, 12);
 						
-			level = new Map(14,10,true);
+			level = new Map(18,14,true);
 			//level = new Map();
 			
-			//loadDarkness();
+			loadDarkness();
 			loadLights();
 			add(level);
 			add(player);
@@ -75,7 +75,7 @@ package
 		//	controllers.add(player.getController());
 		//	controllers.add(enemy.getController());
 			controllers.add(light.getController());
-			controllers.add(flashlight.getController());
+		//	controllers.add(flashlight.getController());
 		//	controllers.add(musicController);
 			add(darkness);
 		}
@@ -183,7 +183,7 @@ package
 		
 		private function loadExit():void
 		{
-			exit = new FlxSprite(298, 155, null);
+			exit = new FlxSprite(340, 267, null);
 			exit.makeGraphic(12, 16, 0xff8B8682);
 			add(exit);
 		}
@@ -202,10 +202,10 @@ package
 			var lightSize:FlxPoint = new FlxPoint(1, 1);
 			light.scale = lightSize;
 			add(light);
-			flashlight = new FlashLight(12, 12, darkness, player);
+			//flashlight = new FlashLight(12, 12, darkness, player);
 			//var lightSize:FlxPoint = new FlxPoint(1, 1);
 			//light.scale = lightSize;
-			add(flashlight);
+			//add(flashlight);
 		}
 	}
 

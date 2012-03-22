@@ -5,7 +5,7 @@ package
 	
 	/**
 	 * ...
-	 * @author Elliot
+	 * @author Darkness Team
 	 */
 	public class Main extends Sprite 
 	{

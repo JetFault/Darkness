@@ -30,11 +30,11 @@ package
 		
 		private function loadPlayer():void
 		{
-			loadGraphic(ImgPlayer, true, true, 12, 9);
-			//super.makeGraphic(10, 10, 0xff007fff);
+			//loadGraphic(ImgPlayer, true, true, 12, 9);
+			super.makeGraphic(10, 10, 0xff007fff);
 		}
 		
-		/*override public function update():void
+		override public function update():void
 		{
 			//velocity.x = 0;
 			//velocity.y = 0;
@@ -57,8 +57,8 @@ package
 			{
 				acceleration.y += -drag.x
 			}
-			//controller.update();
-		}*/
+			controller.update();
+		}
 		
 		public function isAlive():Boolean {
 			return this.playerAlive;

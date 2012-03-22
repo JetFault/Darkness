@@ -8,7 +8,7 @@ package
 	
 	public class FlashLight extends FlxSprite
 	{
-		[Embed(source="/../bin/data/FlashLight.png")] private var FlashLightImageClass:Class;
+		[Embed(source="/../bin/data/glow-light.png")] private var FlashLightImageClass:Class;
 		private var darkness:FlxSprite;
 		public var controller:FlashLightController;
 		public var drawLight:Boolean;
