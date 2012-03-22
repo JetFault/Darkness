@@ -48,6 +48,7 @@ package
 					chaseMusicOn = true;
 				}
 			}
+			
 			if (getEnemyDistance(playerPos, enemyPos) > 60 && chaseMusicOn)
 			{
 				chaseMusic.fadeOut(3);
@@ -79,6 +80,13 @@ package
 			var yDist:Number = playerPos.y - enemyPos.y;
 			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
 			return distance;
+		}
+		
+		override public function destroy(): void {
+			if (chaseMusic.active) {
+				chaseMusic.stop();
+			}
+			super.destroy();
 		}
 	}
 	

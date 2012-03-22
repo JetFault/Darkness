@@ -19,7 +19,7 @@ package
 		
 		private function loadEnemy():void
 		{
-			loadGraphic(ImgEnemy, true, true, 15, 14);
+			//loadGraphic(ImgEnemy, true, true, 15, 14);
 			makeGraphic(10, 10, 0xffCD0000);
 		}
 		
