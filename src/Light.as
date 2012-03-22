@@ -8,8 +8,7 @@ package
 	
 	public class Light extends FlxSprite
 	{
-		//[Embed(source="/../bin/data/glow-light.png")]private var LightImageClass:Class;
-		[Embed(source="/../bin/data/NearLight.png")] private var LightImageClass:Class;
+		[Embed(source="/../bin/data/glow-light.png")]private var LightImageClass:Class;
 		private var darkness:FlxSprite;
 		public var controller:LightController;
 		

@@ -30,8 +30,8 @@ package
 		
 		private function loadPlayer():void
 		{
-			loadGraphic(ImgPlayer, true, true, 12, 9);
-			//super.makeGraphic(10, 10, 0xff007fff);
+			//loadGraphic(ImgPlayer, true, true, 12, 9);
+			super.makeGraphic(10, 10, 0xff007fff);
 		}
 		
 		/*override public function update():void
