@@ -13,6 +13,7 @@ package
 		private var enemyRunSpeed:Number;
 		private var maxRunSpeed:Number = 100;
 		private var runTimer:Number;
+		private var ai:EnemyAI;
 		
 		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number) 
 		{
@@ -21,13 +22,15 @@ package
 			this.level = level;
 			this.enemyRunSpeed = enemyRunSpeed;
 			this.runTimer = 0;
+			this.ai = new DFSSearchAI(enemy, player, level);
 		}
 		
 		override public function update():void {
 			//Time since last iteration
 			
-			var enemyPath:FlxPath = level.findPath(enemy.getMidpoint(), player.getMidpoint());
-			enemy.followPath(enemyPath, enemy.getEnemyRunSpeed());
+			ai.doNextAction();
+			//var enemyPath:FlxPath = level.findPath(enemy.getMidpoint(), player.getMidpoint());
+			//enemy.followPath(enemyPath, enemy.getEnemyRunSpeed());
 			
 			runTimer += FlxG.elapsed;
 			if (runTimer > 3 && enemy.getEnemyRunSpeed() < maxRunSpeed)

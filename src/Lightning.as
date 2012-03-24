@@ -20,13 +20,15 @@ package
 		private var flashtimer:Number = 0;
 		private var flashing:Boolean = false;
 		private var crashtime:Number = .01;
+		private var soundplayed:Boolean = true;
 		private var played:Boolean = false;
-		private var rumbletime:Number = 0.2;
+		private var rumbletime:Number = 1.5;
 		private var rumbleflxsound:FlxSound;
 		private var crashflxsound:FlxSound;
 		private var player:Player;
 		private var enemy:Enemy;
 		private var soundthreshold:Number = 100;
+		private var soundtimer:Number = 0;
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
@@ -44,6 +46,7 @@ package
 			if (darkness != null) {
 				if (flashing) {
 					flashtimer += FlxG.elapsed;
+					soundtimer += FlxG.elapsed;
 					if (flashtimer > flashduration) {
 						flashing = false;
 						flashtimer = 0;
@@ -63,22 +66,31 @@ package
 		
 		override public function update():void {
 			looptimer += FlxG.elapsed;
+			
 			if (looptimer >=looptime) {
 				FlxG.flash(0xffffffff, flashduration);
 				flashtimer = 0;
+				soundtimer = 0;
+				soundplayed = false;
 				flashing = true;
 				looptimer = 0;
 			}
 			
+			soundtimer += FlxG.elapsed;
 			if (flashing) {
 				flashtimer += FlxG.elapsed;
-				var distance:Number = getEnemyDistance(player.getMidpoint(), enemy.getMidpoint());
-				if (distance < soundthreshold && flashtimer >= crashtime) {
-					crashflxsound.play();
-				}else if (distance >= soundthreshold && flashtimer >= rumbletime) {
-					rumbleflxsound.play();
-				}
 			}	
+			
+			if (!soundplayed) {
+				var distance:Number = getEnemyDistance(player.getMidpoint(), enemy.getMidpoint());
+				if (distance < soundthreshold && soundtimer >= crashtime) {
+					crashflxsound.play();
+					soundplayed = true;
+				}else if (distance >= soundthreshold && soundtimer >= rumbletime) {
+					rumbleflxsound.play();
+					soundplayed = true;
+				}
+			}
 		}
 		
 		private function getEnemyDistance(playerPos:FlxPoint, enemyPos:FlxPoint):Number

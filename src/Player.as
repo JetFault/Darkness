@@ -34,32 +34,6 @@ package
 			super.makeGraphic(10, 10, 0xff007fff);
 		}
 		
-		/*override public function update():void
-		{
-			//velocity.x = 0;
-			//velocity.y = 0;
-			acceleration.x = 0;
-			acceleration.y = 0;
-			
-			if (FlxG.keys.RIGHT || FlxG.keys.D)
-			{
-				acceleration.x += drag.x;
-			}
-			if (FlxG.keys.LEFT || FlxG.keys.A)
-			{
-				acceleration.x += -drag.x;
-			}
-			if (FlxG.keys.DOWN || FlxG.keys.S)
-			{
-				acceleration.y += drag.x;
-			}
-			if (FlxG.keys.UP || FlxG.keys. W)
-			{
-				acceleration.y += -drag.x
-			}
-			//controller.update();
-		}*/
-		
 		public function isAlive():Boolean {
 			return this.playerAlive;
 		}
