@@ -39,8 +39,8 @@ package
 			
 			
 			//TODO:  Get collision detection out of here.
-			
-			if (getEnemyDistance(playerPos, enemyPos) < 60)
+			var distance:Number = Utils.getDistance(playerPos, enemyPos);
+			if (distance < 60)
 			{
 				if (!chaseMusicOn)
 				{
@@ -49,7 +49,7 @@ package
 				}
 			}
 			
-			if (getEnemyDistance(playerPos, enemyPos) > 60 && chaseMusicOn)
+			if (distance > 60 && chaseMusicOn)
 			{
 				chaseMusic.fadeOut(3);
 				chaseMusicOn = false;
@@ -74,13 +74,7 @@ package
 		}
 		
 		
-		private function getEnemyDistance(playerPos:FlxPoint, enemyPos:FlxPoint):Number
-		{
-			var xDist:Number = playerPos.x - enemyPos.x;
-			var yDist:Number = playerPos.y - enemyPos.y;
-			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
-			return distance;
-		}
+		
 		
 		override public function destroy(): void {
 			if (chaseMusic.active) {

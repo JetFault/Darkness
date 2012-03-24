@@ -17,6 +17,7 @@ package
 		private var light:Light;
 		//private var flashlight:FlashLight;
 		private var darkness:FlxSprite;
+		private var lightning:Lightning;
 		
 		
 		//Controllers
@@ -54,30 +55,38 @@ package
 			//level = new Map(10,10,true);
 			level = new Map(0, 0, false);
 			
+			enemies = new FlxGroup();
+			spawnEnemy(234, 12);
+			
 			loadDarkness();
 			loadLights();
 			add(level);
 			add(player);
-			enemies = new FlxGroup();
+			
+			
 			add(enemies);
 
 			
 			loadExit();
 
 			 
-			spawnEnemy(234, 12);
+			
 			//enemyTwo = new Enemy(14, 210);
 			//add(enemyTwo);
 			
 			musicController = new MusicController(player, enemy, exit);
 
 			add(controllers);
+			//TODO:  Have a controller?
+			
 			controllers.add(player.getController());
 			controllers.add(enemy.getController());
 			controllers.add(light.getController());
 			//controllers.add(flashlight.getController());
 			controllers.add(musicController);
 			add(darkness);
+			lightning = new Lightning(darkness, player, enemy);
+			add(lightning);
 		}
 		
 		override public function update():void
@@ -107,6 +116,7 @@ package
 			{
 				FlxG.resetState();
 			}
+			
 			
 			
 			super.update();
@@ -160,9 +170,6 @@ package
 		
 		override public function draw():void
 		{
-			if(darkness != null) {
-				darkness.fill(0xff000000);
-			}
 			super.draw();
 		}
 		
