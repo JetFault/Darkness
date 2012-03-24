@@ -25,6 +25,8 @@ package
 		private var _start		: Point;
 		private var _finish		: Point;
 		
+		private var _exit       : Point;
+		
 		public function Maze(width:uint, height:uint) {
 			this._width = width;
 			this._height = height;
@@ -50,7 +52,6 @@ package
 			}
 			return mazeArr;
 		}
-		
 		
 		private function _generate () : void {
 			_initMaze();
@@ -87,6 +88,7 @@ package
  
 			while ( _moves.length )
 			{
+				
 				possibleDirections = "";
  
 				if ((pos.x + 2 < _height ) && (_maze[pos.x + 2][pos.y] == true) && (pos.x + 2 != false) && (pos.x + 2 != _height - 1) )
@@ -108,6 +110,7 @@ package
 				{
 					possibleDirections += EAST;
 				}
+				
  
 				if ( possibleDirections.length > 0 )
 				{
@@ -148,6 +151,7 @@ package
 					pos.x = int(back / _width);
 					pos.y = back % _width;
 				}
+				
 			}
 		}
 		

@@ -10,12 +10,13 @@ package
 	{
 		[Embed(source = "../bin/data/autotiles.png")] public var BigTiles:Class;
 		
+		public var exitPoint:Point;
+		
 		public function Map(width:uint, height:uint, random:Boolean) {
 			if(random) {
 				var maze:Maze = new Maze(width, height);
 				var levelArray:Array = maze.toArray();
 				trace(levelArray);
-				
 				
 				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
 			}

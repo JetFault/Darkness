@@ -115,7 +115,7 @@ package
 			super.update();
 			
 			//Collision Resolution
-	//		FlxG.collide(player, level);
+			FlxG.collide(player, level);
 			
 			
 			
@@ -186,7 +186,7 @@ package
 		
 		private function loadExit():void
 		{
-			exit = new FlxSprite(370, 267, null);
+			exit = new FlxSprite(12, 12, null);
 			exit.makeGraphic(12, 16, 0xff8B8682);
 			add(exit);
 		}
