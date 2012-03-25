@@ -29,6 +29,7 @@ package
 		private var enemy:Enemy;
 		private var soundthreshold:Number = 100;
 		private var soundtimer:Number = 0;
+		private var distance:Number = 0;
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
@@ -74,6 +75,7 @@ package
 				soundplayed = false;
 				flashing = true;
 				looptimer = 0;
+				distance = getEnemyDistance(player.getMidpoint(), enemy.getMidpoint());
 			}
 			
 			soundtimer += FlxG.elapsed;
@@ -82,7 +84,6 @@ package
 			}	
 			
 			if (!soundplayed) {
-				var distance:Number = getEnemyDistance(player.getMidpoint(), enemy.getMidpoint());
 				if (distance < soundthreshold && soundtimer >= crashtime) {
 					crashflxsound.play();
 					soundplayed = true;

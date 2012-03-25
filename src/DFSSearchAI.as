@@ -2,6 +2,7 @@ package
 {
 	//import de.polygonal.ds.TreeNode;
 	import flash.geom.Point;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxPath;
 	//import de.polygonal.ds.TreeBuilder;
@@ -23,16 +24,15 @@ package
 		private var root:Array;
 		private var currentindex:Number;
 		private var closed:Array;
+		private var enemyPath:FlxPath;
 		private var currentPoint:FlxPoint = new FlxPoint(0,0);
 		
 		public function DFSSearchAI(self:Enemy,player:Player, map:Map) 
 		{
 			super(self, player, map);
-			depth = 10;
+			depth = 20;
 			this.xpos = 30;
 			this.ypos = 2;
-			trace(map.widthInTiles);
-			trace(map.heightInTiles);
 		}
 		
 		override public function doNextAction():void {
@@ -55,11 +55,12 @@ package
 						searching = true;
 					}else {
 						//Proceed to next part of DFS
-						if(Utils.getDistance(currentPoint,self.getMidpoint()) < 5){
+						if(Utils.getDistance(currentPoint,self.getMidpoint()) < 10){
 							currentindex += 1;
 							currentindex %= closed.length;
 							currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						}
+
 						var enemyPath:FlxPath = this.map.findPath(self.getMidpoint(), currentPoint);
 						if (enemyPath) {
 							this.self.followPath(enemyPath, self.getEnemyRunSpeed());

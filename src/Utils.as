@@ -78,8 +78,12 @@ package
 				//Node has not been visited.  Push to closed	
 				closed.push(node);
 				//Get neighbors
-				for each(var dx:Number in new Array( -1, 1)) {
-					for each(var dy:Number in new Array( -1, 1)) {
+				for each(var dx:Number in new Array( -1, 0, 1)) {
+					for each(var dy:Number in new Array( -1, 0, 1)) {
+						if (dx != 0 && dy != 0) {
+							continue;
+						}
+						
 						var alsoinclosed:Boolean = false;
 						var p3:Array = new Array(0,0,0);
 						p3[0] = node[0] + dx;
