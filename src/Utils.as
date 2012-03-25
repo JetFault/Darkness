@@ -23,15 +23,15 @@ package
 				return new FlxPoint( -1, -1);
 			}
 			
-			var tilewidth:Number = 8;
-			var tileheight:Number = 8;
+			var tilewidth:Number = map.getTileWidth();
+			var tileheight:Number = map.getTileHeight();
 			
 			return new FlxPoint(tilewidth * x + tilewidth / 2 - 1, tileheight * y + tileheight / 2 - 1);
 		}
 		
 		public static function pointToTileCoords(map:Map, point:FlxPoint):FlxPoint {
-			var tilewidth:Number = 8;
-			var tileheight:Number = 8;
+			var tilewidth:Number = map.getTileWidth();
+			var tileheight:Number = map.getTileHeight();
 			
 			if (point.x < 0 || point.y < 0 || point.x>= map.widthInTiles*tilewidth|| point.y > map.heightInTiles*tileheight) {
 				return new FlxPoint(-1,-1);
