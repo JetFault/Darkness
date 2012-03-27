@@ -58,6 +58,21 @@ package
 		}
 		
 		/**
+		 * Get width of single tile in pixels
+		 * @return
+		 */
+		public function getTileWidthInPixels():uint {
+			return this._tileWidth;
+		}
+		
+		/**
+		 * Get height of single tile in pixels.
+		 * @return
+		 */
+		public function getTileHeightInPixels():uint {
+			return this._tileHeight;
+		}
+		/**
 		 * Get the start point in tiles
 		 * @return
 		 */

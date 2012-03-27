@@ -34,8 +34,10 @@ package
 				return new FlxPoint( -1, -1);
 			}
 			
-			var tilewidth:Number = map.getTileWidth();
-			var tileheight:Number = map.getTileHeight();
+			//var tilewidth:Number = map.getTileWidth();
+			//var tileheight:Number = map.getTileHeight();
+			var tilewidth:Number = map.getTileWidthInPixels();
+			var tileheight:Number = map.getTileHeightInPixels();
 			
 			return new FlxPoint( (tilewidth * x) + tilewidth / 2 - 1, tileheight * y + tileheight / 2 - 1);
 		}
@@ -45,9 +47,11 @@ package
 		}
 		
 		public static function pointToTileCoords(map:Map, point:FlxPoint):FlxPoint {
-			var tilewidth:Number = map.getTileWidth();
-			var tileheight:Number = map.getTileHeight();
-			
+			//var tilewidth:Number = map.getTileWidth();
+			//var tileheight:Number = map.getTileHeight();
+			var tilewidth:Number = map.getTileWidthInPixels();
+			var tileheight:Number = map.getTileHeightInPixels();
+
 			if (point.x < 0 || point.y < 0 || point.x>= map.widthInTiles*tilewidth|| point.y > map.heightInTiles*tileheight) {
 				return new FlxPoint(-1,-1);
 			}
