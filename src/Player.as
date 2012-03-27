@@ -7,7 +7,7 @@ package
 	public class Player extends FlxSprite
 	{
 		//Sprite sheet
-		[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
+		//[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;

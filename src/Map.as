@@ -2,18 +2,17 @@ package
 {
 	import flash.display.Bitmap;
 	import flash.geom.Point;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxTilemap;
 	/**
 	 * ...
-	 * @author Elliot
+	 * @author Darkness Team
 	 */
 	public class Map extends FlxTilemap
 	{
 		[Embed(source = "../bin/data/autotiles.png")] public var BigTiles:Class;
-		public var tilesize:uint;
 		
 		public var maze:Maze;
-		public var exitPoint:Point;
 		
 		/**
 		 * Create a map.
@@ -25,15 +24,12 @@ package
 			if(random) {
 				maze = new Maze(width, height);
 				var levelArray:Array = maze.to1DArray();
-				trace(levelArray);
 				
 				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
 			}
 			else {
 				loadLevelData();
 			}
-			var bitmap:Bitmap = new BigTiles();
-			this.tilesize = bitmap.height;
 		}
 		
 		public function getMaze():Maze {
@@ -41,35 +37,39 @@ package
 		}
 		
 		/**
-		 * Get tile size
+		 * Get tile height in pixels
 		 * @return
 		 */
-		public function getTileSize():uint {
-			return tilesize;
+		public function getTileHeight():uint {
+			return this._tiles.height;
 		}
 		
 		/**
-		 * Transforms a maze location to a pixel location.
-		 * Returns an array with index 0 being the x, and 1 being the y.
-		 * @param	x 	x-coord in maze
-		 * @param	y	y-coord in maze
-		 * @return		Array[0]:x-coord Array[1]:y-coord
+		 * Get tile width in pixels
+		 * @return
 		 */
-		public function mazePointToPixel(x:uint, y:uint):Array {
-			var pixels:Array = new Array();
-			pixels[0] = x * getTileSize();
-			pixels[1] = y * getTileSize();
-			return pixels;
+		public function getTileWidth():uint {
+			return this._tiles.width;
 		}
 		
-		public function getStartPoint():Array {
-			var point:Point = this.maze.getStartTile();
-			return mazePointToPixel(point.x, point.y);
+		/**
+		 * Get the start point in tiles
+		 * @return
+		 */
+		public function getStartTile():FlxPoint {
+			var flxpoint:FlxPoint = new FlxPoint(0, 0);	
+			flxpoint.copyFromFlash(this.maze.getStartTile());
+			return flxpoint;
 		}
 		
-		public function getEndPoint():Array {
-			var point:Point = this.maze.getFinishTile();
-			return mazePointToPixel(point.x, point.y);
+		/**
+		 * Get the end point in tiles
+		 * @return
+		 */
+		public function getEndTile():FlxPoint {
+			var flxpoint:FlxPoint = new FlxPoint(0, 0);	
+			flxpoint.copyFromFlash(this.maze.getFinishTile());
+			return flxpoint;
 		}
 		
 		private function loadLevelData():void
@@ -107,16 +107,7 @@ package
 				1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 
 				);			
 				loadMap(arrayToCSV(levelData, 40), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
-		}
-		
-		public function getTileWidth() {
-			return this._tileWidth;
-		}
-		
-		public function getTileHeight() {
-			return this._tileHeight;
-		}
-		
+		}		
 	}
 
 }

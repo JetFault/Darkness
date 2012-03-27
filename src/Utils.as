@@ -29,6 +29,10 @@ package
 			return new FlxPoint(tilewidth * x + tilewidth / 2 - 1, tileheight * y + tileheight / 2 - 1);
 		}
 		
+		public static function tilePtToMidpoint(map:Map, flxPoint:FlxPoint):FlxPoint {
+			return tileToMidpoint(map, flxPoint.x, flxPoint.y);
+		}
+		
 		public static function pointToTileCoords(map:Map, point:FlxPoint):FlxPoint {
 			var tilewidth:Number = map.getTileWidth();
 			var tileheight:Number = map.getTileHeight();

@@ -52,18 +52,20 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			level = new Map(33,25,true);
+			level = new Map(15,15,true);
 			//level = new Map(0, 0, false);
 			
+			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
+			player = new Player(playerStart.x, playerStart.y);
+			
 			enemies = new FlxGroup();
-			spawnEnemy(234, 12);
+			var enemyStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getEndTile());
+			spawnEnemy(enemyStart.x, enemyStart.y);
 			
 			loadDarkness();
 			loadLights();
 			add(level);
-			add(player);
-			
-			
+			add(player);			
 			add(enemies);
 
 			
