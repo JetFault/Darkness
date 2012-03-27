@@ -51,11 +51,27 @@ package
 				}
 			}
 			return mazeArr;
+		}	
+		
+		public function mazePointToPixel(x:uint, y:uint):Array {
+			var pixels:Array = new Array();
+			pixels[0] = x * getTileSize();
+			pixels[1] = y * getTileSize();
+			return pixels;
+		}
+		
+		public function getTileSize() : int {
+			
+			return 0;
+			
 		}
 		
 		private function _generate () : void {
 			_initMaze();
 			_createMaze();
+			var factor:int = 3;
+			var numWalls:uint = (_height - 2) * (_width - 2) * factor / 64;
+			_removeRandWalls(5);
 		}
  
 		private function _initMaze () : void {
@@ -114,6 +130,43 @@ package
  
 				if ( possibleDirections.length > 0 )
 				{
+					
+/*					// 1 in 4 chance 
+					var percent:int;
+					//percent = 0;
+					percent = _randInt(0, 3);
+					
+					if(percent == 0) {
+						var removeWall:uint = _randInt(0, (possibleDirections.length - 1));
+	 
+						switch ( possibleDirections.charAt(removeWall) )
+						{
+							case NORTH: 
+								_maze[pos.x - 2][pos.y] = 0;
+								_maze[pos.x - 1][pos.y] = 0;
+								_moves.push(pos.y + ((pos.x-2) * _width));
+								break;
+	 
+							case SOUTH: 
+								_maze[pos.x + 2][pos.y] = 0;
+								_maze[pos.x + 1][pos.y] = 0;
+								_moves.push(pos.y + ((pos.x+2) * _width));
+								break;
+	 
+							case WEST: 
+								_maze[pos.x][pos.y - 2] = 0;
+								_maze[pos.x][pos.y - 1] = 0;
+								_moves.push( (pos.y-2) + (pos.x * _width));
+								break;
+	 
+							case EAST: 
+								_maze[pos.x][pos.y + 2] = 0;
+								_maze[pos.x][pos.y + 1] = 0;
+								_moves.push( (pos.y+2) + (pos.x * _width));
+								break;        
+						}
+					}
+*/				
 					move = _randInt(0, (possibleDirections.length - 1));
  
 					switch ( possibleDirections.charAt(move) )
@@ -142,7 +195,7 @@ package
 							pos.y +=2;
 							break;        
 					}
- 
+									
 					_moves.push(pos.y + (pos.x * _width));
 				}
 				else
@@ -157,6 +210,16 @@ package
 		
 		private function _randInt ( min : int, max : int ) : int {
 			return int((Math.random() * (max - min + 1)) + min);
+		}
+		
+		private function _removeRandWalls(numWalls:uint): void {
+			for ( var i:uint = 0; i < numWalls; i++) {
+				do {
+					var xWall:int = _randInt(1, _height-3);
+					var yWall:int = _randInt(1, _width-3);
+				} while (_maze[xWall][yWall] == 0);
+				_maze[xWall][yWall] = 0;
+			}
 		}
 	}
 

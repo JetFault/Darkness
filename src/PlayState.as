@@ -51,8 +51,9 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			level = new Map(18, 14, true);
-			player = new Player(28, 28);
+			//level = new Map(33,25,true);
+			level = new Map(10, 10, true);
+
 			//level = new Map();
 			
 			loadDarkness();
