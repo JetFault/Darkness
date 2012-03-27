@@ -17,7 +17,7 @@ package
 	 */
 	public class DFSSearchAI extends EnemyAI 
 	{
-		private var depth:Number;
+		private var depth:Number; //Ideally variable?
 		private var searching:Boolean;  //Is this guy doing a DFS?
 		private var xpos:Number; //x position on map in tiles (not in pixels)
 		private var ypos:Number; //y position on map in tiles (not in pixels)
