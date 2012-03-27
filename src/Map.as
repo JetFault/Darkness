@@ -109,6 +109,13 @@ package
 				loadMap(arrayToCSV(levelData, 40), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
 		}
 		
+		public function getTileWidth() {
+			return this._tileWidth;
+		}
+		
+		public function getTileHeight() {
+			return this._tileHeight;
+		}
 		
 	}
 

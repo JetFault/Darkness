@@ -13,8 +13,6 @@ package
 		}
 		
 		override public function update(): void {
-			
-			
 			super.update();
 		}
 		

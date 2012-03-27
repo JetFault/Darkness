@@ -7,7 +7,6 @@ package
 	 */
 	public class BaseController extends FlxBasic
 	{
-		
 		override public function update(): void {
 			super.update();
 		}

@@ -4,7 +4,7 @@ package
 
 	public class Enemy extends FlxSprite
 	{
-		[Embed(source = "../bin/data/Enemy.png")] protected var ImgEnemy:Class;
+		//[Embed(source = "../bin/data/Enemy.png")] protected var ImgEnemy:Class;
 		public var controller:EnemyController;
 		private var enemyRunSpeed:Number;
 		public function Enemy(x:Number, y:Number, player:Player, level:Map) 
