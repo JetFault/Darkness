@@ -71,7 +71,7 @@ package
 			_createMaze();
 			var factor:int = 3;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor / 64;
-			_removeRandWalls(5);
+			_removeRandWalls(70);
 		}
  
 		private function _initMaze () : void {

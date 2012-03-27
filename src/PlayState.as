@@ -51,8 +51,8 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			//level = new Map(33,25,true);
-			level = new Map(10, 10, true);
+			level = new Map(33,25,true);
+			//level = new Map(10, 10, true);
 
 			//level = new Map();
 			
@@ -78,7 +78,7 @@ package
 			add(controllers);
 		//	controllers.add(player.getController());
 		//	controllers.add(enemy.getController());
-			controllers.add(light.getController());
+		//	controllers.add(light.getController());
 		//	controllers.add(flashlight.getController());
 		//	controllers.add(musicController);
 		//	add(darkness);
