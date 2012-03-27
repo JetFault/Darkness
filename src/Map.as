@@ -7,11 +7,16 @@ package
 	 */
 	public class Map extends FlxTilemap
 	{
+		[Embed(source = "../bin/data/autotiles.png")] public var BigTiles:Class;
+		
+		public var deadEnds:Array;
+		
 		public function Map(width:uint, height:uint, random:Boolean) {
 			if(random) {
 				var maze:Maze = new Maze(width, height);
 				var levelArray:Array = maze.toArray();
-				loadMap(arrayToCSV(levelArray, maze.getWidth()), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
+				deadEnds = maze.getDeadEnds();
+				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
 			}
 			else {
 				loadLevelData();
@@ -55,11 +60,11 @@ package
 				loadMap(arrayToCSV(levelData, 40), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
 		}
 		
-		public function getTileWidth() {
+		public function getTileWidth():Number {
 			return this._tileWidth;
 		}
 		
-		public function getTileHeight() {
+		public function getTileHeight():Number {
 			return this._tileHeight;
 		}
 		

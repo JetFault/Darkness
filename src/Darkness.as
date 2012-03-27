@@ -7,7 +7,7 @@ package
 		
 		public function Darkness() 
 		{
-			super(320, 240, PlayState, 2);
+			super(400, 300, PlayState, 2);
 		}
 		
 	}

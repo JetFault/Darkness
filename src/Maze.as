@@ -1,6 +1,7 @@
 package  
 {
 	import flash.geom.Point;
+	import org.flixel.FlxPoint;
 	/**
 	 * Algorithm from:
 	 * http://www.emanueleferonato.com/2008/12/08/perfect-maze-generation-tile-based-version-as3/
@@ -25,6 +26,10 @@ package
 		private var _start		: Point;
 		private var _finish		: Point;
 		
+		private var _exit       : Point;
+		
+		private var deadEnds:Array;
+		
 		public function Maze(width:uint, height:uint) {
 			this._width = width;
 			this._height = height;
@@ -43,14 +48,17 @@ package
 		public function toArray():Array {
 			var mazeArr:Array = new Array();
 		
-			for (var i:uint; i < getHeight(); i++) {
-				for (var j:uint; j < getWidth(); j++) {
+			for (var i:uint = 0; i < getHeight(); i++) {
+				for (var j:uint = 0; j < getWidth(); j++) {
 					mazeArr.push(_maze[i][j]);
 				}
 			}
 			return mazeArr;
 		}
 		
+		public function getDeadEnds():Array {
+			return deadEnds;
+		}
 		
 		private function _generate () : void {
 			_initMaze();
@@ -62,7 +70,7 @@ package
 			_start = new Point(1, 1);
 			
 			_maze	= new Array(_width);
- 
+			
 			for ( var x : int = 0; x < _height; x++ )
 			{
 				_maze[x] = new Array(_height);
@@ -81,12 +89,16 @@ package
 			var move				: int;
 			var possibleDirections	: String;
 			var pos					: Point = _start.clone();
+			var lastPossDirection:String = "";
  
 			_moves = new Array();
 			_moves.push(pos.y + (pos.x * _width));
+			
+			deadEnds = new Array();
  
 			while ( _moves.length )
 			{
+				lastPossDirection = possibleDirections;
 				possibleDirections = "";
  
 				if ((pos.x + 2 < _height ) && (_maze[pos.x + 2][pos.y] == true) && (pos.x + 2 != false) && (pos.x + 2 != _height - 1) )
@@ -108,6 +120,29 @@ package
 				{
 					possibleDirections += EAST;
 				}
+				
+				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
+				{
+					if (_randInt(0, 100) < 10)
+					{
+						_maze[pos.x][pos.y + 1] = 0;
+					}
+				}
+				
+				if ((pos.x -2 >= 0) && (_maze[pos.x - 2][pos.y] == false))
+				{
+					if (_randInt(0, 100) < 10)
+					{
+						_maze[pos.x - 1][pos.y] = 0;
+					}
+				}
+				
+				//creates an array with dead-ends.
+				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
+				{
+					deadEnds.push(new FlxPoint(pos.x,pos.y));
+				}
+				
  
 				if ( possibleDirections.length > 0 )
 				{
@@ -148,6 +183,7 @@ package
 					pos.x = int(back / _width);
 					pos.y = back % _width;
 				}
+				
 			}
 		}
 		
