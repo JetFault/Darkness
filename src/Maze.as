@@ -90,7 +90,7 @@ package
 			_createMaze();
 			var factor:Number = 0.18;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
-			_removeRandWalls(numWalls);
+			//_removeRandWalls(numWalls);
 		}
  
 		private function _initMaze () : void {
@@ -149,8 +149,8 @@ package
 				{
 					possibleDirections += EAST;
 				}
-				
-/*				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
+//BEGIN removal of walls				
+				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
 				{
 					if (_randInt(0, 100) < 10)
 					{
@@ -165,7 +165,8 @@ package
 						_maze[pos.x - 1][pos.y] = 0;
 					}
 				}
-*/				
+	
+//END removal of walls
 				//creates an array with dead-ends.
 				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
 				{
