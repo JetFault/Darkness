@@ -13,21 +13,27 @@ package
 		[Embed(source = "../bin/data/Crackle_W_Low_Rumble_8_seconds.mp3")] protected var RumbleSound:Class;
 		[Embed(source = "../bin/data/Bright_Airy_Zap_W_Midrange_Short_Decay_6_seconds.mp3")] protected var CrashSound:Class;
 		
+		
+		
+		
+		//Darkness
 		private var darkness:FlxSprite;
-		private var looptime:Number = 15;
+		//For periodic loop lightning
 		private var looptimer:Number = 0;
-		private var flashduration:Number = .25;
+		
+		
+		//for drawing the darkness
 		private var flashtimer:Number = 0;
 		private var flashing:Boolean = false;
-		private var crashtime:Number = .01;
+		
 		private var soundplayed:Boolean = true;
 		private var played:Boolean = false;
-		private var rumbletime:Number = 1.5;
+		
 		private var rumbleflxsound:FlxSound;
 		private var crashflxsound:FlxSound;
 		private var player:Player;
 		private var enemy:Enemy;
-		private var soundthreshold:Number = 100;
+		
 		private var soundtimer:Number = 0;
 		private var distance:Number = 0;
 		
@@ -48,12 +54,12 @@ package
 				if (flashing) {
 					flashtimer += FlxG.elapsed;
 					soundtimer += FlxG.elapsed;
-					if (flashtimer > flashduration) {
+					if (flashtimer > Constants.flashduration) {
 						flashing = false;
 						flashtimer = 0;
 						darkness.fill(0xff000000);
 					}else {
-						var transparency:Number = Math.floor((flashtimer) * 255/flashduration);
+						var transparency:Number = Math.floor((flashtimer) * 255/Constants.flashduration);
 						darkness.fill(transparency << 24);
 					}
 				}else {
@@ -68,8 +74,8 @@ package
 		override public function update():void {
 			looptimer += FlxG.elapsed;
 			
-			if (looptimer >=looptime) {
-				FlxG.flash(0xffffffff, flashduration);
+			if (looptimer >=Constants.looptime) {
+				FlxG.flash(0xffffffff, Constants.flashduration);
 				flashtimer = 0;
 				soundtimer = 0;
 				soundplayed = false;
@@ -84,10 +90,10 @@ package
 			}	
 			
 			if (!soundplayed) {
-				if (distance < soundthreshold && soundtimer >= crashtime) {
+				if (distance < Constants.soundthreshold && soundtimer >= Constants.crashtime) {
 					crashflxsound.play();
 					soundplayed = true;
-				}else if (distance >= soundthreshold && soundtimer >= rumbletime) {
+				}else if (distance >= Constants.soundthreshold && soundtimer >= Constants.rumbletime) {
 					rumbleflxsound.play();
 					soundplayed = true;
 				}
