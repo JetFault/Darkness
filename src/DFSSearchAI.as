@@ -36,18 +36,22 @@ package
 		}
 		
 		override public function doNextAction():void {
+			var playerPos:FlxPoint = this.player.getMidpoint();
+			var enemyPos:FlxPoint = this.self.getMidpoint();
+			var xDist:Number = playerPos.x - enemyPos.x;
+			var yDist:Number = playerPos.y - enemyPos.y;
+			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
+			
+			if (distance > 60) {
+				this.visible = false;
+				//this.searching = false;
+			}
+			
 			if (!this.visible) {
-				var playerPos:FlxPoint = this.player.getMidpoint();
-				var enemyPos:FlxPoint = this.self.getMidpoint();
-				var xDist:Number = playerPos.x - enemyPos.x;
-				var yDist:Number = playerPos.y - enemyPos.y;
-				var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
-				
 				if (distance < 60) {
 					this.visible = true;
 					this.searching = false;
 				}else {
-					
 					if (!searching) {
 						currentindex = 0;
 						closed = Utils.createDFSPath(map, depth, self);
@@ -68,7 +72,7 @@ package
 					}
 				}
 			}else {
-				var enemyPath:FlxPath = this.map.findPath(self.getMidpoint(), player.getMidpoint());
+				enemyPath = this.map.findPath(self.getMidpoint(), player.getMidpoint());
 				this.self.followPath(enemyPath, self.getEnemyRunSpeed());
 			}
 		}

@@ -12,7 +12,7 @@ package
 			super(0, 0, null);
 			super.x = x;
 			super.y = y;
-			this.enemyRunSpeed = 5;
+			this.enemyRunSpeed = 40;
 			loadEnemy();
 			this.controller = new EnemyController(this, player, level, enemyRunSpeed);
 		}

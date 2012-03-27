@@ -23,6 +23,8 @@ package
 		{
 			chaseMusic = new FlxSound();
 			chaseMusic.loadEmbedded(ChaseMusic, true);
+			chaseMusic.play();
+			chaseMusic.volume = 0;
 			this.player = player;
 			this.enemy = enemy;
 			this.exit = exit;
@@ -40,19 +42,62 @@ package
 			
 			//TODO:  Get collision detection out of here.
 			var distance:Number = Utils.getDistance(playerPos, enemyPos);
-			if (distance < 60)
-			{
-				if (!chaseMusicOn)
-				{
-					chaseMusic.fadeIn(5);
-					chaseMusicOn = true;
-				}
-			}
 			
-			if (distance > 60 && chaseMusicOn)
+			if (distance < 80 && distance > 70) {
+				chaseMusic.volume = .02;
+			}
+			if (distance < 70 && distance > 65) {
+				chaseMusic.volume = .05;
+			}
+			if (distance < 65 && distance > 60) {
+				chaseMusic.volume = .08;
+			}
+			if (distance < 60 && distance > 55) {
+				chaseMusic.volume = .10;
+			}
+			if (distance < 55 && distance > 50) {
+				chaseMusic.volume = .15;
+			}
+			if (distance < 50 && distance > 40) {
+				chaseMusic.volume = .25;
+			}
+			if (distance < 40 && distance > 30) {
+				chaseMusic.volume = .50;
+			}
+			if (distance < 30 && distance > 20) {
+				chaseMusic.volume = .85;
+			}
+			/*
+			switch(distance)
 			{
-				chaseMusic.fadeOut(3);
-				chaseMusicOn = false;
+				case 60:
+					chaseMusic.volume = .10;
+					break;
+				case 55:
+					chaseMusic.volume = .15;
+					break;
+				case 50:
+					chaseMusic.volume = .25;
+					break;
+				case 45:
+					chaseMusic.volume = .35;
+					break;
+				case 40:
+					chaseMusic.volume = .45;
+					break;
+				case 30:
+					chaseMusic.volume = .65;
+					break;
+				case 20:
+					chaseMusic.volume = 1;
+					break;
+					
+			}
+			*/
+			
+			if (distance > 80)
+			{
+				chaseMusic.volume = 0;
 			}
 			if (FlxG.overlap(player, enemy))
 			{

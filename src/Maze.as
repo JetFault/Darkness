@@ -6,6 +6,7 @@ package
 	
 	import flash.automation.ActionGenerator;
 	import flash.geom.Point;
+	import org.flixel.FlxPoint;
 	/**
 	 * Maze in tiles of walls and not walls.
 	 * @author Darkness
@@ -29,6 +30,8 @@ package
 		private var _finish		: Point;
 		
 		private var _exit       : Point;
+
+		private var deadEnds:Array;
 		
 		/**
 		 * Create a maze
@@ -75,7 +78,11 @@ package
 				}
 			}
 			return mazeArr;
-		}	
+		}
+		
+		public function getDeadEnds():Array {
+			return deadEnds;
+		}
 		
 		private function _generate () : void {
 			_initMaze();
@@ -110,13 +117,16 @@ package
 			var move				: int;
 			var possibleDirections	: String;
 			var pos					: Point = _start.clone();
+			var lastPossDirection:String = "";
  
 			_moves = new Array();
 			_moves.push(pos.y + (pos.x * _width));
+			
+			deadEnds = new Array();
  
 			while ( _moves.length )
 			{
-				
+				lastPossDirection = possibleDirections;
 				possibleDirections = "";
  
 				if ((pos.x + 2 < _height ) && (_maze[pos.x + 2][pos.y] == true) && (pos.x + 2 != false) && (pos.x + 2 != _height - 1) )
@@ -137,6 +147,28 @@ package
 				if ((pos.y + 2 < _width ) && (_maze[pos.x][pos.y + 2] == true) && (pos.y + 2 != false) && (pos.y + 2 != _width - 1) )
 				{
 					possibleDirections += EAST;
+				}
+				
+/*				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
+				{
+					if (_randInt(0, 100) < 10)
+					{
+						_maze[pos.x][pos.y + 1] = 0;
+					}
+				}
+				
+				if ((pos.x -2 >= 0) && (_maze[pos.x - 2][pos.y] == false))
+				{
+					if (_randInt(0, 100) < 10)
+					{
+						_maze[pos.x - 1][pos.y] = 0;
+					}
+				}
+*/				
+				//creates an array with dead-ends.
+				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
+				{
+					deadEnds.push(new FlxPoint(pos.x,pos.y));
 				}
 				
  

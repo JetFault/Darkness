@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	/**
 	 * ...
@@ -13,6 +14,17 @@ package
 			var xDist:Number = p1.x - p2.x;
 			var yDist:Number = p1.y - p2.y;
 			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
+			return distance;
+		}
+		
+		//not sure this works properly
+		public static function getPathDistance(path:FlxPath):Number
+		{
+			var distance:Number = 0;
+			for (var i:int = 0; i++; i < path.nodes.length-1)
+			{
+				distance += getDistance(path.nodes[i], path.nodes[i + 1]);
+			}
 			return distance;
 		}
 		

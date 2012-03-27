@@ -33,11 +33,13 @@ package
 			//enemy.followPath(enemyPath, enemy.getEnemyRunSpeed());
 			
 			runTimer += FlxG.elapsed;
+			/*
 			if (runTimer > 3 && enemy.getEnemyRunSpeed() < maxRunSpeed)
 			{
 				enemy.incrementEnemyRunSpeed(enemy.getEnemyRunSpeed()*.2);
 				runTimer = 0;
 			}
+			*/
 			
 			/*var velocityp:FlxPoint = new FlxPoint(enemy.velocity.x, enemy.velocity.y);
 			var origin:FlxPoint = new FlxPoint(0, 0);

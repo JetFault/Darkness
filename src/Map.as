@@ -13,6 +13,7 @@ package
 		[Embed(source = "../bin/data/autotiles.png")] public var BigTiles:Class;
 		
 		public var maze:Maze;
+		public var deadEnds:Array;
 		
 		/**
 		 * Create a map.
@@ -24,7 +25,9 @@ package
 			if(random) {
 				maze = new Maze(width, height);
 				var levelArray:Array = maze.to1DArray();
-				
+
+				deadEnds = maze.getDeadEnds();
+
 				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
 			}
 			else {
