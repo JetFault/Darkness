@@ -42,7 +42,7 @@ package
 		
 		override public function create():void
 		{
-			controllers = new GameControllers();
+
 			
 			/*chaseMusic = new FlxSound();
 			chaseMusic.loadEmbedded(ChaseMusic, true);
@@ -52,7 +52,7 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			level = new Map(15,15,true);
+			level = new Map(18,14,true);
 			//level = new Map(0, 0, false);
 			
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
@@ -60,9 +60,9 @@ package
 			
 			enemies = new FlxGroup();
 			var enemyStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getEndTile());
-			spawnEnemy(enemyStart.x, enemyStart.y);
+			//spawnEnemy(enemyStart.x, enemyStart.y);
 
-		//	spawnEnemy(level.deadEnds[level.deadEnds.length - 2].y * 24, level.deadEnds[level.deadEnds.length - 2].x * 24);
+			spawnEnemy(level.deadEnds[level.deadEnds.length - 2].y * 24, level.deadEnds[level.deadEnds.length - 2].x * 24);
 			
 			loadDarkness();
 			loadLights();
@@ -77,6 +77,8 @@ package
 			//enemyTwo = new Enemy(14, 210);
 			//add(enemyTwo);
 			
+			
+			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
 
 			add(controllers);

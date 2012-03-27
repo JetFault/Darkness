@@ -30,7 +30,6 @@ package
 		
 		
 		public static function tileToMidpoint(map:Map, x:Number, y:Number):FlxPoint {
-			
 			if (x < 0 || y < 0 || x >= map.widthInTiles || y > map.heightInTiles) {
 				return new FlxPoint( -1, -1);
 			}
@@ -38,7 +37,7 @@ package
 			var tilewidth:Number = map.getTileWidth();
 			var tileheight:Number = map.getTileHeight();
 			
-			return new FlxPoint(tilewidth * x + tilewidth / 2 - 1, tileheight * y + tileheight / 2 - 1);
+			return new FlxPoint( (tilewidth * x) + tilewidth / 2 - 1, tileheight * y + tileheight / 2 - 1);
 		}
 		
 		public static function tilePtToMidpoint(map:Map, flxPoint:FlxPoint):FlxPoint {
@@ -106,7 +105,6 @@ package
 						p3[1] = node[1] + dy;
 						p3[2] = node[2] + 1;
 						
-						trace(map.getTile(p3[0], p3[1]));
 						//If not empty point in maze, skip
 						if (map.getTile(p3[0], p3[1]) != 0 ) {
 							continue;

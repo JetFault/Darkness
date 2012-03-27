@@ -6,6 +6,7 @@ package
 	
 	import flash.automation.ActionGenerator;
 	import flash.geom.Point;
+	import flash.sampler.NewObjectSample;
 	import org.flixel.FlxPoint;
 	/**
 	 * Maze in tiles of walls and not walls.
@@ -26,10 +27,8 @@ package
 		private var _maze		: Array;
 		private var _moves		: Array;
 		
-		private var _start		: Point;
-		private var _finish		: Point;
-		
-		private var _exit       : Point;
+		private var _start		: FlxPoint;
+		private var _finish		: FlxPoint;
 
 		private var deadEnds:Array;
 		
@@ -57,11 +56,13 @@ package
 			return this._maze;
 		}
 		
-		public function getStartTile():Point {
+		public function getStartTile():FlxPoint {
+			trace("maze", this._start.x, this._start.y);
 			return this._start;
 		}
 		
-		public function getFinishTile():Point {
+		public function getFinishTile():FlxPoint {
+			trace("maze", this._finish.x, this._finish.y);
 			return this._finish;
 		}
 		
@@ -94,8 +95,8 @@ package
  
 		private function _initMaze () : void {
 			
-			_start = new Point(1, 1);
-			_finish = new Point(_height - 2, _width - 2);
+			_start = new FlxPoint(1, 1);
+			_finish = new FlxPoint(_width - 2, _height - 2);
 			
 			_maze	= new Array(_width);
 			
@@ -116,7 +117,7 @@ package
 			var back				: int;
 			var move				: int;
 			var possibleDirections	: String;
-			var pos					: Point = _start.clone();
+			var pos					: FlxPoint = new FlxPoint(_start.x, _start.y);
 			var lastPossDirection:String = "";
  
 			_moves = new Array();

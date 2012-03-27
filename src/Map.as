@@ -48,11 +48,13 @@ package
 		}
 		
 		/**
-		 * Get tile width in pixels
+		 * Get tile width in pixels. This returns width
+		 * of all tiles in pack, not just one.
+		 * TODO: Look this up
 		 * @return
 		 */
 		public function getTileWidth():uint {
-			return this._tiles.width;
+			return this._tiles.height;
 		}
 		
 		/**
@@ -60,9 +62,7 @@ package
 		 * @return
 		 */
 		public function getStartTile():FlxPoint {
-			var flxpoint:FlxPoint = new FlxPoint(0, 0);	
-			flxpoint.copyFromFlash(this.maze.getStartTile());
-			return flxpoint;
+			return this.maze.getStartTile();
 		}
 		
 		/**
@@ -70,9 +70,7 @@ package
 		 * @return
 		 */
 		public function getEndTile():FlxPoint {
-			var flxpoint:FlxPoint = new FlxPoint(0, 0);	
-			flxpoint.copyFromFlash(this.maze.getFinishTile());
-			return flxpoint;
+			return this.maze.getFinishTile();
 		}
 		
 		private function loadLevelData():void
