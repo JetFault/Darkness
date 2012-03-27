@@ -1,10 +1,13 @@
 package  
 {
+	/* Algorithm from:
+	 * http://www.emanueleferonato.com/2008/12/08/perfect-maze-generation-tile-based-version-as3/
+	 */
+	
+	import flash.automation.ActionGenerator;
 	import flash.geom.Point;
 	/**
-	 * Algorithm from:
-	 * http://www.emanueleferonato.com/2008/12/08/perfect-maze-generation-tile-based-version-as3/
-	 *
+	 * Maze in tiles of walls and not walls.
 	 * @author Darkness
 	 */
 	public class Maze 
@@ -27,6 +30,11 @@ package
 		
 		private var _exit       : Point;
 		
+		/**
+		 * Create a maze
+		 * @param	width In number of tiles
+		 * @param	height In number of tiles
+		 */
 		public function Maze(width:uint, height:uint) {
 			this._width = width;
 			this._height = height;
@@ -42,7 +50,23 @@ package
 			return _width;
 		}
 		
-		public function toArray():Array {
+		public function getMazeArray():Array {
+			return this._maze;
+		}
+		
+		public function getStartTile():Point {
+			return this._start;
+		}
+		
+		public function getFinishTile():Point {
+			return this._finish;
+		}
+		
+		/**
+		 * Return the 1-D array representation of the maze
+		 * @return 1-D Array representation of the maze
+		 */
+		public function to1DArray():Array {
 			var mazeArr:Array = new Array();
 		
 			for (var i:uint = 0; i < getHeight(); i++) {
@@ -53,30 +77,18 @@ package
 			return mazeArr;
 		}	
 		
-		public function mazePointToPixel(x:uint, y:uint):Array {
-			var pixels:Array = new Array();
-			pixels[0] = x * getTileSize();
-			pixels[1] = y * getTileSize();
-			return pixels;
-		}
-		
-		public function getTileSize() : int {
-			
-			return 0;
-			
-		}
-		
 		private function _generate () : void {
 			_initMaze();
 			_createMaze();
-			var factor:int = 3;
-			var numWalls:uint = (_height - 2) * (_width - 2) * factor / 64;
-			_removeRandWalls(70);
+			var factor:Number = 0.18;
+			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
+			_removeRandWalls(numWalls);
 		}
  
 		private function _initMaze () : void {
 			
 			_start = new Point(1, 1);
+			_finish = new Point(_height - 2, _width - 2);
 			
 			_maze	= new Array(_width);
 			
