@@ -83,7 +83,7 @@ package
 
 			add(controllers);
 			//TODO:  Have a controller?
-			controllers.add(player.getController());
+			//controllers.add(player.getController());
 			controllers.add(enemy.getController());
 			controllers.add(light.getController());
 			//controllers.add(flashlight.getController());
