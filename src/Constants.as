@@ -20,7 +20,7 @@ package
 		public static var soundthreshold:Number = 100;
 		
 		
-		public static var flashfunction:Function = Utils.stepfunction;
+		public static var flashfunction:Function = Utils.sampleradial;
 		
 	}
 

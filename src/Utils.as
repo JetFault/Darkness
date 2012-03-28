@@ -171,6 +171,54 @@ package
 			
 			return uint(intensity * 0xff);
 		}
+		
+		/**
+		 * 
+		 * @param	x
+		 * @return sample from N(x,1)*255, clamped to [0x00,0xff]
+		 */
+		public static var thesum:Number = 0;
+		public static var count = 0;
+		public static function samplenormal(x:Number):uint {
+				/*var sample:Number = Math.sqrt( -2 * Math.log(Math.random()) / Math.E) * Math.cos(2 * Math.PI * Math.random());
+				thesum += sample;
+				*/
+				
+				var x:Number = 0;
+				var y:Number = 0;
+				var rds:Number;
+				var c:Number;
+								
+				do{
+				x = Math.random()*2-1;
+				y = Math.random()*2-1;
+				rds = x*x + y*y;
+	
+				}while (rds == 0 || rds > 1);
+				
+				c = Math.sqrt(-2*Math.log(rds)/Math.log(Math.E)*1/rds);
+				var sample:Number = c * x;
+				thesum += sample;
+				sample /= (10*Math.min(x,0.5));
+				sample += (1 - x);
+				//trace(uint(Math.min(0xff, Math.max(0, sample*0xff))));
+				count++;
+				trace(thesum / count);
+				return uint(Math.min(0xff, Math.max(0, sample*0xff)));
+		}
+		
+		public static function sampleradial(x:Number):uint {
+			var sample:Number = Math.random();
+			var beta:Number = 10*(1-x);
+			sample = beta * ((sample- .5) * (sample-.5));
+			var conditionalsample = Math.random();
+			conditionalsample = beta * ((conditionalsample- .5) * (conditionalsample-.5));
+			if(conditionalsample >=0.6){
+				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
+			}else {
+				return 0x00;
+			}
+		}
 	}
 
 }
