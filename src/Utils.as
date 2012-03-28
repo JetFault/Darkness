@@ -209,10 +209,10 @@ package
 		
 		public static function sampleradial(x:Number):uint {
 			var sample:Number = Math.random();
-			var beta:Number = 10*(1-x);
-			sample = beta * ((sample- .5) * (sample-.5));
+			var beta:Number = 55*x;
+			sample = Math.exp(-beta * ((sample- .5) * (sample-.5)));
 			var conditionalsample = Math.random();
-			conditionalsample = beta * ((conditionalsample- .5) * (conditionalsample-.5));
+			conditionalsample = Math.exp(-beta * ((conditionalsample- .5) * (conditionalsample-.5)));
 			if(conditionalsample >=0.6){
 				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
 			}else {
