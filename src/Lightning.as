@@ -13,10 +13,7 @@ package
 	{
 		[Embed(source = "../bin/data/Crackle_W_Low_Rumble_8_seconds.mp3")] protected var RumbleSound:Class;
 		[Embed(source = "../bin/data/Bright_Airy_Zap_W_Midrange_Short_Decay_6_seconds.mp3")] protected var CrashSound:Class;
-		
-		
-		
-		
+				
 		//Darkness
 		private var darkness:FlxSprite;
 		//For periodic loop lightning
@@ -62,8 +59,8 @@ package
 						flashtimer = 0;
 						darkness.fill(0xff000000);
 					}else {
-						var transparency:Number = Math.floor((flashtimer) * 255/Constants.flashduration);
-						darkness.fill(transparency << 24);
+						//
+						this.drawFlash();
 					}
 				}else {
 					darkness.fill(0xff000000);
@@ -78,7 +75,7 @@ package
 			looptimer += FlxG.elapsed;
 			
 			if (looptimer >=Constants.looptime) {
-				FlxG.flash(0xffffffff, Constants.flashduration);
+				//FlxG.flash(0xffffffff, Constants.flashduration);
 				flashtimer = 0;
 				soundtimer = 0;
 				soundplayed = false;
@@ -103,6 +100,19 @@ package
 			}
 		}
 		
+		/**
+		 * Assumes flashtimer < flashduration
+		 */
+		private var framecount:Number = 0;
+		private function drawFlash():void {
+			framecount++;
+			trace(framecount);
+			var cameratransparency:Number = Constants.flashfunction(flashtimer / Constants.flashduration);
+			var darknesstransparency:Number = 0xff - cameratransparency; //Constants.flashfunction(flashtimer / Constants.flashduration)
+			//darkness.fill(0xff000000);
+			darkness.fill(darknesstransparency << 24); 
+			this.camera.fill(0x00ffffff + (cameratransparency<<24));
+		}
 	}
 
 }

@@ -132,11 +132,44 @@ package
 		}
 		
 		/**
-		 * returns (1-x)^2
-		 * @param	var x
+		 * returns (1-x)^2*0xff
+		 * @param	var x [0,1]
+		 * @return [0x00,0xff]
 		 */
-		public static function oneminusxsq(x:Number):Number{
-			return (1 - x) * (1 - x);
+		public static function xsqtimesff(x:Number):uint {
+			return uint((1-x)*(1-x)*0xff);
+		}
+		
+		/**
+		 * 
+		 * @param	var x [0,1]
+		 * @return [0x00,0xff]
+		 */
+		public static function floorxtimesff(x:Number):uint {
+			return uint(Math.floor(((1-x)*0xff)));
+		}
+		
+		/**
+		 * 
+		 * @param	var x [0,1]
+		 * @return
+		 */
+		public static function stepfunction(x:Number):uint {
+			var intensity:Number = 0;
+			
+			if (x <= .1) {
+				intensity = .9;
+			}else if (x <=.2) {
+				intensity = .9 + (.4 - .9) * ((x - .1) * 10);
+			}else if (x <= .25) {
+				intensity = .4 + (.75 - .4) * ((x - .2) * 20);
+			}else if (x <= .35) {
+				intensity = .75 + (.1 - .75) * ((x - .25) * 10);
+			}else {
+				intensity = .1 + (0 - .1) * ((x - .35) * 100/65);
+			}
+			
+			return uint(intensity * 0xff);
 		}
 	}
 
