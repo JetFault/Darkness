@@ -106,7 +106,6 @@ package
 		private var framecount:Number = 0;
 		private function drawFlash():void {
 			framecount++;
-			trace(framecount);
 			var cameratransparency:Number = Constants.flashfunction(flashtimer / Constants.flashduration);
 			var darknesstransparency:Number = 0xff - cameratransparency; //Constants.flashfunction(flashtimer / Constants.flashduration)
 			//darkness.fill(0xff000000);
