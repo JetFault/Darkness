@@ -130,6 +130,14 @@ package
 			}
 			return closed;
 		}
+		
+		/**
+		 * returns (1-x)^2
+		 * @param	var x
+		 */
+		public static function oneminusxsq(x:Number):Number{
+			return (1 - x) * (1 - x);
+		}
 	}
 
 }

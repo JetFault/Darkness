@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxCamera;
 	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxPoint;
@@ -36,6 +37,7 @@ package
 		
 		private var soundtimer:Number = 0;
 		private var distance:Number = 0;
+		private var camera:FlxCamera;
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
@@ -47,6 +49,7 @@ package
 			crashflxsound.loadEmbedded(CrashSound);
 			this.player = player;
 			this.enemy = enemy;
+			this.camera = FlxG.cameras[0] as FlxCamera;
 		}
 		
 		override public function draw():void {
@@ -81,7 +84,7 @@ package
 				soundplayed = false;
 				flashing = true;
 				looptimer = 0;
-				distance = getEnemyDistance(player.getMidpoint(), enemy.getMidpoint());
+				distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
 			}
 			
 			soundtimer += FlxG.elapsed;
@@ -100,13 +103,6 @@ package
 			}
 		}
 		
-		private function getEnemyDistance(playerPos:FlxPoint, enemyPos:FlxPoint):Number
-		{
-			var xDist:Number = playerPos.x - enemyPos.x;
-			var yDist:Number = playerPos.y - enemyPos.y;
-			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
-			return distance;
-		}
 	}
 
 }
