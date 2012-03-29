@@ -209,15 +209,29 @@ package
 		
 		public static function sampleradial(x:Number):uint {
 			var sample:Number = Math.random();
-			var beta:Number = 55*x;
-			sample = Math.exp(-beta * ((sample- .5) * (sample-.5)));
+			var beta:Number = 100 * x;
+			//trace(Math.sqrt(2 * Math.PI * 1 / beta));
+			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
 			var conditionalsample:Number = Math.random();
-			conditionalsample = Math.exp(-beta * ((conditionalsample- .5) * (conditionalsample-.5)));
-			if(conditionalsample >=0.6){
+			conditionalsample = Math.exp( -beta * ((conditionalsample- .5) * (conditionalsample-.5)));///Math.sqrt(2*Math.PI*1/beta);
+			
+			if (conditionalsample >= 0.) {
 				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
 			}else {
 				return 0x00;
 			}
+		}
+		
+		/**
+		 * 
+		 * @param	beta
+		 * @return
+		 */
+		public static function thresholdsampleradial(threshold:Number, beta:Number):Boolean {
+			var sample:Number = Math.random();
+			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
+			trace(sample);
+			return sample >= threshold;
 		}
 	}
 

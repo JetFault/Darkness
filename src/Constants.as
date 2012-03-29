@@ -12,7 +12,8 @@ package
 		//Will putting embedded files in here work?
 		
 		//Lightning variables
-		
+		public static var cameralightningdiff:Number = 0.2; //in [0,1].  originally 1
+		public static var lightningcolor:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
 		public static var looptime:Number = 5;
 		public static var flashduration:Number = 1.5;
 		public static var crashtime:Number = .01;
@@ -20,7 +21,12 @@ package
 		public static var soundthreshold:Number = 100;
 		public static var controlScheme:int  = 2;
 		
-		public static var flashfunction:Function = Utils.sampleradial;
+		public static var flashfunction:Function = Utils.sampleradial; //Functions in Utils.as.  Just insert function name here.  All univariate
+		public static var periodic:Boolean = true;
+		//Spotlight variables
+		public static var scalelight:Boolean = false;
+		public static var raytracelight:Boolean = false;
+		
 		
 	}
 
