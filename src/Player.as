@@ -20,12 +20,13 @@ package
 			this.y = y;
 			this.playerAlive = true;
 			loadPlayer();
-			maxVelocity.x = 40;
-			maxVelocity.y = 40;
+			maxVelocity.x = 70;
+			maxVelocity.y = 70;
 			_runspeed = 80;
-			drag.x = _runspeed * 4;
-			drag.y = _runspeed * 4;
-			this.controller = new PlayerController(this);
+			drag.x = _runspeed * 8;
+			drag.y = _runspeed * 8;
+			this.controller = new PlayerController(this, Constants.controlScheme);
+			
 		}
 		
 		private function loadPlayer():void
@@ -46,7 +47,6 @@ package
 		public function getController(): BaseController {
 			return this.controller;
 		}
-		
 	}
 
 }

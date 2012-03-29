@@ -178,7 +178,7 @@ package
 		 * @return sample from N(x,1)*255, clamped to [0x00,0xff]
 		 */
 		public static var thesum:Number = 0;
-		public static var count = 0;
+		public static var count:int = 0;
 		public static function samplenormal(x:Number):uint {
 				/*var sample:Number = Math.sqrt( -2 * Math.log(Math.random()) / Math.E) * Math.cos(2 * Math.PI * Math.random());
 				thesum += sample;
@@ -211,7 +211,7 @@ package
 			var sample:Number = Math.random();
 			var beta:Number = 55*x;
 			sample = Math.exp(-beta * ((sample- .5) * (sample-.5)));
-			var conditionalsample = Math.random();
+			var conditionalsample:Number = Math.random();
 			conditionalsample = Math.exp(-beta * ((conditionalsample- .5) * (conditionalsample-.5)));
 			if(conditionalsample >=0.6){
 				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
