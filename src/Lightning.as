@@ -59,7 +59,6 @@ package
 						flashtimer = 0;
 						darkness.fill(0xff000000);
 					}else {
-						//
 						this.drawFlash();
 					}
 				}else {
@@ -73,15 +72,16 @@ package
 		
 		override public function update():void {
 			looptimer += FlxG.elapsed;
-			
-			if (looptimer >=Constants.looptime) {
-				//FlxG.flash(0xffffffff, Constants.flashduration);
-				flashtimer = 0;
-				soundtimer = 0;
-				soundplayed = false;
-				flashing = true;
-				looptimer = 0;
-				distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
+			if(Constants.periodic){
+				if (looptimer >=Constants.looptime) {
+					//FlxG.flash(0xffffffff, Constants.flashduration);
+					flashtimer = 0;
+					soundtimer = 0;
+					soundplayed = false;
+					flashing = true;
+					looptimer = 0;
+					distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
+				}
 			}
 			
 			soundtimer += FlxG.elapsed;
@@ -103,14 +103,14 @@ package
 		/**
 		 * Assumes flashtimer < flashduration
 		 */
-		private var framecount:Number = 0;
+		//private var framecount:Number = 0;
 		private function drawFlash():void {
-			framecount++;
+			//framecount++;
 			var cameratransparency:Number = Constants.flashfunction(flashtimer / Constants.flashduration);
-			var darknesstransparency:Number = 0xff - cameratransparency; //Constants.flashfunction(flashtimer / Constants.flashduration)
+			var darknesstransparency:Number = uint(0xff - Constants.cameralightningdiff*cameratransparency); //Constants.flashfunction(flashtimer / Constants.flashduration)
 			//darkness.fill(0xff000000);
 			darkness.fill(darknesstransparency << 24); 
-			this.camera.fill(0x00ffffff + (cameratransparency<<24));
+			this.camera.fill(Constants.lightningcolor + (cameratransparency<<24));
 		}
 	}
 

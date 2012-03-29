@@ -65,7 +65,7 @@ package
 			spawnEnemy(level.deadEnds[level.deadEnds.length - 2].y * 24, level.deadEnds[level.deadEnds.length - 2].x * 24);
 			
 			loadDarkness();
-			loadLights();
+			loadLights(level);
 			add(level);
 			add(player);			
 			add(enemies);
@@ -146,9 +146,9 @@ package
 			darkness.blend = "multiply";
 		}
 		
-		private function loadLights():void
+		private function loadLights(level:Map):void
 		{
-			light = new Light(12, 12, darkness, player);
+			light = new Light(12, 12, darkness, player, level);
 			var lightSize:FlxPoint = new FlxPoint(1, 1);
 			light.scale = lightSize;
 			add(light);
