@@ -179,7 +179,7 @@ package
 		 */
 		public static var thesum:Number = 0;
 		public static var count:int = 0;
-		public static function samplenormal(x:Number):uint {
+		public static function samplenormal(time:Number):uint {
 				/*var sample:Number = Math.sqrt( -2 * Math.log(Math.random()) / Math.E) * Math.cos(2 * Math.PI * Math.random());
 				thesum += sample;
 				*/
@@ -199,8 +199,8 @@ package
 				c = Math.sqrt(-2*Math.log(rds)/Math.log(Math.E)*1/rds);
 				var sample:Number = c * x;
 				thesum += sample;
-				sample /= (10*Math.min(x,0.5));
-				sample += (1 - x);
+				sample /= (10*Math.min(time,0.5));
+				sample += (1 - time);
 				//trace(uint(Math.min(0xff, Math.max(0, sample*0xff))));
 				count++;
 				trace(thesum / count);
@@ -210,12 +210,11 @@ package
 		public static function sampleradial(x:Number):uint {
 			var sample:Number = Math.random();
 			var beta:Number = 100 * x;
-			//trace(Math.sqrt(2 * Math.PI * 1 / beta));
 			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
 			var conditionalsample:Number = Math.random();
 			conditionalsample = Math.exp( -beta * ((conditionalsample- .5) * (conditionalsample-.5)));///Math.sqrt(2*Math.PI*1/beta);
 			
-			if (conditionalsample >= 0.5) {
+			if (conditionalsample >= 0.6) {
 				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
 			}else {
 				return 0x00;
@@ -230,8 +229,79 @@ package
 		public static function thresholdsampleradial(threshold:Number, beta:Number):Boolean {
 			var sample:Number = Math.random();
 			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
-			trace(sample);
 			return sample >= threshold;
+		}
+		
+		public static function sampleradialdecrease(x:Number):uint {
+			var sample:uint = sampleradial(x);
+			if (x <= .7) {
+				return sample;
+			}else {
+				//return uint(Math.max(0, (1 - x) * 0xff));
+				return uint(Math.max(0, ((1 - x) * 0xff) +  0xff * ((sampleradial(1-x*x) / 0xff - .5) * (1 - x))));
+				//return uint(Math.max(0, sample + 0xff*((sampleradial(x)/0xff-2) * (1 - x))));
+			}
+		}
+		
+		public static function brownian(size:Number=3):Array {
+			var retarr:Array = new Array();
+			
+			var first:uint = sampleradial(0);
+			var last:uint = sampleradial(1);
+			retarr.push(first);
+			while (retarr.length < size) {
+				retarr.push(0);
+			}
+			retarr.pop();
+			retarr.push(last);
+			brownian_helper(0, size-1, retarr, 0);
+			return retarr;
+		}
+		
+		private static function brownian_helper(firstindex:uint, lastindex:uint, thearray:Array, iterationnum:Number ):void {
+			var someconstant:Number = 1;
+			if (lastindex - firstindex <= 1) {
+				return;
+			}
+			
+			var midindex:uint = (firstindex+lastindex) / 2;
+			var midval:Number = (thearray[firstindex] + thearray[lastindex]) / 2;
+			
+			thearray[midindex] = uint(Math.min(0xff,Math.max(0, midval + 0xff*samplegauss(0,(thearray.length-midindex)/thearray.length*.5*Math.pow(0.7,iterationnum)))));
+			//thearray[midindex] = uint(Math.min(0xff,Math.max(0, midval + 0xff*samplegauss(0,0.5*Math.pow(0.9,iterationnum)))));
+			
+			brownian_helper(firstindex, midindex, thearray, iterationnum + 1);
+			brownian_helper(midindex, lastindex, thearray, iterationnum + 1);
+		}
+		
+		//Private function for use with brownian
+		private static function samplegauss(mean:Number = 0,std:Number=1):Number {
+				/*var sample:Number = Math.sqrt( -2 * Math.log(Math.random()) / Math.E) * Math.cos(2 * Math.PI * Math.random());
+				thesum += sample;
+				*/
+				
+				var x:Number = 0;
+				var y:Number = 0;
+				var rds:Number;
+				var c:Number;
+								
+				do{
+				x = Math.random()*2-1;
+				y = Math.random()*2-1;
+				rds = x*x + y*y;
+	
+				}while (rds == 0 || rds > 1);
+				
+				c = Math.sqrt(-2*Math.log(rds)/Math.log(Math.E)*1/rds);
+				var sample:Number = c * y;
+				sample *= std;
+				sample += mean;
+				trace("after");
+				trace(sample);
+				//sample /= (10*Math.min(x,0.5));
+				//sample += (1 - x);
+				//trace(uint(Math.min(0xff, Math.max(0, sample*0xff))));
+				return sample;
 		}
 	}
 

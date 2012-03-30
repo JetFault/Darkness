@@ -35,6 +35,9 @@ package
 		private var soundtimer:Number = 0;
 		private var distance:Number = 0;
 		private var camera:FlxCamera;
+		private var flashbuffer:Array;
+		private var bufferfull = false;
+		private var buffersize:uint = 33;
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
@@ -57,6 +60,7 @@ package
 					if (flashtimer > Constants.flashduration) {
 						flashing = false;
 						flashtimer = 0;
+						bufferfull = false;
 						darkness.fill(0xff000000);
 					}else {
 						this.drawFlash();
@@ -80,6 +84,7 @@ package
 					soundplayed = false;
 					flashing = true;
 					looptimer = 0;
+					bufferfull = false;
 					distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
 				}
 			}
@@ -106,7 +111,16 @@ package
 		//private var framecount:Number = 0;
 		private function drawFlash():void {
 			//framecount++;
-			var cameratransparency:Number = Constants.flashfunction(flashtimer / Constants.flashduration);
+			var cameratransparency:Number = 0;
+			if (Constants.functiontype == "batch") {
+				if (!bufferfull) {
+					flashbuffer = Utils.brownian(buffersize);
+					bufferfull = true;
+				}
+				cameratransparency = flashbuffer[uint(Math.floor(flashtimer / Constants.flashduration * flashbuffer.length))];
+			}else if (Constants.functiontype == "sequential") {
+				cameratransparency = Constants.flashfunctionsequential(flashtimer / Constants.flashduration);
+			}
 			var darknesstransparency:Number = uint(0xff - Constants.cameralightningdiff*cameratransparency); //Constants.flashfunction(flashtimer / Constants.flashduration)
 			//darkness.fill(0xff000000);
 			darkness.fill(darknesstransparency << 24); 
