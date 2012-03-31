@@ -4,6 +4,7 @@ package
 	 * ...
 	 * @author Elliot
 	 */
+	import flash.sampler.NewObjectSample;
 	import org.flixel.*;
 	
 	public class Light extends FlxSprite
@@ -13,7 +14,8 @@ package
 		private var darkness:FlxSprite;
 		public var controller:LightController;
 		public var level:Map;
-		public var scaletimer = 0;
+		public var scaletimer:Number = 0;
+		public var lastchord:FlxPoint;
 		
 		public function Light(x:Number, y:Number, darkness:FlxSprite, player:Player, level:Map):void
 		{
@@ -22,6 +24,7 @@ package
 			//this.blend = "screen";
 			this.controller = new LightController(this, player);
 			this.level = level;
+			lastchord = new FlxPoint(0, 0);
 		}
 		
 		override public function draw():void

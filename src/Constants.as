@@ -14,7 +14,7 @@ package
 		//Lightning variables
 		public static var cameralightningdiff:Number = .3; //in [0,1].  originally 1
 		public static var lightningcolor:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
-		public static var looptime:Number = 5;
+		public static var looptime:Number = 15;
 		public static var flashduration:Number = 1.5;
 		public static var crashtime:Number = .01;
 		public static var rumbletime:Number = 1.5;
@@ -22,7 +22,9 @@ package
 		public static var functiontype:String = "sequential"; //From ["batch", "sequential"]  Former generates array, latter generates samples on fly
 		public static var flashfunctionsequential:Function = Utils.stepwithgauss; //Functions in Utils.as.  Just insert function name here.  All univariate
 		public static var flashfunctionbatch:Function = Utils.brownian;
-		public static var periodic:Boolean = true;
+		public static var periodic:Boolean = false;
+		public static var crashduration:Number = 6;
+		public static var rumbleduration:Number = 8;
 		//Player variables
 		public static var controlScheme:int  = 2;
 		

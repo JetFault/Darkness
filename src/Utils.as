@@ -227,6 +227,17 @@ package
 		}
 		
 		/**
+		 * Get value [0,1] from radial with maximum @ 0.
+		 * @param	x
+		 * @return
+		 */
+		public static function sampleradial(beta:Number):Number {
+			var sample:Number = Math.random();
+			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));
+			return sample;
+		}
+		
+		/**
 		 * No idea...
 		 * @param	x
 		 * @return
@@ -312,8 +323,7 @@ package
 			
 			var first:uint = uint(Math.min(0xff, 0xdf + samplegauss(0,1)));
 			var last:uint = uint(Math.max(0, 0 + samplegauss(0, 1)));
-			trace(first);
-			trace(last);
+
 			retarr.push(first);
 			while (retarr.length < size) {
 				retarr.push(0);
@@ -321,7 +331,6 @@ package
 			retarr.pop();
 			retarr.push(last);
 			brownian_helper(0, size-1, retarr, 0);
-			trace(retarr);
 			return retarr;
 		}
 		
@@ -346,6 +355,18 @@ package
 			
 			brownian_helper(firstindex, midindex, thearray, iterationnum + 1);
 			brownian_helper(midindex, lastindex, thearray, iterationnum + 1);
+		}
+		
+		public static function inverseeuclidean(p1:FlxPoint, p2:FlxPoint, coefficient:Number):Number {
+			return coefficient / Utils.getDistance(p1, p2);
+		}
+		
+		public static function sign(x:Number):Number {
+			if (x > 0)
+				return 1;
+			if (x < 0)
+				return -1;
+			return 0;
 		}
 	}
 

@@ -18,6 +18,7 @@ package
 		private var darkness:FlxSprite;
 		//For periodic loop lightning
 		private var looptimer:Number = 0;
+		private var flashcount:Number = 0;  //How many times has this flashed
 		
 		
 		//for drawing the darkness
@@ -25,7 +26,7 @@ package
 		private var flashing:Boolean = false;
 		
 		private var soundplayed:Boolean = true;
-		private var played:Boolean = false;
+		private var soundplayedtimer:Number = 0;
 		
 		private var rumbleflxsound:FlxSound;
 		private var crashflxsound:FlxSound;
@@ -36,8 +37,11 @@ package
 		private var distance:Number = 0;
 		private var camera:FlxCamera;
 		private var flashbuffer:Array;
-		private var bufferfull = false;
+		private var bufferfull:Boolean = false;
 		private var buffersize:uint = 33;
+		
+		private var howoften:uint = 0;
+		private var soundcutofftime:Number = 8; //Minimum amount of time until next flash
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
@@ -55,12 +59,7 @@ package
 		override public function draw():void {
 			if (darkness != null) {
 				if (flashing) {
-					flashtimer += FlxG.elapsed;
-					soundtimer += FlxG.elapsed;
 					if (flashtimer > Constants.flashduration) {
-						flashing = false;
-						flashtimer = 0;
-						bufferfull = false;
 						darkness.fill((0xff<<24) + Constants.darknesscolor);
 					}else {
 						this.drawFlash();
@@ -68,38 +67,45 @@ package
 				}else {
 					darkness.fill((0xff<<24) + Constants.darknesscolor);
 				}				
-				//ROFL uncomment 2 lines below and comment surrounding lines in this function for neat effect
-				//darkness.alpha = 1;
-				//darkness.draw();
 			}
 		}
 		
 		override public function update():void {
+			howoften += FlxG.elapsed;
 			looptimer += FlxG.elapsed;
-			if(Constants.periodic){
-				if (looptimer >=Constants.looptime) {
-					//FlxG.flash(0xffffffff, Constants.flashduration);
-					flashtimer = 0;
-					soundtimer = 0;
-					soundplayed = false;
-					flashing = true;
-					looptimer = 0;
-					bufferfull = false;
-					distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
-				}
-			}
-			
 			soundtimer += FlxG.elapsed;
+			soundplayedtimer += FlxG.elapsed;
 			if (flashing) {
 				flashtimer += FlxG.elapsed;
 			}	
 			
+			if(flashtimer >=Constants.flashduration && soundplayedtimer >=soundcutofftime + Math.max(Constants.rumbletime, Constants.crashtime)){
+				flashing = false;
+				bufferfull = false;
+			}
+			
+			if(Constants.periodic){
+				if (looptimer >=Constants.looptime) {
+					startFlashing();
+				}
+			}else {
+				if (!flashing) {
+					if (shouldflash("enemyeuclidean")) {
+						startFlashing();
+					}
+				}
+			}
+			
+			
+			
 			if (!soundplayed) {
 				if (distance < Constants.soundthreshold && soundtimer >= Constants.crashtime) {
 					crashflxsound.play();
+					soundcutofftime = Constants.crashduration;
 					soundplayed = true;
 				}else if (distance >= Constants.soundthreshold && soundtimer >= Constants.rumbletime) {
 					rumbleflxsound.play();
+					soundcutofftime = Constants.rumbleduration;
 					soundplayed = true;
 				}
 			}
@@ -108,9 +114,7 @@ package
 		/**
 		 * Assumes flashtimer < flashduration
 		 */
-		//private var framecount:Number = 0;
 		private function drawFlash():void {
-			//framecount++;
 			var cameratransparency:Number = 0;
 			if (Constants.functiontype == "batch") {
 				if (!bufferfull) {
@@ -122,9 +126,33 @@ package
 				cameratransparency = Constants.flashfunctionsequential(flashtimer / Constants.flashduration);
 			}
 			var darknesstransparency:Number = uint(0xff - Constants.cameralightningdiff*cameratransparency); //Constants.flashfunction(flashtimer / Constants.flashduration)
-			//darkness.fill(0xff000000);
 			darkness.fill((darknesstransparency << 24) + Constants.darknesscolor); 
 			this.camera.fill(Constants.lightningcolor + (cameratransparency<<24));
+		}
+		
+		private function startFlashing():void {
+			flashtimer = 0;
+			soundtimer = 0;
+			soundplayed = false;
+			flashing = true;
+			looptimer = 0;
+			bufferfull = false;
+			soundplayedtimer = 0;
+			distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
+			flashcount++;
+		}
+		
+		private function shouldflash(criteria:String):Boolean {
+			if (criteria == "enemyeuclidean") {
+				var c:Number = Math.random();
+				//trace(Utils.inverseeuclidean(player.getMidpoint(), enemy.getMidpoint(), .5));
+				return c <= Utils.inverseeuclidean(player.getMidpoint(), enemy.getMidpoint(), .5);
+			}else if (criteria == "flashcount") {
+				var s:Number = Utils.sampleradial(Math.pow(50, flashcount));
+				//trace(s);
+				return s >= .9;
+			}
+			return false;
 		}
 	}
 
