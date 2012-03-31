@@ -61,12 +61,12 @@ package
 						flashing = false;
 						flashtimer = 0;
 						bufferfull = false;
-						darkness.fill(0xff000000);
+						darkness.fill((0xff<<24) + Constants.darknesscolor);
 					}else {
 						this.drawFlash();
 					}
 				}else {
-					darkness.fill(0xff000000);
+					darkness.fill((0xff<<24) + Constants.darknesscolor);
 				}				
 				//ROFL uncomment 2 lines below and comment surrounding lines in this function for neat effect
 				//darkness.alpha = 1;
@@ -123,7 +123,7 @@ package
 			}
 			var darknesstransparency:Number = uint(0xff - Constants.cameralightningdiff*cameratransparency); //Constants.flashfunction(flashtimer / Constants.flashduration)
 			//darkness.fill(0xff000000);
-			darkness.fill(darknesstransparency << 24); 
+			darkness.fill((darknesstransparency << 24) + Constants.darknesscolor); 
 			this.camera.fill(Constants.lightningcolor + (cameratransparency<<24));
 		}
 	}

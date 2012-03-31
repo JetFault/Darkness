@@ -19,8 +19,8 @@ package
 		public static var crashtime:Number = .01;
 		public static var rumbletime:Number = 1.5;
 		public static var soundthreshold:Number = 100;
-		public static var functiontype:String = "batch"; //From ["batch", "sequential"]  Former generates array, latter generates samples on fly
-		public static var flashfunctionsequential:Function = Utils.sampleradialdecrease; //Functions in Utils.as.  Just insert function name here.  All univariate
+		public static var functiontype:String = "sequential"; //From ["batch", "sequential"]  Former generates array, latter generates samples on fly
+		public static var flashfunctionsequential:Function = Utils.stepwithgauss; //Functions in Utils.as.  Just insert function name here.  All univariate
 		public static var flashfunctionbatch:Function = Utils.brownian;
 		public static var periodic:Boolean = true;
 		//Player variables
@@ -30,6 +30,9 @@ package
 		//Spotlight variables
 		public static var scalelight:Boolean = false;
 		public static var raytracelight:Boolean = false;
+		
+		//Darkness variables
+		public static var darknesscolor:uint = 0x00000000;
 		
 		
 	}

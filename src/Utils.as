@@ -28,7 +28,9 @@ package
 			return distance;
 		}
 		
-		
+		/**
+		 * Tile-to-pixel (and vice versa) functions below
+		 */
 		public static function tileToMidpoint(map:Map, x:Number, y:Number):FlxPoint {
 			if (x < 0 || y < 0 || x >= map.widthInTiles || y > map.heightInTiles) {
 				return new FlxPoint( -1, -1);
@@ -51,14 +53,23 @@ package
 			//var tileheight:Number = map.getTileHeight();
 			var tilewidth:Number = map.getTileWidthInPixels();
 			var tileheight:Number = map.getTileHeightInPixels();
-
 			if (point.x < 0 || point.y < 0 || point.x>= map.widthInTiles*tilewidth|| point.y > map.heightInTiles*tileheight) {
 				return new FlxPoint(-1,-1);
 			}
-			
 			return new FlxPoint(Math.floor(point.x / tilewidth), Math.floor(point.y / tileheight));
 		}
 		
+		
+		/**
+		 * Begin AI Path functions
+		 */
+		/**
+		 * 
+		 * @param	map
+		 * @param	depth
+		 * @param	enemy
+		 * @return
+		 */
 		public static function createDFSPath(map:Map, depth:Number, enemy:Enemy):Array {
 			
 			//Initialization
@@ -131,6 +142,11 @@ package
 			return closed;
 		}
 		
+		
+		
+		/**
+		 * Sequential lightning functions below
+		 */
 		/**
 		 * returns (1-x)^2*0xff
 		 * @param	var x [0,1]
@@ -141,7 +157,7 @@ package
 		}
 		
 		/**
-		 * 
+		 * "linearly interpolates" from 255 to 0
 		 * @param	var x [0,1]
 		 * @return [0x00,0xff]
 		 */
@@ -150,21 +166,21 @@ package
 		}
 		
 		/**
-		 * 
+		 * Approximation of a mixture of 2 gaussian-like functions
+		 * Large maximum in beginning, smaller maximum later, slow degrade at end.
 		 * @param	var x [0,1]
 		 * @return
 		 */
 		public static function stepfunction(x:Number):uint {
 			var intensity:Number = 0;
-			
 			if (x <= .1) {
 				intensity = .9;
 			}else if (x <=.2) {
 				intensity = .9 + (.4 - .9) * ((x - .1) * 10);
 			}else if (x <= .25) {
-				intensity = .4 + (.75 - .4) * ((x - .2) * 20);
+				intensity = .4 + (.6 - .4) * ((x - .2) * 20);
 			}else if (x <= .35) {
-				intensity = .75 + (.1 - .75) * ((x - .25) * 10);
+				intensity = .6 + (.1 - .6) * ((x - .25) * 10);
 			}else {
 				intensity = .1 + (0 - .1) * ((x - .35) * 100/65);
 			}
@@ -173,48 +189,26 @@ package
 		}
 		
 		/**
-		 * 
+		 * Sample from normal distribution with shrinking standard deviation and decreasing mean.
+		 * Linearly shrinks over time [0,1]
 		 * @param	x
 		 * @return sample from N(x,1)*255, clamped to [0x00,0xff]
 		 */
-		public static var thesum:Number = 0;
-		public static var count:int = 0;
-		public static function samplenormal(time:Number):uint {
-				/*var sample:Number = Math.sqrt( -2 * Math.log(Math.random()) / Math.E) * Math.cos(2 * Math.PI * Math.random());
-				thesum += sample;
-				*/
-				
-				var x:Number = 0;
-				var y:Number = 0;
-				var rds:Number;
-				var c:Number;
-								
-				do{
-				x = Math.random()*2-1;
-				y = Math.random()*2-1;
-				rds = x*x + y*y;
-	
-				}while (rds == 0 || rds > 1);
-				
-				c = Math.sqrt(-2*Math.log(rds)/Math.log(Math.E)*1/rds);
-				var sample:Number = c * x;
-				thesum += sample;
-				sample /= (10*Math.min(time,0.5));
-				sample += (1 - time);
-				//trace(uint(Math.min(0xff, Math.max(0, sample*0xff))));
-				count++;
-				trace(thesum / count);
-				return uint(Math.min(0xff, Math.max(0, sample*0xff)));
+		public static function sampleshiftingnormal(time:Number):uint {		
+				return uint(Math.min(0xff, Math.max(0, samplegauss(1-time,1/(10*Math.min(time,0.5)))*0xff)))
 		}
 		
-		public static function sampleradial(x:Number):uint {
+		/**
+		 * Sample from an RBF whose radius decreases over time [0,1].  Return sample with a probability.  Otherwise return 0
+		 * @param	x
+		 * @return
+		 */
+		public static function sampleshrinkingradial(x:Number):uint {
 			var sample:Number = Math.random();
 			var beta:Number = 100 * x;
 			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
-			var conditionalsample:Number = Math.random();
-			conditionalsample = Math.exp( -beta * ((conditionalsample- .5) * (conditionalsample-.5)));///Math.sqrt(2*Math.PI*1/beta);
 			
-			if (conditionalsample >= 0.6) {
+			if (thresholdshrinkingradial(0.6,beta)) {
 				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
 			}else {
 				return 0x00;
@@ -222,63 +216,43 @@ package
 		}
 		
 		/**
-		 * 
+		 * Sample from an RBF with given radius and return whether result is over given threshold.
 		 * @param	beta
 		 * @return
 		 */
-		public static function thresholdsampleradial(threshold:Number, beta:Number):Boolean {
+		public static function thresholdshrinkingradial(threshold:Number, beta:Number):Boolean {
 			var sample:Number = Math.random();
 			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
 			return sample >= threshold;
 		}
 		
-		public static function sampleradialdecrease(x:Number):uint {
-			var sample:uint = sampleradial(x);
+		/**
+		 * No idea...
+		 * @param	x
+		 * @return
+		 */
+		public static function sampleradialplusdecrease(x:Number):uint {
+			var sample:uint = sampleshrinkingradial(x);
 			if (x <= .7) {
 				return sample;
 			}else {
-				//return uint(Math.max(0, (1 - x) * 0xff));
-				return uint(Math.max(0, ((1 - x) * 0xff) +  0xff * ((sampleradial(1-x*x) / 0xff - .5) * (1 - x))));
-				//return uint(Math.max(0, sample + 0xff*((sampleradial(x)/0xff-2) * (1 - x))));
+				return uint(Math.max(0, ((1 - x) * 0xff) +  0xff * ((sampleshrinkingradial(1-x*x) / 0xff - .5) * (1 - x))));
 			}
 		}
 		
-		public static function brownian(size:Number=3):Array {
-			var retarr:Array = new Array();
-			
-			var first:uint = sampleradial(0);
-			var last:uint = sampleradial(1);
-			retarr.push(first);
-			while (retarr.length < size) {
-				retarr.push(0);
-			}
-			retarr.pop();
-			retarr.push(last);
-			brownian_helper(0, size-1, retarr, 0);
-			return retarr;
-		}
 		
-		private static function brownian_helper(firstindex:uint, lastindex:uint, thearray:Array, iterationnum:Number ):void {
-			var someconstant:Number = 1;
-			if (lastindex - firstindex <= 1) {
-				return;
-			}
-			
-			var midindex:uint = (firstindex+lastindex) / 2;
-			var midval:Number = (thearray[firstindex] + thearray[lastindex]) / 2;
-			
-			thearray[midindex] = uint(Math.min(0xff,Math.max(0, midval + 0xff*samplegauss(0,(thearray.length-midindex)/thearray.length*.5*Math.pow(0.7,iterationnum)))));
-			//thearray[midindex] = uint(Math.min(0xff,Math.max(0, midval + 0xff*samplegauss(0,0.5*Math.pow(0.9,iterationnum)))));
-			
-			brownian_helper(firstindex, midindex, thearray, iterationnum + 1);
-			brownian_helper(midindex, lastindex, thearray, iterationnum + 1);
-		}
 		
-		//Private function for use with brownian
-		private static function samplegauss(mean:Number = 0,std:Number=1):Number {
-				/*var sample:Number = Math.sqrt( -2 * Math.log(Math.random()) / Math.E) * Math.cos(2 * Math.PI * Math.random());
-				thesum += sample;
-				*/
+		
+		
+		
+		/**
+		 * Sample from a gaussian with unit mean and 0 standard deviation
+		 * WARNING:  Not clamped to range[0x00,0xff]
+		 * @param	mean
+		 * @param	std
+		 * @return sample.  Not clamped to range[0x00,0xff]
+		 */
+		public static function samplegauss(mean:Number = 0,std:Number=1):Number {
 				
 				var x:Number = 0;
 				var y:Number = 0;
@@ -296,12 +270,82 @@ package
 				var sample:Number = c * y;
 				sample *= std;
 				sample += mean;
-				trace("after");
-				trace(sample);
-				//sample /= (10*Math.min(x,0.5));
-				//sample += (1 - x);
-				//trace(uint(Math.min(0xff, Math.max(0, sample*0xff))));
 				return sample;
+		}
+		
+		/**
+		 * Sample from a gaussian with 0 mean.
+		 * @param	x
+		 * @return
+		 */
+		public static function samplegausszeromean(time:Number):uint {
+			var sample:Number = samplegauss(0, 10*time);
+			sample *= (1 - time);
+			return uint(0xff*sample);
+		}
+		
+		
+		public static function radialagain(x:Number):uint {
+			return uint(2*(1-x)*sampleshrinkingradial(1 - x));
+		}
+		
+		/**
+		 * Step function with some gaussian noise.  Noise has 0 mean and .1 std
+		 * @param	x
+		 * @return
+		 */
+		public static function stepwithgauss(x:Number):uint {
+			return uint(Math.min(0xff, Math.max(0, Utils.stepfunction(x) + 0xff * Utils.samplegauss(0, .1))));
+		}
+		
+		
+		/**
+		 * Batch lightning algorithms below
+		 */
+		/**
+		 * Brownian motion with size = 2^(size)+1 for given nonnegative size.
+		 * @param	size
+		 * @return
+		 */
+		public static function brownian(size:Number=3):Array {
+			var retarr:Array = new Array();
+			
+			var first:uint = uint(Math.min(0xff, 0xdf + samplegauss(0,1)));
+			var last:uint = uint(Math.max(0, 0 + samplegauss(0, 1)));
+			trace(first);
+			trace(last);
+			retarr.push(first);
+			while (retarr.length < size) {
+				retarr.push(0);
+			}
+			retarr.pop();
+			retarr.push(last);
+			brownian_helper(0, size-1, retarr, 0);
+			trace(retarr);
+			return retarr;
+		}
+		
+		/**
+		 * Recurses through array computed through brownian motion
+		 * @param	firstindex
+		 * @param	lastindex
+		 * @param	thearray
+		 * @param	iterationnum
+		 */
+		private static function brownian_helper(firstindex:uint, lastindex:uint, thearray:Array, iterationnum:Number ):void {
+			var someconstant:Number = 1;
+			if (lastindex - firstindex <= 1) {
+				return;
+			}
+			
+			var midindex:uint = (firstindex+lastindex) / 2;
+			var midval:Number = (thearray[firstindex] + thearray[lastindex]) / 2;
+			
+			thearray[midindex] = uint(Math.min(0xff,Math.max(0, midval + 0xff*samplegauss(0,.5*Math.pow(0.5,iterationnum)))));
+			//thearray[midindex] = uint(Math.min(0xff,Math.max(0, midval + 0xff*samplegauss(0,0.5*Math.pow(0.9,iterationnum)))));
+			
+			brownian_helper(firstindex, midindex, thearray, iterationnum + 1);
+			brownian_helper(midindex, lastindex, thearray, iterationnum + 1);
 		}
 	}
 
