@@ -66,11 +66,11 @@ package
 				
 			}
 			
-			if(player.velocity.x != 0 || player.velocity.y != 0){
+			/*if(player.velocity.x != 0 || player.velocity.y != 0){
 				var velocityp:FlxPoint = new FlxPoint(player.velocity.x, player.velocity.y);
 				var origin:FlxPoint = new FlxPoint(0, 0);
 				player.angle = FlxU.getAngle(origin, velocityp);
-			}
+			}*/
 			
 			
 			/*var p1:FlxPoint = new FlxPoint(player.x, player.y);

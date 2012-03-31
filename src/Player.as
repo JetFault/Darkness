@@ -7,7 +7,7 @@ package
 	public class Player extends FlxSprite
 	{
 		//Sprite sheet
-		[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
+		//[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;
@@ -31,8 +31,8 @@ package
 		
 		private function loadPlayer():void
 		{
-			loadGraphic(ImgPlayer, true, true, 12, 9);
-			//super.makeGraphic(10, 10, 0xff007fff);
+			//loadGraphic(ImgPlayer, true, true, 12, 9);
+			super.makeGraphic(10, 10, 0xff007fff);
 		}
 		
 		public function isAlive():Boolean {
