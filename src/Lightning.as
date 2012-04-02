@@ -71,6 +71,13 @@ package
 		}
 		
 		override public function update():void {
+			if (FlxG.keys.justPressed("L")) {
+				if (Constants.darknesscolor == Constants.CLEARDARKNESSCOLOR) {
+					Constants.darknesscolor = Constants.DEFAULTDARKNESSCOLOR;
+				}else if (Constants.darknesscolor == Constants.DEFAULTDARKNESSCOLOR) {
+					Constants.darknesscolor = Constants.CLEARDARKNESSCOLOR;
+				}
+			}
 			howoften += FlxG.elapsed;
 			looptimer += FlxG.elapsed;
 			soundtimer += FlxG.elapsed;

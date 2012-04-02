@@ -35,6 +35,8 @@ package
 		
 		//Darkness variables
 		public static var darknesscolor:uint = 0x00000000;
+		public static var DEFAULTDARKNESSCOLOR:uint = 0x00000000;
+		public static var CLEARDARKNESSCOLOR:uint = 0x00ffffff;
 		
 		
 	}
