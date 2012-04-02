@@ -72,6 +72,9 @@ package
 
 			
 			loadExit();
+			
+			FlxG.camera.setBounds(0, 0, level.width, level.height);
+			FlxG.camera.follow(player);
 
 			
 			//enemyTwo = new Enemy(14, 210);

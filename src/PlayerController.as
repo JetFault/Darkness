@@ -9,6 +9,7 @@ package
 	{
 		private var player:Player;
 		private var controlScheme:int;
+		private var currentAngle:Number = 0;
 		
 		public function PlayerController(player:Player, controlScheme:int) 
 		{
@@ -17,6 +18,14 @@ package
 		}
 		
 		override public function update():void {
+			
+			if (player.velocity.y != 0 || player.velocity.x != 0)
+			{
+				var velocityp:FlxPoint = new FlxPoint(player.velocity.x, player.velocity.y);
+				var origin:FlxPoint = new FlxPoint(0, 0);
+				currentAngle = FlxU.getAngle(origin, velocityp);
+				currentAngle = Math.abs(currentAngle - 90);
+			}
 			if (controlScheme == 1)
 			{
 				player.acceleration.x = 0;
@@ -24,21 +33,22 @@ package
 				
 				if (FlxG.keys.RIGHT || FlxG.keys.D)
 				{
-					player.acceleration.x += player.drag.x;
+					player.acceleration.x = player.drag.x;
 				}
 				if (FlxG.keys.LEFT || FlxG.keys.A)
 				{
-					player.acceleration.x += -player.drag.x;
+					player.acceleration.x = -player.drag.x;
 				}
 				if (FlxG.keys.DOWN || FlxG.keys.S)
 				{
-					player.acceleration.y += player.drag.y;
+					player.acceleration.y = player.drag.y;
 				}
 				if (FlxG.keys.UP || FlxG.keys.W)
 				{
-					player.acceleration.y += -player.drag.y;
+					player.acceleration.y = -player.drag.y;
 				}
 			}
+			
 			if (controlScheme == 2)
 			{
 				player.velocity.x = 0;
@@ -61,17 +71,19 @@ package
 					player.velocity.y += -player.maxVelocity.y;
 				}
 			}
+			
 			if (controlScheme == 3)
 			{
 				
 			}
 			
-			/*if(player.velocity.x != 0 || player.velocity.y != 0){
+			/*
+			if(player.velocity.x != 0 || player.velocity.y != 0){
 				var velocityp:FlxPoint = new FlxPoint(player.velocity.x, player.velocity.y);
 				var origin:FlxPoint = new FlxPoint(0, 0);
 				player.angle = FlxU.getAngle(origin, velocityp);
-			}*/
-			
+			}
+			*/
 			
 			/*var p1:FlxPoint = new FlxPoint(player.x, player.y);
 			var p2:FlxPoint = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
