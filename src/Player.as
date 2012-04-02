@@ -20,13 +20,13 @@ package
 			this.y = y;
 			this.playerAlive = true;
 			loadPlayer();
-			maxVelocity.x = 55;
-			maxVelocity.y = 55;
+			maxVelocity.x = 52;
+			maxVelocity.y = 52;
 			_runspeed = 70;
 			drag.x = _runspeed * 2.6;
 			drag.y = _runspeed * 2.6;
 			this.controller = new PlayerController(this, Constants.controlScheme);
-			elasticity = .5;
+			elasticity = 1;
 			
 		}
 		

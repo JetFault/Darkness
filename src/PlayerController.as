@@ -52,54 +52,25 @@ package
 			
 			if (controlScheme == 2)
 			{
-				player.velocity.x = 0;
-				player.velocity.y = 0;
+				//player.velocity.x = 0;
+				//player.velocity.y = 0;
 				
-				//don't think this works properly.
+				
 				if (FlxG.keys.RIGHT || FlxG.keys.D)
 				{
-					if (player.velocity.x <= 0)
-					{
-						player.velocity.x += player.maxVelocity.x;
-					}
-					else
-					{
-						player.velocity.x = Math.cos(currentAngle) * player.maxVelocity.x;
-					}
+					player.velocity.x = player.maxVelocity.x;
 				}
 				if (FlxG.keys.LEFT || FlxG.keys.A)
 				{
-					if (player.velocity.x >= 0)
-					{
-						player.velocity.x += -player.maxVelocity.x;
-					}
-					else
-					{
-						player.velocity.x = Math.cos(currentAngle) * player.maxVelocity.x;
-					}
+					player.velocity.x = -player.maxVelocity.x;
 				}
 				if (FlxG.keys.DOWN || FlxG.keys.S)
 				{
-					if (player.velocity.y <= 0)
-					{
-						player.velocity.y += player.maxVelocity.y;
-					}
-					else
-					{
-						player.velocity.y = Math.sin(currentAngle) * player.maxVelocity.y;
-					}
-					
+					player.velocity.y = player.maxVelocity.y;
 				}
 				if (FlxG.keys.UP || FlxG.keys.W)
 				{
-					if (player.velocity.y >= 0)
-					{
-						player.velocity.y += -player.maxVelocity.y;
-					}
-					else
-					{
-						player.velocity.y = Math.sin(currentAngle) * player.maxVelocity.y;
-					}
+					player.velocity.y = -player.maxVelocity.y;
 				}
 			}
 			
