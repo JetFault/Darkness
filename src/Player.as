@@ -20,8 +20,8 @@ package
 			this.y = y;
 			this.playerAlive = true;
 			loadPlayer();
-			maxVelocity.x = 48;
-			maxVelocity.y = 48;
+			maxVelocity.x = 55;
+			maxVelocity.y = 55;
 			_runspeed = 70;
 			drag.x = _runspeed * 2.6;
 			drag.y = _runspeed * 2.6;

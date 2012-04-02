@@ -17,8 +17,8 @@ package
 			this.controlScheme = controlScheme;
 		}
 		
-		override public function update():void {
-			
+		override public function update():void 
+		{
 			if (player.velocity.y != 0 || player.velocity.x != 0)
 			{
 				var velocityp:FlxPoint = new FlxPoint(player.velocity.x, player.velocity.y);
@@ -26,6 +26,7 @@ package
 				currentAngle = FlxU.getAngle(origin, velocityp);
 				currentAngle = Math.abs(currentAngle - 90);
 			}
+			
 			if (controlScheme == 1)
 			{
 				player.acceleration.x = 0;
@@ -34,7 +35,7 @@ package
 				if (FlxG.keys.RIGHT || FlxG.keys.D)
 				{
 					player.acceleration.x = player.drag.x;
-				}
+				}	
 				if (FlxG.keys.LEFT || FlxG.keys.A)
 				{
 					player.acceleration.x = -player.drag.x;
@@ -54,21 +55,51 @@ package
 				player.velocity.x = 0;
 				player.velocity.y = 0;
 				
+				//don't think this works properly.
 				if (FlxG.keys.RIGHT || FlxG.keys.D)
 				{
-					player.velocity.x += player.maxVelocity.x;
+					if (player.velocity.x <= 0)
+					{
+						player.velocity.x += player.maxVelocity.x;
+					}
+					else
+					{
+						player.velocity.x = Math.cos(currentAngle) * player.maxVelocity.x;
+					}
 				}
 				if (FlxG.keys.LEFT || FlxG.keys.A)
 				{
-					player.velocity.x += -player.maxVelocity.x;
+					if (player.velocity.x >= 0)
+					{
+						player.velocity.x += -player.maxVelocity.x;
+					}
+					else
+					{
+						player.velocity.x = Math.cos(currentAngle) * player.maxVelocity.x;
+					}
 				}
 				if (FlxG.keys.DOWN || FlxG.keys.S)
 				{
-					player.velocity.y += player.maxVelocity.y;
+					if (player.velocity.y <= 0)
+					{
+						player.velocity.y += player.maxVelocity.y;
+					}
+					else
+					{
+						player.velocity.y = Math.sin(currentAngle) * player.maxVelocity.y;
+					}
+					
 				}
 				if (FlxG.keys.UP || FlxG.keys.W)
 				{
-					player.velocity.y += -player.maxVelocity.y;
+					if (player.velocity.y >= 0)
+					{
+						player.velocity.y += -player.maxVelocity.y;
+					}
+					else
+					{
+						player.velocity.y = Math.sin(currentAngle) * player.maxVelocity.y;
+					}
 				}
 			}
 			
@@ -76,6 +107,7 @@ package
 			{
 				
 			}
+			
 			
 			/*
 			if(player.velocity.x != 0 || player.velocity.y != 0){

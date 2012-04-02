@@ -26,7 +26,7 @@ package
 		public static var crashduration:Number = 6;
 		public static var rumbleduration:Number = 8;
 		//Player variables
-		public static var controlScheme:int  = 1;
+		public static var controlScheme:int  = 2;
 		
 		
 		//Spotlight variables
