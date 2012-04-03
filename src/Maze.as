@@ -260,13 +260,15 @@ package
 			for (var i:uint = 1; i < getHeight() - 1; i++) {
 				for (var j:uint = 1; j < getWidth() - 1; j++) {
 					
-					var sum:uint = 	_maze[i - 1][j] //TOP
-								  + _maze[i + 1][j] //BOTTOM
-								  + _maze[i][j - 1] //LEFT
-								  + _maze[i][j + 1]; //RIGHT
-					
-					if(sum == 3) {
-						deadEnds.push(new FlxPoint(j, i));
+					if(_maze[i][j] == 0) {					
+						var sum:uint = 	_maze[i - 1][j] //TOP
+									  + _maze[i + 1][j] //BOTTOM
+									  + _maze[i][j - 1] //LEFT
+									  + _maze[i][j + 1]; //RIGHT
+						
+						if(sum == 3) {
+							deadEnds.push(new FlxPoint(j, i));
+						}
 					}
 				}
 			}
