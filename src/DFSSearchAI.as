@@ -48,7 +48,7 @@ package
 			}
 			
 			if (!this.visible) {
-				if (distance < 60) {
+				if (distance < 80) {
 					this.visible = true;
 					this.searching = false;
 				}else {

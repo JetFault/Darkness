@@ -24,7 +24,7 @@ package
 		
 		private var background:FlxSprite;
 		
-		
+		private var currentExitPoint:FlxPoint;
 		//Controllers
 		private var controllers:GameControllers;
 		
@@ -66,11 +66,13 @@ package
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
 			
+			
+			
 			enemies = new FlxGroup();
 			var enemyStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getEndTile());
 			//spawnEnemy(enemyStart.x, enemyStart.y);
 
-			spawnEnemy(level.deadEnds[level.deadEnds.length - 2].y * 24, level.deadEnds[level.deadEnds.length - 2].x * 24);
+			
 			
 			loadDarkness();
 			loadLights(level);
@@ -80,8 +82,8 @@ package
 			add(player);			
 			add(enemies);
 
-			
 			loadExit();
+			spawnEnemy(level.deadEnds[level.deadEnds.length-1].y * 24, level.deadEnds[level.deadEnds.length-1].x * 24);
 			
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
@@ -134,7 +136,17 @@ package
 		private function loadExit():void
 		{
 			//not sure this is working.
-			var currentExitPoint:FlxPoint = level.deadEnds[0];
+			currentExitPoint = level.deadEnds[0];
+			var currentDistance:Number = Utils.getDistance(player.getMidpoint(), currentExitPoint);
+			for (var i:int = 0; i < level.deadEnds.length; i++)
+			{
+				var distance:Number = Utils.getDistance(player.getMidpoint(), level.deadEnds[i]);
+				if (currentDistance > distance)
+				{
+					currentDistance = distance;
+					currentExitPoint = level.deadEnds[i];
+				}
+			}
 			exit = new FlxSprite(currentExitPoint.y * 24 + 5, currentExitPoint.x * 24 + 3, null);
 			exit.makeGraphic(12, 16, 0xff8B8682);
 			add(exit);

@@ -152,7 +152,7 @@ package
 //BEGIN removal of walls				
 				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
 				{
-					if (_randInt(0, 100) < 10)
+					if (_randInt(0, 100) < 10 && pos.x > 4 && pos.y > 5)
 					{
 						_maze[pos.x][pos.y + 1] = 0;
 					}
@@ -160,7 +160,7 @@ package
 				
 				if ((pos.x -2 >= 0) && (_maze[pos.x - 2][pos.y] == false))
 				{
-					if (_randInt(0, 100) < 10)
+					if (_randInt(0, 100) < 10 && pos.x > 4 && pos.y > 4)
 					{
 						_maze[pos.x - 1][pos.y] = 0;
 					}
