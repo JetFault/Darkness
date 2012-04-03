@@ -10,7 +10,7 @@ package
 	 */
 	public class Map extends FlxTilemap
 	{
-		[Embed(source = "../bin/data/autotiles.png")] public var BigTiles:Class;
+		[Embed(source = "../bin/data/autotiles3.png")] public var MapTiles:Class;
 		
 		public var maze:Maze;
 		public var deadEnds:Array;
@@ -28,7 +28,7 @@ package
 
 				deadEnds = maze.getDeadEnds();
 
-				loadMap(arrayToCSV(levelArray, maze.getWidth()), BigTiles, 0, 0, FlxTilemap.AUTO);
+				loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles, 0, 0, FlxTilemap.AUTO);
 			}
 			else {
 				loadLevelData();

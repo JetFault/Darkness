@@ -114,7 +114,7 @@ package
 		}
  
 		private function _createMaze () : void {
-			var back				: int;
+			var back				: int; 
 			var move				: int;
 			var possibleDirections	: String;
 			var pos					: FlxPoint = new FlxPoint(_start.x, _start.y);

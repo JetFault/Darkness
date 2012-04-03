@@ -10,10 +10,18 @@ package
 	{
 		private var light:Light;
 		private var player:Player;
+		
+		public var preVelocity:FlxPoint;
+		public var deltaVel:FlxPoint;
+		
+		private var preChange:Number = 0;
+		
 		public function LightController(light:Light, player:Player) 
 		{
 			this.light = light;
 			this.player = player;
+			
+			preVelocity = player.velocity;
 		}
 		
 		override public function update():void {
@@ -64,7 +72,16 @@ package
 			light.velocity.y *= 20;
 			
 			
+			var zero:FlxPoint;
+			zero = new FlxPoint(0, 0);
+			//var change:Number = (40 - Utils.getDistance(zero, player.velocity)) * 0.0015 + 0.4;
+			var change:Number = 40 - Utils.getDistance(zero, player.velocity);
+			var deltaChange:Number = change - preChange;
+			var scaleValue:Number = (1.0 - Math.abs(deltaChange * 0.1) - (Math.random() * 0.1)) * 1.0;
+			light.scale.x = scaleValue;
+			light.scale.y = scaleValue;
 			
+			preChange = change;
 			
 			super.update();
 		}

@@ -9,7 +9,7 @@ package
 		protected var self:Enemy;
 		protected var player:Player;
 		protected var map:Map;
-		protected var visible:Boolean; //Is the player visible?
+		public var visible:Boolean; //Is the player visible?
 		public function EnemyAI(self:Enemy, player:Player, map:Map) 
 		{
 			this.self = self;

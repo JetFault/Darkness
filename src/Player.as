@@ -7,7 +7,7 @@ package
 	public class Player extends FlxSprite
 	{
 		//Sprite sheet
-		//[Embed(source = "../bin/data/Player.png")] protected var ImgPlayer:Class;
+		[Embed(source = "../bin/data/Player3.png")] protected var ImgPlayer:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;
@@ -20,20 +20,20 @@ package
 			this.y = y;
 			this.playerAlive = true;
 			loadPlayer();
-			maxVelocity.x = 52;
-			maxVelocity.y = 52;
+			maxVelocity.x = 50;
+			maxVelocity.y = 50;
 			_runspeed = 70;
-			drag.x = _runspeed * 2.6;
-			drag.y = _runspeed * 2.6;
+			drag.x = _runspeed * 3;
+			drag.y = _runspeed * 3;
 			this.controller = new PlayerController(this, Constants.controlScheme);
-			elasticity = 1;
+			elasticity = .7;
 			
 		}
 		
 		private function loadPlayer():void
 		{
-			//loadGraphic(ImgPlayer, true, true, 12, 9);
-			super.makeGraphic(10, 10, 0xff007fff);
+			loadGraphic(ImgPlayer, true, true, 15, 15);
+			//super.makeGraphic(10, 10, 0xff007fff);
 		}
 		
 		public function isAlive():Boolean {

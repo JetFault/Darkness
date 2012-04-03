@@ -20,7 +20,7 @@ package
 		private function loadEnemy():void
 		{
 			//loadGraphic(ImgEnemy, true, true, 15, 14);
-			makeGraphic(10, 10, 0xffCD0000);
+			makeGraphic(16, 16, 0xff000000);
 		}
 		
 		public function getEnemyRunSpeed():Number {

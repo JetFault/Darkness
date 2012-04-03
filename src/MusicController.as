@@ -11,9 +11,15 @@ package
 		[Embed(source = "../bin/data/music.mp3")] protected var BgMusic:Class;
 		[Embed(source = "../bin/data/chase_music.mp3")] protected var ChaseMusic:Class;
 		[Embed(source = "../bin/data/win_music.mp3")] protected var WinMusic:Class;
+		[Embed(source = "../bin/data/RainSound1-1.mp3")] protected var RainMusic:Class;
+		[Embed(source = "../bin/data/WindSound.mp3")] protected var WindMusic:Class;
 		
 		private var chaseMusic:FlxSound;
 		private var chaseMusicOn:Boolean = false;
+		
+		private var rainMusic:FlxSound;
+		private var windMusic:FlxSound;
+		
 		private var player:Player;
 		private var enemy:Enemy;
 		private var exit:FlxSprite;
@@ -23,12 +29,23 @@ package
 		{
 			chaseMusic = new FlxSound();
 			chaseMusic.loadEmbedded(ChaseMusic, true);
-			chaseMusic.play();
+			//chaseMusic.play();
 			chaseMusic.volume = 0;
+			
+			rainMusic = new FlxSound();
+			rainMusic.loadEmbedded(RainMusic, true);
+			rainMusic.play();
+			rainMusic.volume = 0.04;
+			
+			windMusic = new FlxSound();
+			windMusic.loadEmbedded(WindMusic, true);
+			windMusic.play();
+			windMusic.volume = 0.06
+			
 			this.player = player;
 			this.enemy = enemy;
 			this.exit = exit;
-			FlxG.playMusic(BgMusic);
+			//FlxG.playMusic(BgMusic);
 			
 			super();
 			
@@ -103,16 +120,17 @@ package
 			{
 				FlxG.shake();
 				player.kill();
-				chaseMusic.fadeOut(3);
+				//chaseMusic.fadeOut(3);
+				FlxG.resetState();
 			}
 			
 			if (FlxG.overlap(player, exit))
 			{
 				player.kill();
 				enemy.kill();
-				chaseMusic.stop();
-				FlxG.music.stop();
-				FlxG.playMusic(WinMusic);
+				//chaseMusic.stop();
+				//FlxG.music.stop();
+				//FlxG.playMusic(WinMusic);
 			}
 			
 			super.update();
@@ -123,7 +141,7 @@ package
 		
 		override public function destroy(): void {
 			if (chaseMusic.active) {
-				chaseMusic.stop();
+				//chaseMusic.stop();
 			}
 			super.destroy();
 		}
