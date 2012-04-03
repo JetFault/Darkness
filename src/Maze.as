@@ -81,23 +81,24 @@ package
 			return mazeArr;
 		}
 		
-		public function getDeadEnds():Array {
+		public function getDeadEnds() : Array {
 			return deadEnds;
 		}
 		
-		private function _generate () : void {
+		private function _generate() : void {
 			_initMaze();
 			_createMaze();
 			var factor:Number = 0.05;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
 			_removeRandWalls(numWalls);
+			_emptyStart(3, 3);
 			_findDeadEnds();
 		}
  
-		private function _initMaze () : void {
+		private function _initMaze() : void {
 			
 			_start = new FlxPoint(1, 1);
-			_finish = new FlxPoint(_width - 2, _height - 2);
+			_finish = new FlxPoint(_width - 3, _height - 3);
 			
 			_maze	= new Array(_width);
 			
@@ -113,8 +114,9 @@ package
  
 			_maze[_start.x][_start.y] = 0;
 		}
- 
-		private function _createMaze () : void {
+		
+
+		private function _createMaze() : void {
 			var back				: int; 
 			var move				: int;
 			var possibleDirections	: String;
@@ -254,7 +256,15 @@ package
 				
 			}
 		}
-		
+	
+		private function _emptyStart(x:uint, y:uint) : void {
+			for ( var i: uint = _start.y; (i < _start.y + y) && (i < getHeight()); i++) {
+				for ( var j: uint = _start.x; (j < _start.x + x) && (j < getWidth()); j++) {
+					_maze[i][j] = 0;
+				}
+			}
+		}
+	
 		private function _findDeadEnds() : void {
 			
 			for (var i:uint = 1; i < getHeight() - 1; i++) {
@@ -274,7 +284,7 @@ package
 			}
 		}
 		
-		private function _randInt ( min : int, max : int ) : int {
+		private function _randInt( min : int, max : int ) : int {
 			return int((Math.random() * (max - min + 1)) + min);
 		}
 		
