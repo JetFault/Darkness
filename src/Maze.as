@@ -167,52 +167,9 @@ package
 				}
 	
 //END removal of walls
-				//creates an array with dead-ends.
-				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
-				{
-					deadEnds.push(new FlxPoint(pos.x,pos.y));
-				}
-				
  
 				if ( possibleDirections.length > 0 )
 				{
-					
-/*					// 1 in 4 chance 
-					var percent:int;
-					//percent = 0;
-					percent = _randInt(0, 3);
-					
-					if(percent == 0) {
-						var removeWall:uint = _randInt(0, (possibleDirections.length - 1));
-	 
-						switch ( possibleDirections.charAt(removeWall) )
-						{
-							case NORTH: 
-								_maze[pos.x - 2][pos.y] = 0;
-								_maze[pos.x - 1][pos.y] = 0;
-								_moves.push(pos.y + ((pos.x-2) * _width));
-								break;
-	 
-							case SOUTH: 
-								_maze[pos.x + 2][pos.y] = 0;
-								_maze[pos.x + 1][pos.y] = 0;
-								_moves.push(pos.y + ((pos.x+2) * _width));
-								break;
-	 
-							case WEST: 
-								_maze[pos.x][pos.y - 2] = 0;
-								_maze[pos.x][pos.y - 1] = 0;
-								_moves.push( (pos.y-2) + (pos.x * _width));
-								break;
-	 
-							case EAST: 
-								_maze[pos.x][pos.y + 2] = 0;
-								_maze[pos.x][pos.y + 1] = 0;
-								_moves.push( (pos.y+2) + (pos.x * _width));
-								break;        
-						}
-					}
-*/				
 					move = _randInt(0, (possibleDirections.length - 1));
  
 					switch ( possibleDirections.charAt(move) )
@@ -251,6 +208,21 @@ package
 					pos.y = back % _width;
 				}
 				
+			}
+		}
+		
+		private function findDeadEnds() : void {
+			
+			for (var i:uint = 0; i < getHeight(); i++) {
+				for (var j:uint = 0; j < getWidth(); j++) {
+					
+				}
+			}
+			
+			//creates an array with dead-ends.
+			if (possibleDirections.length == 0 && lastPossDirection.length > 0)
+			{
+				deadEnds.push(new FlxPoint(pos.x,pos.y));
 			}
 		}
 		

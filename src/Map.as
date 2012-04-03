@@ -35,26 +35,16 @@ package
 			}
 		}
 		
+		public function isWall(x:uint, y:uint):Boolean {
+			var mazeArr:Array = this.maze.getMazeArray();
+			if (mazeArr[x][y] == 1) {
+				return true;
+			}
+			return false;
+		}
+		
 		public function getMaze():Maze {
 			return this.maze;
-		}
-		
-		/**
-		 * Get tile height in pixels
-		 * @return
-		 */
-		public function getTileHeight():uint {
-			return this._tiles.height;
-		}
-		
-		/**
-		 * Get tile width in pixels. This returns width
-		 * of all tiles in pack, not just one.
-		 * TODO: Look this up
-		 * @return
-		 */
-		public function getTileWidth():uint {
-			return this._tiles.height;
 		}
 		
 		/**
