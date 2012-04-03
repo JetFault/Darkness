@@ -88,9 +88,10 @@ package
 		private function _generate () : void {
 			_initMaze();
 			_createMaze();
-			var factor:Number = 0.18;
+			var factor:Number = 0.06;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
-			//_removeRandWalls(numWalls);
+			_removeRandWalls(numWalls);
+			_findDeadEnds();
 		}
  
 		private function _initMaze () : void {
@@ -211,18 +212,22 @@ package
 			}
 		}
 		
-		private function findDeadEnds() : void {
+		private function _findDeadEnds() : void {
 			
-			for (var i:uint = 0; i < getHeight(); i++) {
-				for (var j:uint = 0; j < getWidth(); j++) {
+			for (var i:uint = 2; i < getHeight() - 2; i++) {
+				for (var j:uint = 2; j < getWidth() - 2; j++) {
 					
+					if(_maze[i][j] == 0) {					
+						var sum:uint = 	_maze[i - 1][j] //TOP
+									  + _maze[i + 1][j] //BOTTOM
+									  + _maze[i][j - 1] //LEFT
+									  + _maze[i][j + 1]; //RIGHT
+						
+						if(sum == 3) {
+							deadEnds.push(new FlxPoint(j, i));
+						}
+					}
 				}
-			}
-			
-			//creates an array with dead-ends.
-			if (possibleDirections.length == 0 && lastPossDirection.length > 0)
-			{
-				deadEnds.push(new FlxPoint(pos.x,pos.y));
 			}
 		}
 		
