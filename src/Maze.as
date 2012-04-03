@@ -214,8 +214,8 @@ package
 		
 		private function _findDeadEnds() : void {
 			
-			for (var i:uint = 2; i < getHeight() - 2; i++) {
-				for (var j:uint = 2; j < getWidth() - 2; j++) {
+			for (var i:uint = 1; i < getHeight() - 1; i++) {
+				for (var j:uint = 1; j < getWidth() - 1; j++) {
 					
 					if(_maze[i][j] == 0) {					
 						var sum:uint = 	_maze[i - 1][j] //TOP
