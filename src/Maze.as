@@ -88,9 +88,9 @@ package
 		private function _generate () : void {
 			_initMaze();
 			_createMaze();
-			var factor:Number = 0.18;
+			var factor:Number = 0.05;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
-			//_removeRandWalls(numWalls);
+			_removeRandWalls(numWalls);
 		}
  
 		private function _initMaze () : void {
