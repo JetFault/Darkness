@@ -91,6 +91,7 @@ package
 			var factor:Number = 0.05;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
 			_removeRandWalls(numWalls);
+			_findDeadEnds();
 		}
  
 		private function _initMaze () : void {
@@ -168,12 +169,12 @@ package
 	
 //END removal of walls
 				//creates an array with dead-ends.
-				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
+/*				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
 				{
 					deadEnds.push(new FlxPoint(pos.x,pos.y));
 				}
 				
- 
+*/ 
 				if ( possibleDirections.length > 0 )
 				{
 					
@@ -251,6 +252,23 @@ package
 					pos.y = back % _width;
 				}
 				
+			}
+		}
+		
+		private function _findDeadEnds() : void {
+			
+			for (var i:uint = 1; i < getHeight() - 1; i++) {
+				for (var j:uint = 1; j < getWidth() - 1; j++) {
+					
+					var sum:uint = 	_maze[i - 1][j] //TOP
+								  + _maze[i + 1][j] //BOTTOM
+								  + _maze[i][j - 1] //LEFT
+								  + _maze[i][j + 1]; //RIGHT
+					
+					if(sum == 3) {
+						deadEnds.push(new FlxPoint(j, i));
+					}
+				}
 			}
 		}
 		
