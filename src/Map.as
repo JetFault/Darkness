@@ -21,13 +21,14 @@ package
 		 * @param	height In number of tiles
 		 * @param	random If the maze should be random or not
 		 */
+		
 		public function Map(width:uint, height:uint, random:Boolean) {
 			if(random) {
 				maze = new Maze(width, height);
 				var levelArray:Array = maze.to1DArray();
 
 				deadEnds = maze.getDeadEnds();
-
+				
 				loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles, 0, 0, FlxTilemap.AUTO);
 			}
 			else {

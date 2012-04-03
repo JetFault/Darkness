@@ -64,7 +64,7 @@ package
 			//level = new Map(0, 0, false);
 			
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
-			player = new Player(playerStart.x, playerStart.y);
+			player = new Player(playerStart.x - 5, playerStart.y - 5);
 			
 			enemies = new FlxGroup();
 			var enemyStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getEndTile());
@@ -135,17 +135,6 @@ package
 		{
 			//not sure this is working.
 			var currentExitPoint:FlxPoint = level.deadEnds[0];
-			var currentDistance:Number = Utils.getPathDistance(level.findPath(player.getMidpoint(), currentExitPoint));
-			for (var i:int = 0; i++; i < level.deadEnds.length)
-			{
-				var distance:Number = Utils.getPathDistance(level.findPath(player.getMidpoint(), level.deadEnds[i]));
-				if (distance > currentDistance)
-				{
-					currentDistance = distance;
-					currentExitPoint = level.deadEnds[i];
-				}
-			}
-			
 			exit = new FlxSprite(currentExitPoint.y * 24 + 5, currentExitPoint.x * 24 + 3, null);
 			exit.makeGraphic(12, 16, 0xff8B8682);
 			add(exit);

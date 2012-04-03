@@ -12,7 +12,7 @@ package
 			super(0, 0, null);
 			super.x = x;
 			super.y = y;
-			this.enemyRunSpeed = 40;
+			this.enemyRunSpeed = 50;
 			loadEnemy();
 			this.controller = new EnemyController(this, player, level, enemyRunSpeed);
 		}
@@ -20,7 +20,7 @@ package
 		private function loadEnemy():void
 		{
 			//loadGraphic(ImgEnemy, true, true, 15, 14);
-			makeGraphic(16, 16, 0xff000000);
+			makeGraphic(20, 20, 0xff000000);
 		}
 		
 		public function getEnemyRunSpeed():Number {

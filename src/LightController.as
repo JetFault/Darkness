@@ -55,7 +55,7 @@ package
 			light.x = player.x + 4 + light.lastchord.x;
 			light.y = player.y + 5 + light.lastchord.y;
 			
-			trace(player.deltaPosition.x);
+			//trace(player.deltaPosition.x);
 			
 			if (!center) {
 				light.x += ((player.x + 4 + radius * Math.cos(angle)) - light.x) / 20;

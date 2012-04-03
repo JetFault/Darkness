@@ -121,7 +121,7 @@ package
 				FlxG.shake();
 				player.kill();
 				//chaseMusic.fadeOut(3);
-				FlxG.resetState();
+				//FlxG.resetState();
 			}
 			
 			if (FlxG.overlap(player, exit))

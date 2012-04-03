@@ -22,11 +22,11 @@ package
 			this.y = y;
 			this.playerAlive = true;
 			loadPlayer();
-			maxVelocity.x = 50;
-			maxVelocity.y = 50;
+			maxVelocity.x = 52;
+			maxVelocity.y = 52;
 			_runspeed = 70;
-			drag.x = _runspeed * 3;
-			drag.y = _runspeed * 3;
+			drag.x = _runspeed * 2.3;
+			drag.y = _runspeed * 2.3;
 			this.controller = new PlayerController(this, Constants.controlScheme);
 			elasticity = .7;
 			lastPosition = new FlxPoint(this.x, this.y);
