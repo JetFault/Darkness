@@ -137,6 +137,11 @@ package
 			}
 			prePosition = player.getMidpoint();
 			
+			
+			player.deltaPosition.x = player.x - player.lastPosition.x;
+			player.deltaPosition.y = player.y - player.lastPosition.y;
+			player.lastPosition.x = player.x;
+			player.lastPosition.y = player.y;
 			super.update();
 		}
 	}

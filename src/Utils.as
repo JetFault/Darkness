@@ -121,7 +121,7 @@ package
 						p3[2] = node[2] + 1;
 						
 						//If not empty point in maze, skip
-						if (map.getTile(p3[0], p3[1]) != 0 ) {
+						if (map.getTile(p3[0], p3[1]) != Constants.EMPTYTILEINDEX ) {
 							continue;
 						}
 

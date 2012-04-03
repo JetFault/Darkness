@@ -12,6 +12,8 @@ package
 		private var _runspeed:Number;
 		private var controller:PlayerController;
 		private var playerAlive:Boolean;
+		public var lastPosition:FlxPoint;
+		public var deltaPosition:FlxPoint;
 		
 		public function Player(x:Number, y:Number)
 		{
@@ -27,7 +29,8 @@ package
 			drag.y = _runspeed * 3;
 			this.controller = new PlayerController(this, Constants.controlScheme);
 			elasticity = .7;
-			
+			lastPosition = new FlxPoint(this.x, this.y);
+			deltaPosition = new FlxPoint(0, 0);
 		}
 		
 		private function loadPlayer():void

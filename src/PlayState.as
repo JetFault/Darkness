@@ -7,6 +7,9 @@ package
 		/*[Embed(source = "../bin/data/music.mp3")] protected var BgMusic:Class;
 		[Embed(source = "../bin/data/chase_music.mp3")] protected var ChaseMusic:Class;
 		[Embed(source = "../bin/data/win_music.mp3")] protected var WinMusic:Class;*/
+		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
+		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
+		[Embed(source = "../bin/data/Background3.png")] protected var BgTexture3:Class;
 		
 		//Model
 		private var player:Player;
@@ -18,6 +21,8 @@ package
 		//private var flashlight:FlashLight;
 		private var darkness:FlxSprite;
 		private var lightning:Lightning;
+		
+		private var background:FlxSprite;
 		
 		
 		//Controllers
@@ -47,6 +52,9 @@ package
 			/*chaseMusic = new FlxSound();
 			chaseMusic.loadEmbedded(ChaseMusic, true);
 			FlxG.playMusic(BgMusic);*/
+			
+			background = new FlxSprite(0, 0,BgTexture3);
+			background.solid = false;
 			FlxG.bgColor = 0xffC9C9C9;
 			
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
@@ -66,6 +74,8 @@ package
 			
 			loadDarkness();
 			loadLights(level);
+			
+			add(background);
 			add(level);
 			add(player);			
 			add(enemies);

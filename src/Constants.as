@@ -38,6 +38,8 @@ package
 		public static var DEFAULTDARKNESSCOLOR:uint = 0x00000000;
 		public static var CLEARDARKNESSCOLOR:uint = 0x00ffffff;
 		
+		public static var EMPTYTILEINDEX:Number = 0;
+		
 		
 	}
 

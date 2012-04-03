@@ -14,7 +14,7 @@ package
 		public var preVelocity:FlxPoint;
 		public var deltaVel:FlxPoint;
 		
-		private var preChange:Number = 0;
+		private var preChange:Number;
 		
 		public function LightController(light:Light, player:Player) 
 		{
@@ -22,6 +22,7 @@ package
 			this.player = player;
 			
 			preVelocity = player.velocity;
+			preChange = Utils.getDistance(new FlxPoint(0,0), player.maxVelocity);
 		}
 		
 		override public function update():void {
@@ -29,7 +30,7 @@ package
 			light.lastchord.y = light.y - (player.y +5);
 			var angle:Number = 0;
 			var center:Boolean = false;
-			var radius:Number = 10;
+			var radius:Number = 7;
 			if (Utils.sign(player.velocity.x)> 0 && Utils.sign(player.velocity.y) > 0) {
 				angle = 45;
 			}else if (Utils.sign(player.velocity.x)> 0 && Utils.sign(player.velocity.y) == 0) {
@@ -54,7 +55,7 @@ package
 			light.x = player.x + 4 + light.lastchord.x;
 			light.y = player.y + 5 + light.lastchord.y;
 			
-			
+			trace(player.deltaPosition.x);
 			
 			if (!center) {
 				light.x += ((player.x + 4 + radius * Math.cos(angle)) - light.x) / 20;
@@ -75,13 +76,16 @@ package
 			var zero:FlxPoint;
 			zero = new FlxPoint(0, 0);
 			//var change:Number = (40 - Utils.getDistance(zero, player.velocity)) * 0.0015 + 0.4;
-			var change:Number = 40 - Utils.getDistance(zero, player.velocity);
+			var change:Number = Utils.getDistance(zero, player.maxVelocity) - Utils.getDistance(zero, player.deltaPosition);
 			var deltaChange:Number = change - preChange;
-			var scaleValue:Number = (1.0 - Math.abs(deltaChange * 0.1) - (Math.random() * 0.1)) * 1.0;
+			var scaleValue:Number = Math.max(0, Math.min(1.0,(1.0 - Math.abs(deltaChange * 0.05) - (Math.random() * 0.1)) * 1.0) -.1);
 			light.scale.x = scaleValue;
 			light.scale.y = scaleValue;
-			
+						
 			preChange = change;
+			if (scaleValue < 0) {
+				trace(scaleValue);
+			}
 			
 			super.update();
 		}
