@@ -91,7 +91,7 @@ package
 			var factor:Number = 0.05;
 			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
 			_removeRandWalls(numWalls);
-			_emptyStart(3, 3);
+			_emptyOut(_start, 3, 3);
 			_findDeadEnds();
 		}
  
@@ -257,9 +257,23 @@ package
 			}
 		}
 	
-		private function _emptyStart(x:uint, y:uint) : void {
-			for ( var i: uint = _start.y; (i < _start.y + y) && (i < getHeight()); i++) {
-				for ( var j: uint = _start.x; (j < _start.x + x) && (j < getWidth()); j++) {
+		/**
+		 * Make everything starting at location into walkable tiles
+		 * Example:
+		 * l = Location, x=4 y=2
+		 * 	l+++
+		 * 	++++
+		 * 
+		 * @param	FlxPoint location
+		 * @param	x Number of tiles along x direction to remove
+		 * @param	y Number of tiles along y direction to remove
+		 */
+		private function _emptyOut(location:FlxPoint, x:uint, y:uint) : void {
+			var beginX:uint = location.x;
+			var beginY:uint = location.y;
+			
+			for ( var i: uint = beginY; (i < beginY + y) && (i < getHeight()); i++) {
+				for ( var j: uint = beginX; (j < beginX + x) && (j < getWidth()); j++) {
 					_maze[i][j] = 0;
 				}
 			}
