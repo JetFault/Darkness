@@ -42,8 +42,14 @@ package
 			var yDist:Number = playerPos.y - enemyPos.y;
 			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
 			
-			if (distance > 60) {
-				this.visible = false;
+			if (distance <= 60) {
+				var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
+				var howclose:Number = Utils.getPathDistance(thepath);
+				if (thepath != null && howclose <= 60) {
+					this.visible = true;
+				}else {
+					this.visible = false;
+				}
 				//this.searching = false;
 			}
 			
@@ -75,6 +81,7 @@ package
 				enemyPath = this.map.findPath(self.getMidpoint(), player.getMidpoint());
 				if (enemyPath == null) {
 					trace("No Path found");
+					this.self.stopFollowingPath(true);
 				}
 				else  {
 					this.self.followPath(enemyPath, self.getEnemyRunSpeed());
