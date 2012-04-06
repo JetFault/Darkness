@@ -61,10 +61,10 @@ package
 		}
 		
 		override public function update():void {
-			enemyStep1.update();
-			enemyStep2.update();
-			enemyStep3.update();
-			sirenSound.update();
+			//enemyStep1.update();
+			//enemyStep2.update();
+			//enemyStep3.update();
+			//sirenSound.update();
 			
 			var playerPos:FlxPoint = player.getMidpoint();
 			var enemyPos:FlxPoint = enemy.getMidpoint();
@@ -121,9 +121,13 @@ package
 			
 			//Time since last iteration
 			
+			if (FlxG.overlap(player, this.enemy) && player.isAlive()) {
+				FlxG.shake();
+				player.kill();
+			}
 			ai.doNextAction();
-			//var enemyPath:FlxPath = level.findPath(enemy.getMidpoint(), player.getMidpoint());
-			//enemy.followPath(enemyPath, enemy.getEnemyRunSpeed());
+			
+			
 			
 			runTimer += FlxG.elapsed;
 			/*

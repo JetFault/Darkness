@@ -31,6 +31,8 @@ package
 		//Music controller
 		private var musicController:MusicController;
 		
+		private var collisionController:CollisionController;
+		
 		
 		
 		//TODO:  Erase these comments
@@ -69,7 +71,6 @@ package
 			
 			
 			enemies = new FlxGroup();
-			//var enemyStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getEndTile());
 			spawnEnemy(level);
 			
 			loadDarkness();
@@ -94,6 +95,7 @@ package
 			
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
+			collisionController = new CollisionController(player, enemies, exit);
 
 			add(controllers);
 			//TODO:  Have a controller?
@@ -102,6 +104,7 @@ package
 			controllers.add(light.getController());
 			//controllers.add(flashlight.getController());
 			controllers.add(musicController);
+			controllers.add(collisionController);
 			add(darkness);
 			lightning = new Lightning(darkness, player, enemy);
 			add(lightning);

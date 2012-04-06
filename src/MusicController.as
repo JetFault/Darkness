@@ -92,22 +92,6 @@ package
 			{
 				chaseMusic.volume = 0;
 			}*/
-			if (FlxG.overlap(player, enemy))
-			{
-				FlxG.shake();
-				player.kill();
-				//chaseMusic.fadeOut(3);
-				//FlxG.resetState();
-			}
-			
-			if (FlxG.overlap(player, exit))
-			{
-				player.kill();
-				enemy.kill();
-				//chaseMusic.stop();
-				//FlxG.music.stop();
-				//FlxG.playMusic(WinMusic);
-			}
 			
 			super.update();
 		}
