@@ -55,7 +55,7 @@ package
 			this.level = level;
 			this.enemyRunSpeed = enemyRunSpeed;
 			this.runTimer = 0;
-			this.ai = new DFSSearchAI(enemy, player, level);
+			this.ai = new UCSSearchAI(enemy, player, level);
 			
 			prePosition = enemy.getMidpoint();
 		}

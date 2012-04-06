@@ -2,6 +2,7 @@ package
 {
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
+	import de.polygonal.ds.Heap;
 	/**
 	 * ...
 	 * @author Darkness Team
@@ -86,7 +87,6 @@ package
 				//frontier = frontier.reverse();
 				var node:Array = frontier.pop();
 				//frontier = frontier.reverse();
-				var inclosed:Boolean = false;
 
 				//Base case: depth
 				if (node[2] >= depth) {
@@ -97,16 +97,6 @@ package
 				if (Utils.inArray(closed, node)) {
 					continue;
 				}
-				/*for each (var elem:Array in closed) {
-					if (elem[0] == node[0] && elem[1] == node[1]) {
-						inclosed = true;
-						break;
-					}
-				}	
-				if (inclosed) {
-					continue;
-				}*/
-					
 					
 				//Node has not been visited.  Push to closed	
 				closed.push(node);
@@ -117,7 +107,6 @@ package
 							continue;
 						}
 						
-						var alsoinclosed:Boolean = false;
 						var p3:Array = new Array(0,0,0);
 						p3[0] = node[0] + dx;
 						p3[1] = node[1] + dy;
@@ -127,26 +116,127 @@ package
 						if (map.getTile(p3[0], p3[1]) != Constants.EMPTYTILEINDEX ) {
 							continue;
 						}
-
+						
+						//If not in closed, push it to frontier
 						if (!Utils.inArray(closed, p3)) {
 							frontier.push(p3);
 						}
-						//If not in closed, push it to frontier
-						/*for each (var anotherelem:Array in closed) {
-							if (anotherelem[0] == p3[0] && anotherelem[1] == p3[1]) {
-								alsoinclosed = true;
-										break;
-							}
-						}
-						if (!alsoinclosed) {
-							frontier.push(p3);
-						}*/
 					}
 				}
 				
 			}
 			return closed;
 		}
+		
+		/**
+		 * Begin AI Path functions
+		 */
+		/**
+		 * 
+		 * @param	map
+		 * @param	depth
+		 * @param	enemy
+		 * @return
+		 */
+		public static function createUCSPath(map:Map, depth:Number, enemy:Enemy, player:Player):Array {
+			
+			//Initialization
+			var starttile:FlxPoint = Utils.pointToTileCoords(map, enemy.getMidpoint());
+			var root:HeapItem = new HeapItem(map, player.getMidpoint(), new FlxPoint(starttile.x, starttile.y), 0, 0);	
+			
+			var closed:Array = new Array();			
+			var frontier:Heap = new Heap();
+			var frontierArray:Array = new Array();
+			frontier.add(root);
+			frontierArray.push(root);
+			var numnodes:uint = 0;
+			
+			
+			//UCS loop
+			while (frontier.size() > 0) {
+				//Get next node on frontier
+				var node:HeapItem = frontier.pop() as HeapItem;
+				numnodes++;
+				var newarray:Array = new Array();
+				for (var index:uint = 0; index < frontierArray.length; index++) {
+					var theitem:HeapItem = frontierArray[index] as HeapItem;
+					if (theitem != node) {
+						newarray.push(theitem);
+					}
+				}
+				frontierArray = newarray;
+
+				
+				/*
+				 * TODO:  EITHER BASE CASE BY DEPTH OR BY DISTANCE 
+				 */
+				//Base case: depth
+				if (numnodes >= depth) {
+					continue;
+				}
+					
+				//Base case: Node has already been visited
+				if (Utils.heapItemInArray(closed, node)) {
+					continue;
+				}
+					
+				//Node has not been visited.  Push to closed	
+				closed.push(node);
+				//Get neighbors
+				for each(var dx:Number in new Array( -1, 0, 1)) {
+					for each(var dy:Number in new Array( -1, 0, 1)) {
+						/*if (dx != 0 && dy != 0) {
+							continue;
+						}*/
+						
+						var newp:HeapItem = new HeapItem(map, player.getMidpoint(), new FlxPoint(node.getTileLocation().x + dx, node.getTileLocation().y + dy), node.getDepth() + 1, node.value);
+						//var p3:Array = new Array(0,0,0);
+						//p3[0] = node[0] + dx;
+						//p3[1] = node[1] + dy;
+						//p3[2] = node[2] + 1;
+						
+						//If not empty point in maze, skip
+						if (map.getTile(newp.getTileLocation().x, newp.getTileLocation().y) != Constants.EMPTYTILEINDEX ) {
+							continue;
+						}
+						
+						//If not in closed, push it to frontier (if never seen) or replace "equivalent" point that is closer to the player
+						if (!Utils.heapItemInArray(closed, newp)) {
+							if (!Utils.heapItemInArray(frontierArray, newp)) {
+								frontier.add(newp);
+								frontierArray.push(newp);
+							}else {
+								var otherp:HeapItem = Utils.getEquivalentItemFromArray(frontierArray, newp);
+								//If newp has higher priority (i.e. is more distant), replace otherp.  Otherwise, ignore newp
+								if (newp.compare(otherp) < 0) {
+									frontier.remove(otherp);
+									var na:Array = new Array();
+									for (var index:uint = 0; index < frontierArray.length; index++) {
+										var theitem:HeapItem = frontierArray[index] as HeapItem;
+										if (theitem != otherp) {
+											na.push(theitem);
+										}
+									}
+									frontierArray = na;
+									frontier.add(newp);
+									frontierArray.push(newp);
+								}
+							}
+						}
+					}
+				}
+				
+			}
+			
+			var closedarrayofarrays:Array = new Array();
+			for (var index:uint = 0; index < closed.length; index++) {
+				var theitem:HeapItem = closed[index] as HeapItem;
+				closedarrayofarrays.push(new Array(theitem.getTileLocation().x, theitem.getTileLocation().y, theitem.getDepth()));
+			}
+			return closedarrayofarrays;
+		}
+		
+		
 		
 		private static function inArray(array:Array, arr2:Array): Boolean {
 			for each(var p:Array in array) {
@@ -155,6 +245,24 @@ package
 				}
 			}
 			return false;
+		}
+		
+		private static function heapItemInArray(array:Array, item:HeapItem):Boolean {
+			for (var i:uint = 0; i < array.length; i++ ) {
+				if (item.equals(array[i] as HeapItem)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private static function getEquivalentItemFromArray(array:Array, item:HeapItem):HeapItem {
+			for (var i:uint = 0; i < array.length; i++ ) {
+				if (item.equals(array[i] as HeapItem)) {
+					return array[i] as HeapItem;
+				}
+			}
+			return null;
 		}
 		
 		

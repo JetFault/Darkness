@@ -63,7 +63,7 @@ package
 						pathcreated = true;
 					}else {
 						//Proceed to next part of DFS
-						if(Utils.getDistance(currentPoint,self.getMidpoint()) < 10){
+						if(Utils.getDistance(currentPoint,self.getMidpoint()) < 5){
 							currentindex += 1;
 							currentindex %= closed.length;
 							currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
