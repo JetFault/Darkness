@@ -14,72 +14,67 @@ package
 		//Model
 		private var player:Player;
 		private var level:Map;
-		private var enemies:FlxGroup;
 		private var enemy:Enemy;
 		private var exit:FlxSprite;
 		private var light:Light;
-		//private var flashlight:FlashLight;
+		private var enemiesreal:FlxGroup;
+		private var enemieshallucination:FlxGroup;
 		private var darkness:FlxSprite;
 		private var lightning:Lightning;
-		
-		private var background:FlxSprite;
-		
+		private var backgroundtemplate:FlxSprite;
+		private var backgroundgroup:FlxGroup;
 		private var currentExitPoint:FlxPoint;
+		
 		//Controllers
 		private var controllers:GameControllers;
-		
 		//Music controller
 		private var musicController:MusicController;
-		
+		//Collision controller
 		private var collisionController:CollisionController;
 		
-		
-		
-		//TODO:  Erase these comments
-		/*private var chaseMusic:FlxSound;
-		private var chaseMusicOn:Boolean = false;*/
-		
-		//Timer
-		//Moved it to enemy controller but may put a timer back here to control frame rate.
-		//private var runTimer:Number = 0;
-		//private var enemyTwo:Enemy;
-		
-		
-		//TODO:  Any abstraction for lights + darkness?  (To localize rendering code)
-		
+
 		override public function create():void
 		{
 
-			
-			/*chaseMusic = new FlxSound();
-			chaseMusic.loadEmbedded(ChaseMusic, true);
-			FlxG.playMusic(BgMusic);*/
-			
-			background = new FlxSprite(0, 0,BgTexture3);
-			background.solid = false;
+			backgroundtemplate = new FlxSprite(0, 0,BgTexture3);
+			backgroundtemplate.solid = false;
 			FlxG.bgColor = 0xffC9C9C9;
 			
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			level = new Map(36,28,true);
-			//level = new Map(0, 0, false);
+			level = new Map(18, 14, true);
+			
+			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
+			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
+			
+			backgroundgroup = new FlxGroup();
+			for (var i:uint = 0; i < widthLimit; i++) {
+				for (var j:uint = 0; j < heightLimit; j++) {
+					var bg:FlxSprite = new FlxSprite(backgroundtemplate.width * i, backgroundtemplate.height * j, BgTexture3);
+					bg.solid = backgroundtemplate.solid;
+					backgroundgroup.add(bg);
+				}
+			}
+
 			
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
 			
 			
 			
-			enemies = new FlxGroup();
+			enemiesreal = new FlxGroup();
+			enemieshallucination = new FlxGroup();
 			spawnEnemy(level);
 			
 			loadDarkness();
 			loadLights(level);
 			
-			add(background);
+			add(backgroundgroup);
 			add(level);
 			add(player);			
-			add(enemies);
+			add(enemiesreal);
+			add(enemieshallucination);
 
 			loadExit();
 			
@@ -89,13 +84,10 @@ package
 			//Adjust world bounds to maze size
 			FlxG.worldBounds.make( -10, -10, level.width+10, level.height+10);
 			
-			//enemyTwo = new Enemy(14, 210);
-			//add(enemyTwo);
-			
 			
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
-			collisionController = new CollisionController(player, enemies, exit);
+			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit);
 
 			add(controllers);
 			//TODO:  Have a controller?
@@ -172,8 +164,13 @@ package
 			trace("Enemy: xloc", xlocPix);
 			trace("Enemy: yloc", ylocPix);
 			
-			enemy = new Enemy(xlocPix, ylocPix, this.player, level);
-			enemies.add(enemy);
+			var hallucination:Boolean = true;
+			enemy = new Enemy(xlocPix, ylocPix, this.player, level, hallucination);
+			if (hallucination) {
+				enemieshallucination.add(enemy);
+			}else {
+				enemiesreal.add(enemy);
+			}
 			
 		}
 

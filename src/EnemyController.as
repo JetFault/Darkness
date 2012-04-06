@@ -66,6 +66,13 @@ package
 			//enemyStep3.update();
 			//sirenSound.update();
 			
+			//Cleanup after hallucination died
+			if (!this.enemy.alive) {
+				this.destroy();
+				return;
+			}
+			
+			
 			var playerPos:FlxPoint = player.getMidpoint();
 			var enemyPos:FlxPoint = enemy.getMidpoint();
 			
@@ -121,10 +128,10 @@ package
 			
 			//Time since last iteration
 			
-			if (FlxG.overlap(player, this.enemy) && player.isAlive()) {
+			/*if (FlxG.overlap(player, this.enemy) && player.isAlive()) {
 				FlxG.shake();
 				player.kill();
-			}
+			}*/
 			ai.doNextAction();
 			
 			
