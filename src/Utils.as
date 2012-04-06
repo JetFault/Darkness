@@ -94,7 +94,10 @@ package
 				}
 					
 				//Base case: Node has already been visited
-				for each (var elem:Array in closed) {
+				if (Utils.inArray(closed, node)) {
+					continue;
+				}
+				/*for each (var elem:Array in closed) {
 					if (elem[0] == node[0] && elem[1] == node[1]) {
 						inclosed = true;
 						break;
@@ -102,7 +105,7 @@ package
 				}	
 				if (inclosed) {
 					continue;
-				}
+				}*/
 					
 					
 				//Node has not been visited.  Push to closed	
@@ -125,8 +128,11 @@ package
 							continue;
 						}
 
+						if (!Utils.inArray(closed, p3)) {
+							frontier.push(p3);
+						}
 						//If not in closed, push it to frontier
-						for each (var anotherelem:Array in closed) {
+						/*for each (var anotherelem:Array in closed) {
 							if (anotherelem[0] == p3[0] && anotherelem[1] == p3[1]) {
 								alsoinclosed = true;
 										break;
@@ -134,12 +140,21 @@ package
 						}
 						if (!alsoinclosed) {
 							frontier.push(p3);
-						}
+						}*/
 					}
 				}
 				
 			}
 			return closed;
+		}
+		
+		private static function inArray(array:Array, arr2:Array): Boolean {
+			for each(var p:Array in array) {
+				if (p[0] == arr2[0] && p[1] == arr2[1]) {
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		
