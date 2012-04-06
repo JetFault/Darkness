@@ -127,16 +127,9 @@ package
 			//End SIREN---
 			
 			//Time since last iteration
-			
-			/*if (FlxG.overlap(player, this.enemy) && player.isAlive()) {
-				FlxG.shake();
-				player.kill();
-			}*/
-			ai.doNextAction();
-			
-			
-			
 			runTimer += FlxG.elapsed;
+			
+			
 			/*
 			if (runTimer > 3 && enemy.getEnemyRunSpeed() < maxRunSpeed)
 			{
