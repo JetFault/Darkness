@@ -45,7 +45,9 @@ package
 				}else {
 					this.visible = false;
 				}
-				thepath.destroy();
+				if (thepath) {
+					thepath.destroy();
+				}
 			}
 			
 			//If found, just follow.  Else, go around predetermined path

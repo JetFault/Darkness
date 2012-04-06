@@ -60,7 +60,7 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			level = new Map(18,14,true);
+			level = new Map(36,28,true);
 			//level = new Map(0, 0, false);
 			
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
@@ -84,7 +84,9 @@ package
 			
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
-
+			
+			//Adjust world bounds to maze size
+			FlxG.worldBounds.make( -10, -10, level.width+10, level.height+10);
 			
 			//enemyTwo = new Enemy(14, 210);
 			//add(enemyTwo);
