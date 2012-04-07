@@ -54,37 +54,30 @@ package
 			var distance:Number = Utils.getDistance(playerPos, enemyPos);
 			
 			//if (distance <= 80) {
-				chaseMusic.proximity(enemyPos.x, enemyPos.y, player,80);
+				//chaseMusic.proximity(enemyPos.x, enemyPos.y, player,80);
 			//}
-			/*if (distance < 80 && distance > 70) {
-				chaseMusic.volume = .02;
-			}
-			if (distance < 70 && distance > 65) {
-				chaseMusic.volume = .05;
-			}
-			if (distance < 65 && distance > 60) {
-				chaseMusic.volume = .08;
-			}
-			if (distance < 60 && distance > 55) {
-				chaseMusic.volume = .10;
-			}
-			if (distance < 55 && distance > 50) {
-				chaseMusic.volume = .15;
-			}
-			if (distance < 50 && distance > 40) {
-				chaseMusic.volume = .25;
-			}
-			if (distance < 40 && distance > 30) {
-				chaseMusic.volume = .50;
-			}
-			if (distance < 30 && distance > 20) {
-				chaseMusic.volume = .85;
-			}*/
-			
-			/*if (distance > 80)
+			if (distance > 80)
 			{
 				chaseMusic.volume = 0;
-			}*/
+			}else if (distance <= 80 && distance > 70) {
+				chaseMusic.volume = .02;
+			}else if (distance <= 70 && distance > 65) {
+				chaseMusic.volume = .05;
+			}else if (distance <= 65 && distance > 60) {
+				chaseMusic.volume = .08;
+			}else if (distance <= 60 && distance > 55) {
+				chaseMusic.volume = .10;
+			}else if (distance <= 55 && distance > 50) {
+				chaseMusic.volume = .15;
+			}else if (distance <= 50 && distance > 40) {
+				chaseMusic.volume = .25;
+			}else if (distance <= 40 && distance > 30) {
+				chaseMusic.volume = .50;
+			}else if (distance <= 30) { // && distance > 20
+				chaseMusic.volume = .85;
+			}
+			
+			
 			
 			super.update();
 		}
