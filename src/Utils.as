@@ -29,6 +29,26 @@ package
 			return distance;
 		}
 		
+		//Assumes only FlxSprites in g
+		public static function getMinDistance(p:FlxPoint, g:FlxGroup):Number {
+			var distance:Number = Number.POSITIVE_INFINITY;
+			for (var i:uint = 0; i < g.members.length; i++) {
+				var spr:FlxSprite = g.members[i] as FlxSprite;
+				distance = Math.min(distance, Utils.getDistance(p, spr.getMidpoint()));
+			}
+			return distance;
+		}
+		
+		//Assumes only FlxSprites in g
+		public static function getMaxDistance(p:FlxPoint, g:FlxGroup):Number {
+			var distance:Number = Number.NEGATIVE_INFINITY;	
+			for (var i:uint = 0; i < g.members.length; i++) {
+				var spr:FlxSprite = g.members[i] as FlxSprite;
+				distance = Math.max(distance, Utils.getDistance(p, spr.getMidpoint()));
+			}
+			return distance;
+		}
+		
 		//not sure this works properly
 		public static function getPathDistance(path:FlxPath):Number
 		{
