@@ -33,6 +33,9 @@ package
 		public static function getPathDistance(path:FlxPath):Number
 		{
 			var distance:Number = 0;
+			
+			if (path == null) return 0;
+			
 			for (var i:int = 0; i < path.nodes.length - 1; i++)
 			{
 				distance += getDistance(path.nodes[i], path.nodes[i + 1]);
