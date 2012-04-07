@@ -28,15 +28,9 @@ package
 		
 		public function PlayerController(player:Player, controlScheme:int) 
 		{
-			playerStep1 = new FlxSound();
-			playerStep1.loadEmbedded(PlayerStepSound1);
-			playerStep1.volume = 0.1;
-			playerStep2 = new FlxSound();
-			playerStep2.loadEmbedded(PlayerStepSound2);
-			playerStep2.volume = 0.1;
-			playerStep3 = new FlxSound();
-			playerStep3.loadEmbedded(PlayerStepSound3);
-			playerStep3.volume = 0.07;
+			playerStep1 = FlxG.loadSound(PlayerStepSound1, 0.1);
+			playerStep2 = FlxG.loadSound(PlayerStepSound2, 0.1);
+			playerStep3 = FlxG.loadSound(PlayerStepSound3, .07);
 			this.player = player;
 			this.controlScheme = controlScheme;
 			prePosition = player.getMidpoint();
