@@ -125,6 +125,7 @@ package
 				sirenSound.stop();
 			}
 			//End SIREN---
+			ai.doNextAction();
 			
 			//Time since last iteration
 			runTimer += FlxG.elapsed;
