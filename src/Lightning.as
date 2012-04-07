@@ -47,10 +47,8 @@ package
 		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
 		{
 			this.darkness = darkness;
-			rumbleflxsound = new FlxSound();
-			rumbleflxsound.loadEmbedded(RumbleSound);
-			crashflxsound = new FlxSound();
-			crashflxsound.loadEmbedded(CrashSound);
+			rumbleflxsound = FlxG.loadSound(RumbleSound);
+			crashflxsound = FlxG.loadSound(CrashSound);
 			this.player = player;
 			this.enemy = enemy;
 			this.camera = FlxG.cameras[0] as FlxCamera;
@@ -152,11 +150,9 @@ package
 		private function shouldflash(criteria:String):Boolean {
 			if (criteria == "enemyeuclidean") {
 				var c:Number = Math.random();
-				//trace(Utils.inverseeuclidean(player.getMidpoint(), enemy.getMidpoint(), .5));
 				return c <= Utils.inverseeuclidean(player.getMidpoint(), enemy.getMidpoint(), .5);
 			}else if (criteria == "flashcount") {
 				var s:Number = Utils.sampleradial(Math.pow(50, flashcount));
-				//trace(s);
 				return s >= .9;
 			}
 			return false;
