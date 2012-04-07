@@ -118,7 +118,7 @@ package
 			controllers.add(musicController);
 			controllers.add(collisionController);
 			add(darkness);
-			lightning = new Lightning(darkness, player, enemy);
+			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
 		}
 		
