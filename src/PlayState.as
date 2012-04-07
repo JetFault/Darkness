@@ -42,14 +42,11 @@ package
 			
 			level = new Map(this.levelNum);
 			
-			backgroundtemplate = new FlxSprite(0, 0,BgTexture3);
-			backgroundtemplate.solid = false;
-			FlxG.bgColor = 0xff000000;
-			
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
 			backgroundtemplate.solid = false;
-			FlxG.bgColor = 0xffC9C9C9;
+			FlxG.bgColor = 0xff000000;
+			
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
 			backgroundgroup = new FlxGroup();
