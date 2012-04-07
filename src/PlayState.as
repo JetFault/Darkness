@@ -4,15 +4,12 @@ package
 	
 	public class PlayState extends FlxState
 	{
-		/*[Embed(source = "../bin/data/music.mp3")] protected var BgMusic:Class;
-		[Embed(source = "../bin/data/chase_music.mp3")] protected var ChaseMusic:Class;
-		[Embed(source = "../bin/data/win_music.mp3")] protected var WinMusic:Class;*/
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
-		[Embed(source = "../bin/data/Background3.png")] protected var BgTexture3:Class;
 		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
 		//Model
 		private var player:Player;
+		private var levelNum:Number;
 		private var level:Map;
 		private var enemy:Enemy;
 		private var item:Item;
@@ -38,22 +35,23 @@ package
 
 		override public function create():void
 		{
-
-			
-			
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
-			level = new Map(18, 14, true);
+			
+			this.levelNum = FlxG.level + 1;
+			
+			level = new Map(this.levelNum);
 			
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
 			backgroundtemplate.solid = false;
-			FlxG.bgColor = 0xffC9C9C9;
+			FlxG.bgColor = 0xff000000;
+			
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
 			backgroundgroup = new FlxGroup();
 			for (var i:uint = 0; i < widthLimit; i++) {
 				for (var j:uint = 0; j < heightLimit; j++) {
-					var bg:FlxSprite = new FlxSprite(backgroundtemplate.width * i, backgroundtemplate.height * j, BgTexture3);
+					var bg:FlxSprite = new FlxSprite(backgroundtemplate.width * i, backgroundtemplate.height * j, BgTexture7);
 					bg.solid = backgroundtemplate.solid;
 					backgroundgroup.add(bg);
 				}
@@ -125,10 +123,14 @@ package
 		override public function update():void
 		{
 			//TODO  Put this somewhere else
-			if (FlxG.keys.ENTER)
-			{
+			if (FlxG.keys.ENTER) {
 				FlxG.resetState();
 			}
+			if (FlxG.keys.N) {
+				FlxG.level++;
+				FlxG.switchState(new PlayState());
+			}
+			
 			super.update();
 			
 			//Collision Resolution

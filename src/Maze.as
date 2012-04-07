@@ -38,11 +38,31 @@ package
 		 * @param	width In number of tiles
 		 * @param	height In number of tiles
 		 */
-		public function Maze(width:uint, height:uint) {
-			this._width = width;
-			this._height = height;
-			
-			_generate();
+		public function Maze() {
+			this._maze = null;
+			this.deadEnds = new Array();
+			this.corners = new Array();
+		}
+		
+		public function generateRandMaze(width:uint, height:uint, numWallsRemove:uint):void {
+			if (_maze == null) {
+				this._width = width;
+				this._height = height;
+				_generate(numWallsRemove);
+			}
+		}
+		
+		public function generateFixedMaze(levelData:Array, start:FlxPoint, end:FlxPoint):void {
+			if (_maze == null) {
+				this._maze = levelData.slice(0);
+				this._width = levelData[0].length;
+				this._height = levelData.length;
+				
+				this._start = start;
+				this._finish = end;
+				_findDeadEnds();
+				_findCorners();
+			}
 		}
 		
 		public function getHeight():uint {
@@ -90,11 +110,9 @@ package
 			return this.corners;
 		}
 		
-		private function _generate() : void {
+		private function _generate(numWalls:uint = 0) : void {
 			_initMaze();
 			_createMaze();
-			var factor:Number = 0.05;
-			var numWalls:uint = (_height - 2) * (_width - 2) * factor;
 			_removeRandWalls(numWalls);
 			_emptyOut(_start, 3, 3);
 			_findDeadEnds();
@@ -121,7 +139,6 @@ package
 			_maze[_start.x][_start.y] = 0;
 		}
 		
-
 		private function _createMaze() : void {
 			var back				: int; 
 			var move				: int;
@@ -132,9 +149,7 @@ package
 			_moves = new Array();
 			_moves.push(pos.y + (pos.x * _width));
 			
-			deadEnds = new Array();
-			corners = new Array();
- 
+			
 			while ( _moves.length )
 			{
 				lastPossDirection = possibleDirections;
@@ -177,13 +192,6 @@ package
 				}
 	
 //END removal of walls
-				//creates an array with dead-ends.
-/*				if (possibleDirections.length == 0 && lastPossDirection.length > 0)
-				{
-					deadEnds.push(new FlxPoint(pos.x,pos.y));
-				}
-				
-*/ 
 				if ( possibleDirections.length > 0 )
 				{
 
@@ -287,8 +295,6 @@ package
 				}
 			}
 		}
-		
-
 		
 		private function _removeRandWalls(numWalls:uint): void {
 			for ( var i:uint = 0; i < numWalls; i++) {
