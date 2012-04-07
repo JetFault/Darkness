@@ -55,6 +55,8 @@ package
 				this.ai = new DFSSearchAI(enemy, player, level);
 			}else if (enemyType == EnemyType.UCS_PATHER) {
 				this.ai = new UCSSearchAI(enemy, player, level);
+			}else if (enemyType == EnemyType.DO_NOTHING) {
+				this.ai = new DoNothingAI(enemy, player, level);
 			}
 			
 			prePosition = enemy.getMidpoint();
