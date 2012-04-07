@@ -1,7 +1,9 @@
 package  
 {
+	import org.flixel.FlxGroup;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	import de.polygonal.ds.Heap;
 	/**
 	 * ...
