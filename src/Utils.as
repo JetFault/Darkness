@@ -3,6 +3,9 @@ package
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	import de.polygonal.ds.Heap;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxGroup;
+
 	/**
 	 * ...
 	 * @author Darkness Team
@@ -34,6 +37,9 @@ package
 			var distance:Number = Number.POSITIVE_INFINITY;
 			for (var i:uint = 0; i < g.members.length; i++) {
 				var spr:FlxSprite = g.members[i] as FlxSprite;
+				if (!spr.alive) {
+					continue;
+				}
 				distance = Math.min(distance, Utils.getDistance(p, spr.getMidpoint()));
 			}
 			return distance;
@@ -44,6 +50,9 @@ package
 			var distance:Number = Number.NEGATIVE_INFINITY;	
 			for (var i:uint = 0; i < g.members.length; i++) {
 				var spr:FlxSprite = g.members[i] as FlxSprite;
+				if (!spr.alive) {
+					continue;
+				}
 				distance = Math.max(distance, Utils.getDistance(p, spr.getMidpoint()));
 			}
 			return distance;

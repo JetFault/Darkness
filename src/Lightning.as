@@ -147,14 +147,14 @@ package
 			bufferfull = false;
 			soundplayedtimer = 0;
 			distance = Utils.getMinDistance(player.getMidpoint(), enemiesreal);
-			distance = Math.min(distance, Utils.getMinDistance(player.getMidpoint(), enemieshallucination);
+			distance = Math.min(distance, Utils.getMinDistance(player.getMidpoint(), enemieshallucination));
 			flashcount++;
 		}
 		
 		private function shouldflash(criteria:String):Boolean {
 			
 			var scale:Number = 1.0;
-			if (true) {
+			if (player.playerHasItem(ItemType.UMBRELLA)) {
 				scale = 2.0;
 			}
 			if (criteria == "enemyeuclidean") {
@@ -164,10 +164,11 @@ package
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 				}
-				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
-					var e:Enemy = enemieshallucination.members[i] as Enemy;
+				for (i = 0; i < enemieshallucination.members.length; i++) {
+					e = enemieshallucination.members[i] as Enemy;
 					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 				}
+
 				return c <= threshold;
 			}else if (criteria == "flashcount") {
 				var s:Number = Utils.sampleradial(Math.pow(50, flashcount));
