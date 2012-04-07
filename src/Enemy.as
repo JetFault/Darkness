@@ -7,12 +7,14 @@ package
 		//[Embed(source = "../bin/data/Enemy.png")] protected var ImgEnemy:Class;
 		public var controller:EnemyController;
 		private var enemyRunSpeed:Number;
-		public function Enemy(x:Number, y:Number, player:Player, level:Map) 
+		private var hallucination:Boolean;
+		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean) 
 		{
 			super(0, 0, null);
 			super.x = x;
 			super.y = y;
 			this.enemyRunSpeed = 50;
+			this.hallucination = hallucination;
 			loadEnemy();
 			this.controller = new EnemyController(this, player, level, enemyRunSpeed);
 		}
@@ -33,6 +35,10 @@ package
 		
 		public function getController():BaseController {
 			return this.controller;
+		}
+		
+		public function isHallucination():Boolean {
+			return this.hallucination;
 		}
 	}
 

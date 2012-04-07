@@ -55,16 +55,23 @@ package
 			this.level = level;
 			this.enemyRunSpeed = enemyRunSpeed;
 			this.runTimer = 0;
-			this.ai = new DFSSearchAI(enemy, player, level);
+			this.ai = new UCSSearchAI(enemy, player, level);
 			
 			prePosition = enemy.getMidpoint();
 		}
 		
 		override public function update():void {
-			enemyStep1.update();
-			enemyStep2.update();
-			enemyStep3.update();
-			sirenSound.update();
+			//enemyStep1.update();
+			//enemyStep2.update();
+			//enemyStep3.update();
+			//sirenSound.update();
+			
+			//Cleanup after hallucination died
+			if (!this.enemy.alive) {
+				this.destroy();
+				return;
+			}
+			
 			
 			var playerPos:FlxPoint = player.getMidpoint();
 			var enemyPos:FlxPoint = enemy.getMidpoint();
@@ -120,12 +127,9 @@ package
 			//End SIREN---
 			
 			//Time since last iteration
-			
-			ai.doNextAction();
-			//var enemyPath:FlxPath = level.findPath(enemy.getMidpoint(), player.getMidpoint());
-			//enemy.followPath(enemyPath, enemy.getEnemyRunSpeed());
-			
 			runTimer += FlxG.elapsed;
+			
+			
 			/*
 			if (runTimer > 3 && enemy.getEnemyRunSpeed() < maxRunSpeed)
 			{
