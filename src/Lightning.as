@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.FlxCamera;
+	import org.flixel.FlxGroup;
 	import org.flixel.FlxSound;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxPoint;
@@ -31,7 +32,8 @@ package
 		private var rumbleflxsound:FlxSound;
 		private var crashflxsound:FlxSound;
 		private var player:Player;
-		private var enemy:Enemy;
+		private var enemiesreal:FlxGroup;
+		private var enemieshallucination:FlxGroup;
 		
 		private var soundtimer:Number = 0;
 		private var distance:Number = 0;
@@ -44,15 +46,14 @@ package
 		private var soundcutofftime:Number = 8; //Minimum amount of time until next flash
 		
 		
-		public function Lightning(darkness:FlxSprite,player:Player, enemy:Enemy) 
+		public function Lightning(darkness:FlxSprite,player:Player, enemiesreal:FlxGroup,enemieshallucination:FlxGroup) 
 		{
 			this.darkness = darkness;
-			rumbleflxsound = new FlxSound();
-			rumbleflxsound.loadEmbedded(RumbleSound);
-			crashflxsound = new FlxSound();
-			crashflxsound.loadEmbedded(CrashSound);
+			rumbleflxsound = FlxG.loadSound(RumbleSound);
+			crashflxsound = FlxG.loadSound(CrashSound);
 			this.player = player;
-			this.enemy = enemy;
+			this.enemiesreal = enemiesreal;
+			this.enemieshallucination = enemieshallucination;
 			this.camera = FlxG.cameras[0] as FlxCamera;
 		}
 		
@@ -145,18 +146,39 @@ package
 			looptimer = 0;
 			bufferfull = false;
 			soundplayedtimer = 0;
-			distance = Utils.getDistance(player.getMidpoint(), enemy.getMidpoint());
+			distance = Utils.getMinDistance(player.getMidpoint(), enemiesreal);
+			distance = Math.min(distance, Utils.getMinDistance(player.getMidpoint(), enemieshallucination));
 			flashcount++;
 		}
 		
 		private function shouldflash(criteria:String):Boolean {
+			
+			var scale:Number = 1.0;
+			if (player.playerHasItem(ItemType.UMBRELLA)) {
+				scale = 2.0;
+			}
 			if (criteria == "enemyeuclidean") {
 				var c:Number = Math.random();
-				//trace(Utils.inverseeuclidean(player.getMidpoint(), enemy.getMidpoint(), .5));
-				return c <= Utils.inverseeuclidean(player.getMidpoint(), enemy.getMidpoint(), .5);
+				var threshold:Number = 0;
+				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+					var e:Enemy = enemiesreal.members[i] as Enemy;
+					if (!e || !e.alive) {
+						continue;
+					}
+					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
+				}
+				for (i = 0; i < enemieshallucination.members.length; i++) {
+					e = enemieshallucination.members[i] as Enemy;
+					if (!e || !e.alive) {
+						continue;
+					}
+					var mp:FlxPoint = e.getMidpoint();
+					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
+				}
+
+				return c <= threshold;
 			}else if (criteria == "flashcount") {
 				var s:Number = Utils.sampleradial(Math.pow(50, flashcount));
-				//trace(s);
 				return s >= .9;
 			}
 			return false;

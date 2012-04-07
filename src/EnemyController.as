@@ -38,24 +38,24 @@ package
 		//private var runLength:Number = 30;
 		private var prePosition:FlxPoint;
 		
-		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number) 
+		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint) 
 		{
-			enemyStep1 = new FlxSound();
-			enemyStep1.loadEmbedded(EnemyStepSound1);
-			enemyStep2 = new FlxSound();
-			enemyStep2.loadEmbedded(EnemyStepSound2);
-			enemyStep3 = new FlxSound();
-			enemyStep3.loadEmbedded(EnemyStepSound3);
+			enemyStep1 = FlxG.loadSound(EnemyStepSound1);
+			enemyStep2 = FlxG.loadSound(EnemyStepSound2);
+			enemyStep3 = FlxG.loadSound(EnemyStepSound3);
 			
-			sirenSound = new FlxSound();
-			sirenSound.loadEmbedded(SirenSound);
+			sirenSound = FlxG.loadSound(SirenSound);
 			
 			this.player = player;
 			this.enemy = enemy;
 			this.level = level;
 			this.enemyRunSpeed = enemyRunSpeed;
 			this.runTimer = 0;
-			this.ai = new UCSSearchAI(enemy, player, level);
+			if(enemyType == EnemyType.DFS_PATHER){
+				this.ai = new DFSSearchAI(enemy, player, level);
+			}else if (enemyType == EnemyType.UCS_PATHER) {
+				this.ai = new UCSSearchAI(enemy, player, level);
+			}
 			
 			prePosition = enemy.getMidpoint();
 		}
@@ -125,6 +125,7 @@ package
 				sirenSound.stop();
 			}
 			//End SIREN---
+			ai.doNextAction();
 			
 			//Time since last iteration
 			runTimer += FlxG.elapsed;

@@ -1,6 +1,7 @@
 package  
 {
 	import org.flixel.*;
+	import flash.display.*;
 	
 	public class Darkness extends FlxGame
 	{

@@ -7,12 +7,13 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background3.png")] protected var BgTexture3:Class;
-		
+		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
 		//Model
 		private var player:Player;
 		private var levelNum:Number;
 		private var level:Map;
 		private var enemy:Enemy;
+		private var item:Item;
 		private var exit:FlxSprite;
 		private var light:Light;
 		private var enemiesreal:FlxGroup;
@@ -45,9 +46,12 @@ package
 			backgroundtemplate.solid = false;
 			FlxG.bgColor = 0xff000000;
 			
+			//Create background
+			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
+			backgroundtemplate.solid = false;
+			FlxG.bgColor = 0xffC9C9C9;
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
-			
 			backgroundgroup = new FlxGroup();
 			for (var i:uint = 0; i < widthLimit; i++) {
 				for (var j:uint = 0; j < heightLimit; j++) {
@@ -58,11 +62,10 @@ package
 			}
 
 			
+			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
-			
 			findValidLocations(level);
-			
 /*TRACING			
 			for (var i:uint = 0; i < this.validLocs.length; i++) {
 				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
@@ -70,21 +73,33 @@ package
 			}
 */
 			
+			//add enemies
 			enemiesreal = new FlxGroup();
 			enemieshallucination = new FlxGroup();
-			spawnEnemy(level,false);
+
+			/*
+			 *  TODO:  Spawn enemies as function of level
+			 */
+			spawnEnemy(level,true);
 			
+			//Load darkness and lights
+			/*
+			 * 
+			 */ 
 			loadDarkness();
 			loadLights(level);
 			
 			add(backgroundgroup);
 			add(level);
-			add(player);			
+			add(player);
 			add(enemiesreal);
 			add(enemieshallucination);
+			
+			spawnItem(level, ItemType.LANTERN);
 
 			loadExit(level);
 			
+			//Set camera to follow player
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
 			
@@ -94,7 +109,7 @@ package
 			
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
-			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit);
+			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light);
 
 			add(controllers);
 			//TODO:  Have a controller?
@@ -105,7 +120,7 @@ package
 			controllers.add(musicController);
 			controllers.add(collisionController);
 			add(darkness);
-			lightning = new Lightning(darkness, player, enemy);
+			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
 		}
 		
@@ -181,13 +196,25 @@ package
 				
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
 		
-				enemy = new Enemy(point.x, point.y, this.player, level, hallucination);
+				enemy = new Enemy(point.x, point.y, this.player, level, hallucination, EnemyType.UCS_PATHER);
 				if(!hallucination) {
 					enemiesreal.add(enemy);
 				}
 				else {
 					enemieshallucination.add(enemy);
 				}
+			}
+		}
+		
+		private function spawnItem(level:Map, itemType:ItemType):void {
+			if (this.validLocs.length > 0) {
+				var startPercent:Number = .40;
+				
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length * startPercent, validLocs.length - 1)].loc;
+				
+				item = new Item(point.x,point.y,player,level,itemType);
+				
+				add(item);
 			}
 		}
 

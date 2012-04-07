@@ -14,6 +14,7 @@ package
 		private var playerAlive:Boolean;
 		public var lastPosition:FlxPoint;
 		public var deltaPosition:FlxPoint;
+		public var inventory:Array;
 		
 		public function Player(x:Number, y:Number)
 		{
@@ -31,6 +32,7 @@ package
 			elasticity = .7;
 			lastPosition = new FlxPoint(this.x, this.y);
 			deltaPosition = new FlxPoint(0, 0);
+			inventory = new Array();
 		}
 		
 		private function loadPlayer():void
@@ -50,6 +52,17 @@ package
 		
 		public function getController(): BaseController {
 			return this.controller;
+		}
+		
+		public function playerHasItem(itemType:ItemType):Boolean {
+			for (var i:int = 0; i < inventory.length; i++)
+			{
+				if (inventory[i].getItemType() == itemType) 
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 
