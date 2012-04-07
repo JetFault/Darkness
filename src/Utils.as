@@ -37,7 +37,7 @@ package
 			var distance:Number = Number.POSITIVE_INFINITY;
 			for (var i:uint = 0; i < g.members.length; i++) {
 				var spr:FlxSprite = g.members[i] as FlxSprite;
-				if (!spr.alive) {
+				if (!spr || !spr.alive) {
 					continue;
 				}
 				distance = Math.min(distance, Utils.getDistance(p, spr.getMidpoint()));
@@ -50,7 +50,7 @@ package
 			var distance:Number = Number.NEGATIVE_INFINITY;	
 			for (var i:uint = 0; i < g.members.length; i++) {
 				var spr:FlxSprite = g.members[i] as FlxSprite;
-				if (!spr.alive) {
+				if (!spr || !spr.alive) {
 					continue;
 				}
 				distance = Math.max(distance, Utils.getDistance(p, spr.getMidpoint()));

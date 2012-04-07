@@ -162,10 +162,17 @@ package
 				var threshold:Number = 0;
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
+					if (!e || !e.alive) {
+						continue;
+					}
 					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 				}
 				for (i = 0; i < enemieshallucination.members.length; i++) {
 					e = enemieshallucination.members[i] as Enemy;
+					if (!e || !e.alive) {
+						continue;
+					}
+					var mp:FlxPoint = e.getMidpoint();
 					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 				}
 

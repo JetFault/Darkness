@@ -78,7 +78,7 @@ package
 			/*
 			 *  TODO:  Spawn enemies as function of level
 			 */
-			spawnEnemy(level,false);
+			spawnEnemy(level,true);
 			
 			//Load darkness and lights
 			/*
