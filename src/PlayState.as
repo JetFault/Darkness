@@ -78,7 +78,7 @@ package
 			/*
 			 *  TODO:  Spawn enemies as function of level
 			 */
-			spawnEnemy(level,false);
+			spawnEnemy(level,true);
 			
 			//Load darkness and lights
 			/*
@@ -118,7 +118,7 @@ package
 			controllers.add(musicController);
 			controllers.add(collisionController);
 			add(darkness);
-			lightning = new Lightning(darkness, player, enemy);
+			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
 		}
 		
@@ -190,7 +190,7 @@ package
 				
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
 		
-				enemy = new Enemy(point.x, point.y, this.player, level, hallucination);
+				enemy = new Enemy(point.x, point.y, this.player, level, hallucination, EnemyType.UCS_PATHER);
 				if(!hallucination) {
 					enemiesreal.add(enemy);
 				}

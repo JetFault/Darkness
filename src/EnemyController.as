@@ -38,7 +38,7 @@ package
 		//private var runLength:Number = 30;
 		private var prePosition:FlxPoint;
 		
-		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number) 
+		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint) 
 		{
 			enemyStep1 = FlxG.loadSound(EnemyStepSound1);
 			enemyStep2 = FlxG.loadSound(EnemyStepSound2);
@@ -51,7 +51,11 @@ package
 			this.level = level;
 			this.enemyRunSpeed = enemyRunSpeed;
 			this.runTimer = 0;
-			this.ai = new UCSSearchAI(enemy, player, level);
+			if(enemyType == EnemyType.DFS_PATHER){
+				this.ai = new DFSSearchAI(enemy, player, level);
+			}else if (enemyType == EnemyType.UCS_PATHER) {
+				this.ai = new UCSSearchAI(enemy, player, level);
+			}
 			
 			prePosition = enemy.getMidpoint();
 		}
