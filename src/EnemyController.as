@@ -40,15 +40,11 @@ package
 		
 		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number) 
 		{
-			enemyStep1 = new FlxSound();
-			enemyStep1.loadEmbedded(EnemyStepSound1);
-			enemyStep2 = new FlxSound();
-			enemyStep2.loadEmbedded(EnemyStepSound2);
-			enemyStep3 = new FlxSound();
-			enemyStep3.loadEmbedded(EnemyStepSound3);
+			enemyStep1 = FlxG.loadSound(EnemyStepSound1);
+			enemyStep2 = FlxG.loadSound(EnemyStepSound2);
+			enemyStep3 = FlxG.loadSound(EnemyStepSound3);
 			
-			sirenSound = new FlxSound();
-			sirenSound.loadEmbedded(SirenSound);
+			sirenSound = FlxG.loadSound(SirenSound);
 			
 			this.player = player;
 			this.enemy = enemy;
@@ -125,6 +121,7 @@ package
 				sirenSound.stop();
 			}
 			//End SIREN---
+			ai.doNextAction();
 			
 			//Time since last iteration
 			runTimer += FlxG.elapsed;
