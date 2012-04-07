@@ -190,7 +190,7 @@ package
 				
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
 		
-				enemy = new Enemy(point.x, point.y, this.player, level, hallucination);
+				enemy = new Enemy(point.x, point.y, this.player, level, hallucination, EnemyType.UCS_PATHER);
 				if(!hallucination) {
 					enemiesreal.add(enemy);
 				}

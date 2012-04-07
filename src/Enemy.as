@@ -8,7 +8,8 @@ package
 		public var controller:EnemyController;
 		private var enemyRunSpeed:Number;
 		private var hallucination:Boolean;
-		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean) 
+		private var enemyType:uint;
+		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean, enemyType:uint) 
 		{
 			super(0, 0, null);
 			super.x = x;
@@ -16,8 +17,8 @@ package
 			this.enemyRunSpeed = 50;
 			this.hallucination = hallucination;
 			loadEnemy();
-			this.controller = new EnemyController(this, player, level, enemyRunSpeed);
-			
+			this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType);
+			this.enemyType = enemyType;
 			width = 1;
 			height = 1;
 			offset.x = 10;
