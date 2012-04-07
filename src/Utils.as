@@ -323,44 +323,6 @@ package
 		}
 		
 		/**
-		 * Sample from normal distribution with shrinking standard deviation and decreasing mean.
-		 * Linearly shrinks over time [0,1]
-		 * @param	x
-		 * @return sample from N(x,1)*255, clamped to [0x00,0xff]
-		 */
-		public static function sampleshiftingnormal(time:Number):uint {		
-				return uint(Math.min(0xff, Math.max(0, samplegauss(1-time,1/(10*Math.min(time,0.5)))*0xff)))
-		}
-		
-		/**
-		 * Sample from an RBF whose radius decreases over time [0,1].  Return sample with a probability.  Otherwise return 0
-		 * @param	x
-		 * @return
-		 */
-		public static function sampleshrinkingradial(x:Number):uint {
-			var sample:Number = Math.random();
-			var beta:Number = 100 * x;
-			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
-			
-			if (thresholdshrinkingradial(0.6,beta)) {
-				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
-			}else {
-				return 0x00;
-			}
-		}
-		
-		/**
-		 * Sample from an RBF with given radius and return whether result is over given threshold.
-		 * @param	beta
-		 * @return
-		 */
-		public static function thresholdshrinkingradial(threshold:Number, beta:Number):Boolean {
-			var sample:Number = Math.random();
-			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
-			return sample >= threshold;
-		}
-		
-		/**
 		 * Get value [0,1] from radial with maximum @ 0.
 		 * @param	x
 		 * @return
@@ -370,24 +332,6 @@ package
 			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));
 			return sample;
 		}
-		
-		/**
-		 * No idea...
-		 * @param	x
-		 * @return
-		 */
-		public static function sampleradialplusdecrease(x:Number):uint {
-			var sample:uint = sampleshrinkingradial(x);
-			if (x <= .7) {
-				return sample;
-			}else {
-				return uint(Math.max(0, ((1 - x) * 0xff) +  0xff * ((sampleshrinkingradial(1-x*x) / 0xff - .5) * (1 - x))));
-			}
-		}
-		
-		
-		
-		
 		
 		
 		/**
@@ -418,21 +362,7 @@ package
 				return sample;
 		}
 		
-		/**
-		 * Sample from a gaussian with 0 mean.
-		 * @param	x
-		 * @return
-		 */
-		public static function samplegausszeromean(time:Number):uint {
-			var sample:Number = samplegauss(0, 10*time);
-			sample *= (1 - time);
-			return uint(0xff*sample);
-		}
-		
-		
-		public static function radialagain(x:Number):uint {
-			return uint(2*(1-x)*sampleshrinkingradial(1 - x));
-		}
+
 		
 		/**
 		 * Step function with some gaussian noise.  Noise has 0 mean and .1 std
@@ -505,3 +435,74 @@ package
 	}
 
 }
+
+
+/**
+		 * Sample from normal distribution with shrinking standard deviation and decreasing mean.
+		 * Linearly shrinks over time [0,1]
+		 * @param	x
+		 * @return sample from N(x,1)*255, clamped to [0x00,0xff]
+		 
+		public static function sampleshiftingnormal(time:Number):uint {		
+				return uint(Math.min(0xff, Math.max(0, samplegauss(1-time,1/(10*Math.min(time,0.5)))*0xff)))
+		}
+		
+		/**
+		 * Sample from an RBF whose radius decreases over time [0,1].  Return sample with a probability.  Otherwise return 0
+		 * @param	x
+		 * @return
+		 
+		public static function sampleshrinkingradial(x:Number):uint {
+			var sample:Number = Math.random();
+			var beta:Number = 100 * x;
+			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
+			
+			if (thresholdshrinkingradial(0.6,beta)) {
+				return uint(Math.min(0xff, Math.max(0, sample * 0xff)));
+			}else {
+				return 0x00;
+			}
+		}
+		
+		/**
+		 * Sample from an RBF with given radius and return whether result is over given threshold.
+		 * @param	beta
+		 * @return
+		 
+		public static function thresholdshrinkingradial(threshold:Number, beta:Number):Boolean {
+			var sample:Number = Math.random();
+			sample = Math.exp( -beta * ((sample- .5) * (sample-.5)));// / Math.sqrt(2 * Math.PI * 1 / beta);
+			return sample >= threshold;
+		}
+		
+		
+		
+		/**
+		 * No idea...
+		 * @param	x
+		 * @return
+		 
+		public static function sampleradialplusdecrease(x:Number):uint {
+			var sample:uint = sampleshrinkingradial(x);
+			if (x <= .7) {
+				return sample;
+			}else {
+				return uint(Math.max(0, ((1 - x) * 0xff) +  0xff * ((sampleshrinkingradial(1-x*x) / 0xff - .5) * (1 - x))));
+			}
+		}*/
+		
+				/**
+		 * Sample from a gaussian with 0 mean.
+		 * @param	x
+		 * @return
+		 
+		public static function samplegausszeromean(time:Number):uint {
+			var sample:Number = samplegauss(0, 10*time);
+			sample *= (1 - time);
+			return uint(0xff*sample);
+		}
+		
+		
+		public static function radialagain(x:Number):uint {
+			return uint(2*(1-x)*sampleshrinkingradial(1 - x));
+		}*/

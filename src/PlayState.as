@@ -10,7 +10,7 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background3.png")] protected var BgTexture3:Class;
-		
+		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
 		//Model
 		private var player:Player;
 		private var level:Map;
@@ -38,18 +38,17 @@ package
 		override public function create():void
 		{
 
-			backgroundtemplate = new FlxSprite(0, 0,BgTexture3);
-			backgroundtemplate.solid = false;
-			FlxG.bgColor = 0xffC9C9C9;
+			
 			
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
-			
-						
 			level = new Map(18, 14, true);
 			
+			//Create background
+			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
+			backgroundtemplate.solid = false;
+			FlxG.bgColor = 0xffC9C9C9;
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
-			
 			backgroundgroup = new FlxGroup();
 			for (var i:uint = 0; i < widthLimit; i++) {
 				for (var j:uint = 0; j < heightLimit; j++) {
@@ -60,11 +59,10 @@ package
 			}
 
 			
+			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
-			
 			findValidLocations(level);
-			
 /*TRACING			
 			for (var i:uint = 0; i < this.validLocs.length; i++) {
 				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
@@ -72,10 +70,18 @@ package
 			}
 */
 			
+			//add enemies
 			enemiesreal = new FlxGroup();
 			enemieshallucination = new FlxGroup();
+			/*
+			 *  TODO:  Spawn enemies as function of level
+			 */
 			spawnEnemy(level,false);
 			
+			//Load darkness and lights
+			/*
+			 * 
+			 */ 
 			loadDarkness();
 			loadLights(level);
 			
@@ -87,6 +93,7 @@ package
 
 			loadExit(level);
 			
+			//Set camera to follow player
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
 			
