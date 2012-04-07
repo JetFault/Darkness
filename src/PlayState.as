@@ -32,6 +32,8 @@ package
 		private var musicController:MusicController;
 		
 		
+		private var validLocs:Array;
+		
 		
 		//TODO:  Erase these comments
 		/*private var chaseMusic:FlxSound;
@@ -66,10 +68,16 @@ package
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
 			
+			findValidLocations(level);
 			
+/*TRACING			
+			for (var i:uint = 0; i < this.validLocs.length; i++) {
+				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
+				trace("Dist", validLocs[i].distance);
+			}
+*/
 			
 			enemies = new FlxGroup();
-			//var enemyStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getEndTile());
 			spawnEnemy(level);
 			
 			loadDarkness();
@@ -80,7 +88,7 @@ package
 			add(player);			
 			add(enemies);
 
-			loadExit();
+			loadExit(level);
 			
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
@@ -123,194 +131,75 @@ package
 			super.draw();
 		}
 		
+		private function findValidLocations(level:Map):void {
+			var xlocMaze:uint = 0;
+			var ylocMaze:uint = 0;
+			
+			var pt:FlxPoint;
+			var midpt:FlxPoint;
+			var dist:Number;
+			var i:uint;
+			
+			this.validLocs = new Array();
+			
+			/* Discover all possible dead ends */
+			for (i = 0; i < level.deadEnds.length; i++) {
+				xlocMaze = level.deadEnds[i].x;
+				ylocMaze = level.deadEnds[i].y;
+				
+				midpt = Utils.tileToMidpoint(level, xlocMaze, ylocMaze);
+				dist = Utils.getPathDistance(level.findPath(midpt, this.player.getMidpoint()));
+				
+				if (dist != 0) {
+					pt = new FlxPoint(xlocMaze * level.getTileWidthInPixels(), ylocMaze * level.getTileHeightInPixels());
+					validLocs.push({loc:pt, distance:dist});
+				}				
+			}
+			
+			/* Discover all possible corners */
+			for (i = 0; i < level.corners.length; i++) {
+				xlocMaze = level.corners[i].x;
+				ylocMaze = level.corners[i].y;
+				
+				midpt = Utils.tileToMidpoint(level, xlocMaze, ylocMaze);
+				dist = Utils.getPathDistance(level.findPath(midpt, this.player.getMidpoint()));
+				
+				if (dist != 0) {
+					pt = new FlxPoint(xlocMaze * level.getTileWidthInPixels(), ylocMaze * level.getTileHeightInPixels());
+					validLocs.push({loc:pt, distance:dist});
+				}
+			}
+			
+			validLocs.sortOn('distance', Array.NUMERIC);
+		}
 		
 		private function spawnEnemy(level:Map):void {
-			var xlocMaze:uint = 0;
-			var ylocMaze:uint = 0;
 			
-			var xMin:uint = level.getMaze().getWidth()  * (2.0/5.0);
-			var yMin:uint = level.getMaze().getHeight() * (2.0/5.0);
-			
-			var found:Boolean = false;
-			for (var i:uint = 0; i < level.deadEnds.length; i++) {
-				var dead:FlxPoint = level.deadEnds[i];
-				xlocMaze = dead.x;
-				ylocMaze = dead.y;
+			if (this.validLocs.length > 0) {
 				
-				if (   (xlocMaze >= xMin) 
-					&& (ylocMaze >= yMin)
-					&& (xlocMaze < level.getMaze().getWidth())
-					&& (ylocMaze < level.getMaze().getHeight())   ) {
-						
-						found = true;
-						break;
-				}			
-			}
-			
-			//Couldn't find any dead ends
-			if (!found) {
+				var startPercent:Number = 0.60;
 				
-				trace("Enemy: No dead ends!");
-				
-				/*
-				var end:FlxPoint = findValidLocation(level);
-				if (end == null) {
-					trace("NULL!");
-				}*/
-				
-				xlocMaze = level.getMaze().getFinishTile().x;
-				ylocMaze = level.getMaze().getFinishTile().y;
-			}
-			
-			var xlocPix:int = level.getTileWidthInPixels() * xlocMaze;
-			var ylocPix:int = level.getTileHeightInPixels() * ylocMaze;
-			trace("Enemy: xloc", xlocPix);
-			trace("Enemy: yloc", ylocPix);
-			
-			enemy = new Enemy(xlocPix, ylocPix, this.player, level);
-			enemies.add(enemy);
-			
-		}
-
-		private function loadExit():void
-		{			
-			var xMin:uint = level.getMaze().getWidth() * (3.0 / 5.0);
-			var yMin:uint = level.getMaze().getHeight() * (3.0 / 5.0);
-			
-			var xlocMaze:uint = 0;
-			var ylocMaze:uint = 0;
-			
-			var found:Boolean = false;
-			for (var i:uint = 0; i < level.deadEnds.length; i++) {
-				var dead:FlxPoint = level.deadEnds[i];
-				xlocMaze = dead.x;
-				ylocMaze = dead.y;
-								
-				if (   (xlocMaze >= xMin) 
-					&& (ylocMaze >= yMin)
-					&& (xlocMaze < level.getMaze().getWidth())
-					&& (ylocMaze < level.getMaze().getHeight())   ) {
-						
-						found = true;
-						break;
-				}			
-			}
-			
-			//Couldn't find any dead ends
-			if (!found) {
-				
-				trace("Exit: No dead ends!");
-				
-				/*
-				var end:FlxPoint = findValidLocation(level);
-				if (end == null) {
-					trace("NULL!");
-				}*/
-				
-				xlocMaze = level.getMaze().getFinishTile().x;
-				ylocMaze = level.getMaze().getFinishTile().y;
-
-			}
-			
-			var xlocPix:int = level.getTileWidthInPixels() * xlocMaze;
-			var ylocPix:int = level.getTileHeightInPixels() * ylocMaze;
-			
-			exit = new FlxSprite(xlocPix + 5, ylocPix + 3, null);
-			exit.makeGraphic(12, 16, 0xff8B8682);
-			add(exit);
-		}
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
 		
-		
-/*	ORIGINAL	
-		private function spawnEnemy(x:Number, y:Number):void
-		{
-			enemy = new Enemy(x, y,this.player, level);
-			enemies.add(enemy);
+				enemy = new Enemy(point.x, point.y, this.player, level);
+				enemies.add(enemy);
+			}
+		}
+
+		private function loadExit(level:Map):void {			
 			
-		}
+			if (this.validLocs.length > 0) {
+				
+				var startPercent:Number = 0.75;
+				
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
 		
-				private function loadExit():void
-		{
-			//not sure this is working.
-			currentExitPoint = level.deadEnds[0];
-			var currentDistance:Number = Utils.getDistance(player.getMidpoint(), currentExitPoint);
-			for (var i:int = 0; i < level.deadEnds.length; i++)
-			{
-				var distance:Number = Utils.getDistance(player.getMidpoint(), level.deadEnds[i]);
-				if (currentDistance > distance)
-				{
-					currentDistance = distance;
-					currentExitPoint = level.deadEnds[i];
-				}
+				exit = new FlxSprite(point.x, point.y, null);
+				exit.makeGraphic(12, 16, 0xff8B8682);
+				add(exit);
+				
 			}
-			exit = new FlxSprite(currentExitPoint.y * 24 + 5, currentExitPoint.x * 24 + 3, null);
-			exit.makeGraphic(12, 16, 0xff8B8682);
-			add(exit);
-		}
-*/	
-/* EXPERIMENTAL
-	
-		
-		private function findValidLocation(level:Map):FlxPoint {
-			var maze:Array = level.getMaze().getMazeArray();
-			var height:uint = level.getMaze().getHeight();
-			var width:uint = level.getMaze().getWidth();
-			
-			var end:FlxPoint;
-			
-			for (var j:uint = 0; j < height; j++) {
-				//This is why you don't program tired
-				for (var i:uint = width - 1; (i >= width - j) && (i >=0) && (i < width); i--) {
-					if (!level.isWall(j, i)) {
-						trace("j:", j);
-						trace("i:", i);
-						end = new FlxPoint(j*level.getTileHeightInPixels(), i*level.getTileWidthInPixels());
-						if (isPath(level, end, this.player.getMidpoint())) {
-							return end;
-						}
-					}
-					
-				}
-			}
-			return null;
-		}
-		
-		private function isPath(level:Map, point1:FlxPoint, point2:FlxPoint):Boolean {
-			if ( level.findPath(point1, point2, true, false) != null) {
-				return true;
-			}
-			return false;
-		}
-		
-		private function loadExit(level:Map):void
-		{
-			//not sure this is working.
-			var x:uint = level.deadEnds[0].x * level.getTileWidthInPixels();
-			var y:uint = level.deadEnds[0].y * level.getTileHeightInPixels();
-			var farthestExitPoint:FlxPoint = new FlxPoint(x, y);
-
-			var farthestDistance:Number = Utils.getPathDistance(level.findPath(player.getMidpoint(), farthestExitPoint));
-
-			for (var i:int = 0; i < level.deadEnds.length; i++)
-			{
-				x = level.deadEnds[i].x * level.getTileWidthInPixels();
-				y = level.deadEnds[i].y * level.getTileHeightInPixels();
-				var currentExitPoint:FlxPoint = new FlxPoint(x, y);
-
-				var distance:Number = Utils.getPathDistance(level.findPath(player.getMidpoint(), currentExitPoint));
-				if (distance > farthestDistance)
-				{
-					farthestDistance = distance;
-					farthestExitPoint = currentExitPoint;
-				}
-			}
-
-			exit = new FlxSprite(farthestExitPoint.x * level.getTileWidthInPixels() + 5, farthestExitPoint.y * level.getTileHeightInPixels() + 3, null);
-			exit.makeGraphic(12, 16, 0xff8B8682);
-			add(exit);
-		}
-*/		
-
+		}		
 
 		private function loadDarkness():void
 		{

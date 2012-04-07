@@ -31,6 +31,7 @@ package
 		private var _finish		: FlxPoint;
 
 		private var deadEnds:Array;
+		private var corners:Array;
 		
 		/**
 		 * Create a maze
@@ -82,7 +83,11 @@ package
 		}
 		
 		public function getDeadEnds() : Array {
-			return deadEnds;
+			return this.deadEnds;
+		}
+		
+		public function getCorners() : Array {
+			return this.corners;
 		}
 		
 		private function _generate() : void {
@@ -93,6 +98,7 @@ package
 			_removeRandWalls(numWalls);
 			_emptyOut(_start, 3, 3);
 			_findDeadEnds();
+			_findCorners();
 		}
  
 		private function _initMaze() : void {
@@ -127,6 +133,7 @@ package
 			_moves.push(pos.y + (pos.x * _width));
 			
 			deadEnds = new Array();
+			corners = new Array();
  
 			while ( _moves.length )
 			{
@@ -155,7 +162,7 @@ package
 //BEGIN removal of walls				
 				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
 				{
-					if (_randInt(0, 100) < 10 && pos.x > 4 && pos.y > 5)
+					if (Utils.randInt(0, 100) < 10 && pos.x > 4 && pos.y > 5)
 					{
 						_maze[pos.x][pos.y + 1] = 0;
 					}
@@ -163,7 +170,7 @@ package
 				
 				if ((pos.x -2 >= 0) && (_maze[pos.x - 2][pos.y] == false))
 				{
-					if (_randInt(0, 100) < 10 && pos.x > 4 && pos.y > 4)
+					if (Utils.randInt(0, 100) < 10 && pos.x > 4 && pos.y > 4)
 					{
 						_maze[pos.x - 1][pos.y] = 0;
 					}
@@ -179,44 +186,8 @@ package
 */ 
 				if ( possibleDirections.length > 0 )
 				{
-					
-/*					// 1 in 4 chance 
-					var percent:int;
-					//percent = 0;
-					percent = _randInt(0, 3);
-					
-					if(percent == 0) {
-						var removeWall:uint = _randInt(0, (possibleDirections.length - 1));
-	 
-						switch ( possibleDirections.charAt(removeWall) )
-						{
-							case NORTH: 
-								_maze[pos.x - 2][pos.y] = 0;
-								_maze[pos.x - 1][pos.y] = 0;
-								_moves.push(pos.y + ((pos.x-2) * _width));
-								break;
-	 
-							case SOUTH: 
-								_maze[pos.x + 2][pos.y] = 0;
-								_maze[pos.x + 1][pos.y] = 0;
-								_moves.push(pos.y + ((pos.x+2) * _width));
-								break;
-	 
-							case WEST: 
-								_maze[pos.x][pos.y - 2] = 0;
-								_maze[pos.x][pos.y - 1] = 0;
-								_moves.push( (pos.y-2) + (pos.x * _width));
-								break;
-	 
-							case EAST: 
-								_maze[pos.x][pos.y + 2] = 0;
-								_maze[pos.x][pos.y + 1] = 0;
-								_moves.push( (pos.y+2) + (pos.x * _width));
-								break;        
-						}
-					}
-*/				
-					move = _randInt(0, (possibleDirections.length - 1));
+
+					move = Utils.randInt(0, (possibleDirections.length - 1));
  
 					switch ( possibleDirections.charAt(move) )
 					{
@@ -285,9 +256,9 @@ package
 				for (var j:uint = 1; j < getWidth() - 1; j++) {
 					
 					if(_maze[i][j] == 0) {					
-						var sum:uint = 	_maze[i - 1][j] //TOP
-									  + _maze[i + 1][j] //BOTTOM
-									  + _maze[i][j - 1] //LEFT
+						var sum:uint = 	_maze[i - 1][j]  //TOP
+									  + _maze[i + 1][j]  //BOTTOM
+									  + _maze[i][j - 1]  //LEFT
 									  + _maze[i][j + 1]; //RIGHT
 						
 						if(sum == 3) {
@@ -298,15 +269,32 @@ package
 			}
 		}
 		
-		private function _randInt( min : int, max : int ) : int {
-			return int((Math.random() * (max - min + 1)) + min);
+		private function _findCorners() : void {
+			for (var i:uint = 1; i < getHeight() - 1; i++) {
+				for (var j:uint = 1; j < getWidth() - 1; j++) {
+					
+					if (_maze[i][j] == 0) {
+						var sum:uint = 0;
+						if (_maze[i - 1][j]) sum += 1; //TOP
+						if (_maze[i + 1][j]) sum += 1; //BOTTOM
+						if (_maze[i][j - 1]) sum += 2; //LEFT
+						if (_maze[i][j + 1]) sum += 2; //RIGHT
+						
+						if (sum == 3) {
+							this.corners.push(new FlxPoint(j, i));
+						}
+					}
+				}
+			}
 		}
+		
+
 		
 		private function _removeRandWalls(numWalls:uint): void {
 			for ( var i:uint = 0; i < numWalls; i++) {
 				do {
-					var xWall:int = _randInt(1, _height-3);
-					var yWall:int = _randInt(1, _width-3);
+					var xWall:int = Utils.randInt(1, _height-3);
+					var yWall:int = Utils.randInt(1, _width-3);
 				} while (_maze[xWall][yWall] == 0);
 				_maze[xWall][yWall] = 0;
 			}

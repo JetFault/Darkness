@@ -11,9 +11,11 @@ package
 	public class Map extends FlxTilemap
 	{
 		[Embed(source = "../bin/data/autotiles3.png")] public var MapTiles:Class;
+//		[Embed(source = "../bin/data/large_tiles.png")] public var MapTiles:Class;
 		
 		public var maze:Maze;
 		public var deadEnds:Array;
+		public var corners:Array;
 		
 		/**
 		 * Create a map.
@@ -27,7 +29,8 @@ package
 				maze = new Maze(width, height);
 				var levelArray:Array = maze.to1DArray();
 
-				deadEnds = maze.getDeadEnds();
+				this.deadEnds = maze.getDeadEnds();
+				this.corners = maze.getCorners();
 				
 				loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles, 0, 0, FlxTilemap.AUTO);
 			}
@@ -35,6 +38,15 @@ package
 				loadLevelData();
 			}
 		}
+		
+		public function isWall(x:uint, y:uint):Boolean {
+			var mazeArr:Array = this.maze.getMazeArray();
+			if (mazeArr[x][y] == 1) {
+				return true;
+			}
+			return false;
+		}
+
 		
 		public function getMaze():Maze {
 			return this.maze;

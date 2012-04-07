@@ -9,6 +9,17 @@ package
 	public class Utils 
 	{
 		
+		public static function randInt( min : int, max : int ) : int {
+			return int((Math.random() * (max - min + 1)) + min);
+		}
+		
+		public static function isPath(level:Map, point1:FlxPoint, point2:FlxPoint):Boolean {
+			if ( level.findPath(point1, point2, true, false) != null) {
+				return true;
+			}
+			return false;
+		}
+		
 		public static function getDistance(p1:FlxPoint, p2:FlxPoint):Number
 		{
 			var xDist:Number = p1.x - p2.x;
@@ -21,7 +32,12 @@ package
 		public static function getPathDistance(path:FlxPath):Number
 		{
 			var distance:Number = 0;
-			for (var i:int = 0; i++; i < path.nodes.length-1)
+			
+			if (path == null) {
+				return distance;
+			}
+			
+			for (var i:int = 0; i < path.nodes.length - 1; i++)
 			{
 				distance += getDistance(path.nodes[i], path.nodes[i + 1]);
 			}
