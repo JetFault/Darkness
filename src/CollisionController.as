@@ -52,8 +52,10 @@ package
 				player.inventory.push(item);
 			}
 			
-			if (FlxG.overlap(player, exit) && player.isAlive()) {
+			if (FlxG.overlap(player, exit) && player.isAlive()) {				
 				player.kill();
+				FlxG.level++;
+				FlxG.switchState(new PlayState());
 			}
 			super.update();
 		}

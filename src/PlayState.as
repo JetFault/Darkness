@@ -6,7 +6,6 @@ package
 	{
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
-		[Embed(source = "../bin/data/Background3.png")] protected var BgTexture3:Class;
 		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
 		//Model
 		private var player:Player;
@@ -52,7 +51,7 @@ package
 			backgroundgroup = new FlxGroup();
 			for (var i:uint = 0; i < widthLimit; i++) {
 				for (var j:uint = 0; j < heightLimit; j++) {
-					var bg:FlxSprite = new FlxSprite(backgroundtemplate.width * i, backgroundtemplate.height * j, BgTexture3);
+					var bg:FlxSprite = new FlxSprite(backgroundtemplate.width * i, backgroundtemplate.height * j, BgTexture7);
 					bg.solid = backgroundtemplate.solid;
 					backgroundgroup.add(bg);
 				}
