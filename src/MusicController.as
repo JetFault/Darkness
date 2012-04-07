@@ -27,20 +27,13 @@ package
 		
 		public function MusicController(player:Player, enemy:Enemy, exit:FlxSprite) 
 		{
-			chaseMusic = new FlxSound();
-			chaseMusic.loadEmbedded(ChaseMusic, true);
-			//chaseMusic.play();
-			chaseMusic.volume = 0;
+			chaseMusic = FlxG.loadSound(ChaseMusic, 0, true);
 			
-			rainMusic = new FlxSound();
-			rainMusic.loadEmbedded(RainMusic, true);
+			rainMusic =FlxG.loadSound(RainMusic, 0.04, true);
 			rainMusic.play();
-			rainMusic.volume = 0.04;
 			
-			windMusic = new FlxSound();
-			windMusic.loadEmbedded(WindMusic, true);
+			windMusic = FlxG.loadSound(WindMusic, .06, true);
 			windMusic.play();
-			windMusic.volume = 0.06
 			
 			this.player = player;
 			this.enemy = enemy;
@@ -52,7 +45,7 @@ package
 		}
 		
 		override public function update():void {
-			chaseMusic.update();
+			//chaseMusic.update();
 			var playerPos:FlxPoint = player.getMidpoint();
 			var enemyPos:FlxPoint = enemy.getMidpoint();
 			
