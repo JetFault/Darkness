@@ -14,12 +14,16 @@ package
 		private var enemiesreal:FlxGroup;
 		private var exit:FlxSprite;
 		private var enemieshallucination:FlxGroup;
-		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, exit:FlxSprite) 
+		private var item:Item;
+		private var light:Light;
+		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, exit:FlxSprite, item:Item, light:Light) 
 		{
 			this.player = player;
 			this.enemiesreal = enemiesreal;
 			this.exit = exit;
 			this.enemieshallucination = enemieshallucination;
+			this.item = item;
+			this.light = light;
 			super();
 		}
 		
@@ -39,7 +43,14 @@ package
 				}
 			}
 			
-			
+			if (FlxG.overlap(player, item) && player.isAlive()) {
+				if (item.getItemType() == ItemType.LANTERN)
+				{
+					light.loadLantern();
+					item.kill();
+					item.destroy();
+				}
+			}
 			
 			if (FlxG.overlap(player, exit) && player.isAlive()) {
 				player.kill();

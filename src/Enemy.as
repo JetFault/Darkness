@@ -17,6 +17,11 @@ package
 			this.hallucination = hallucination;
 			loadEnemy();
 			this.controller = new EnemyController(this, player, level, enemyRunSpeed);
+			
+			width = 1;
+			height = 1;
+			offset.x = 10;
+			offset.y = 10;
 		}
 		
 		private function loadEnemy():void

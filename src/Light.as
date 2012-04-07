@@ -9,7 +9,8 @@ package
 	
 	public class Light extends FlxSprite
 	{
-		[Embed(source="/../bin/data/glow-light7-2.png")]private var LightImageClass:Class;
+		[Embed(source = "/../bin/data/glow-light.png")]private var LightImageClass:Class;
+		[Embed(source = "/../bin/data/glow-light7-2.png")]private var LanternImageClass:Class;
 
 		private var darkness:FlxSprite;
 		public var controller:LightController;
@@ -38,6 +39,10 @@ package
 		
 		public function getController():BaseController {
 			return this.controller;
+		}
+		
+		public function loadLantern():void {
+			this.loadGraphic(LanternImageClass);
 		}
 		
 	}

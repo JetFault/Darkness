@@ -15,6 +15,7 @@ package
 		public var deltaVel:FlxPoint;
 		
 		private var preChange:Number;
+		private var LargeScale:Number = 1.2
 		
 		public function LightController(light:Light, player:Player) 
 		{
@@ -78,7 +79,7 @@ package
 			//var change:Number = (40 - Utils.getDistance(zero, player.velocity)) * 0.0015 + 0.4;
 			var change:Number = Utils.getDistance(zero, player.maxVelocity) - Utils.getDistance(zero, player.deltaPosition);
 			var deltaChange:Number = change - preChange;
-			var scaleValue:Number = Math.max(0, Math.min(1.0,(1.0 - Math.abs(deltaChange * 0.05) - (Math.random() * 0.1)) * 1.0) -.1);
+			var scaleValue:Number = Math.max(0, Math.min(LargeScale,(1.0 - Math.abs(deltaChange * 0.05) - (Math.random() * 0.2)) * LargeScale) -.1);
 			light.scale.x = scaleValue;
 			light.scale.y = scaleValue;
 						

@@ -15,6 +15,7 @@ package
 		private var player:Player;
 		private var level:Map;
 		private var enemy:Enemy;
+		private var item:Item;
 		private var exit:FlxSprite;
 		private var light:Light;
 		private var enemiesreal:FlxGroup;
@@ -45,7 +46,7 @@ package
 			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 						
-			level = new Map(18, 14, true);
+			level = new Map(22, 18, true);
 			
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
@@ -74,16 +75,18 @@ package
 			
 			enemiesreal = new FlxGroup();
 			enemieshallucination = new FlxGroup();
-			spawnEnemy(level,false);
+			spawnEnemy(level, false);
 			
 			loadDarkness();
 			loadLights(level);
 			
 			add(backgroundgroup);
 			add(level);
-			add(player);			
+			add(player);
 			add(enemiesreal);
 			add(enemieshallucination);
+			
+			spawnItem(level, ItemType.LANTERN);
 
 			loadExit(level);
 			
@@ -96,7 +99,7 @@ package
 			
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
-			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit);
+			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light);
 
 			add(controllers);
 			//TODO:  Have a controller?
@@ -186,6 +189,18 @@ package
 				else {
 					enemieshallucination.add(enemy);
 				}
+			}
+		}
+		
+		private function spawnItem(level:Map, itemType:ItemType):void {
+			if (this.validLocs.length > 0) {
+				var startPercent:Number = .40;
+				
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length * startPercent, validLocs.length - 1)].loc;
+				
+				item = new Item(point.x,point.y,player,level,itemType);
+				
+				add(item);
 			}
 		}
 
