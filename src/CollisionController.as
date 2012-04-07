@@ -48,8 +48,8 @@ package
 				{
 					light.loadLantern();
 					item.kill();
-					item.destroy();
 				}
+				player.inventory.push(item);
 			}
 			
 			if (FlxG.overlap(player, exit) && player.isAlive()) {
