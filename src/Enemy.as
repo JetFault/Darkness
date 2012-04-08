@@ -23,10 +23,10 @@ package
 				this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType);
 			}
 			this.enemyType = enemyType;
-			width = 1;
-			height = 1;
-			offset.x = 10;
-			offset.y = 10;
+			//width = 1;
+			//height = 1;
+			//offset.x = 10;
+			//offset.y = 10;
 		}
 		
 		private function loadEnemy():void
@@ -50,6 +50,7 @@ package
 		public function isHallucination():Boolean {
 			return this.hallucination;
 		}
+		
 	}
 
 }

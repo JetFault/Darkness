@@ -38,7 +38,7 @@ package
 			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
 			
 			//Check visibility
-			if (distance <= visibledistance) {
+			/*if (distance <= visibledistance) {
 				var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
 				if (thepath != null && Utils.getPathDistance(thepath) <= visibledistance) {
 					this.visible = true;
@@ -48,6 +48,16 @@ package
 				if (thepath) {
 					thepath.destroy();
 				}
+			}*/
+			
+			
+			//Lose sight of player if too far
+			var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
+			if (thepath != null && Utils.getPathDistance(thepath) >= visibledistance) {
+				this.visible = false;
+			}
+			if (thepath) {
+				thepath.destroy();
 			}
 			
 			//If found, just follow.  Else, go around predetermined path
@@ -98,6 +108,18 @@ package
 		
 		protected function getAutoPath():Array {
 			return null;
+		}
+		
+		public function setPlayerVisible():void {
+			var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
+			if (thepath != null && Utils.getPathDistance(thepath) <= visibledistance) {
+				this.visible = true;
+			}else {
+				this.visible = false;
+			}
+			if (thepath) {
+				thepath.destroy();
+			}
 		}
 		
 	}

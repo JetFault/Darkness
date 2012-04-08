@@ -154,6 +154,10 @@ package
 			}
 			super.destroy();
 		}
+		
+		public function setPlayerVisible(): void {
+			this.ai.setPlayerVisible();
+		}
 	}
 
 }
