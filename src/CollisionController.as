@@ -29,15 +29,22 @@ package
 		
 		override public function update(): void {
 			//Real enemies that tag player kill player
+			
 			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
-				player.kill();
-				FlxG.shake();
+				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+					var e:Enemy = enemiesreal.members[i] as Enemy;
+					if (FlxG.overlap(player, e.getHitbox())) {
+						player.kill();
+						FlxG.shake();
+					}
+				}
 			}
 			
 			//Hallucinations that tag player stay alive
 			if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
-					if (FlxG.overlap(player, enemieshallucination.members[i])) {
+					var e:Enemy = enemieshallucination.members[i] as Enemy;
+					if (FlxG.overlap(player, e.getHitbox())) {
 						enemieshallucination.members[i].kill();
 						enemieshallucination.remove(enemieshallucination.members[i]);
 					}
@@ -88,6 +95,11 @@ package
 				FlxG.switchState(new PlayState());
 			}
 			super.update();
+		}
+		
+		private function killPlayerByEnemy() {
+			player.kill();
+			FlxG.shake();
 		}
 		
 	}

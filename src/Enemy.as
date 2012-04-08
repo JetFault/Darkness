@@ -9,11 +9,16 @@ package
 		private var enemyRunSpeed:Number;
 		private var hallucination:Boolean;
 		private var enemyType:uint;
+		public var hitbox:FlxSprite;
 		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean, enemyType:uint) 
 		{
 			super(0, 0, null);
 			super.x = x;
 			super.y = y;
+			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
+			hitbox.makeGraphic(1, 1, 0xffff0000);
+			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
+			hitbox.y = this.getMidpoint().y - hitbox.width / 2;
 			this.enemyRunSpeed = 50;
 			this.hallucination = hallucination;
 			loadEnemy();
@@ -50,6 +55,10 @@ package
 		
 		public function isHallucination():Boolean {
 			return this.hallucination;
+		}
+		
+		public function getHitbox():FlxSprite {
+			return this.hitbox;
 		}
 		
 	}

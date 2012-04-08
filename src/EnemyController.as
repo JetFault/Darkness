@@ -145,6 +145,9 @@ package
 			var origin:FlxPoint = new FlxPoint(0, 0);
 			enemy.angle = FlxU.getAngle(origin, velocityp);*/
 			
+			enemy.hitbox.x = enemy.getMidpoint().x - enemy.hitbox.width / 2;
+			enemy.hitbox.y = enemy.getMidpoint().y - enemy.hitbox.width / 2;
+			
 			super.update();
 		}
 		

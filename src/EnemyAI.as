@@ -2,6 +2,7 @@ package
 {
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxPath;
+	import org.flixel.FlxSprite;
 	/**
 	 * ...
 	 * @author Darkness Team
