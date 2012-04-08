@@ -23,6 +23,7 @@ package
 				this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType);
 			}
 			this.enemyType = enemyType;
+			//Deliberately commented these out.  Try something else...
 			//width = 1;
 			//height = 1;
 			//offset.x = 10;
