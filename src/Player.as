@@ -23,7 +23,7 @@ package
 			this.x = x;
 			this.y = y;
 			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
-			hitbox.makeGraphic(8, 8, 0xffff0000);
+			hitbox.makeGraphic(8, 8, 0x00ff0000);
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
 			hitbox.y = this.getMidpoint().y - hitbox.height / 2;
 			this.playerAlive = true;
