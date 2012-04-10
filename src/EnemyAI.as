@@ -20,7 +20,7 @@ package
 		protected var enemyPath:FlxPath;
 		protected var currentPoint:FlxPoint = new FlxPoint(0, 0);
 		protected var pathcreated:Boolean;  //Is this guy doing a tree search?
-		protected var visibledistance:Number = 80;
+		protected var visibledistance:Number = 100;
 		
 		
 		public function EnemyAI(self:Enemy, player:Player, map:Map) 

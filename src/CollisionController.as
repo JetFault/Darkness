@@ -56,7 +56,7 @@ package
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					if (FlxG.overlap(light, enemiesreal.members[i])) {
 						var e:Enemy = enemiesreal.members[i] as Enemy;
-						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < 40*light.scale.x) { //Assumes light.scale.x == light.scale.y
+						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < light.radius*light.scale.x) { //Assumes light.scale.x == light.scale.y
 							var ctrl:EnemyController = e.getController() as EnemyController;
 							ctrl.setPlayerVisible();
 						}
@@ -69,7 +69,7 @@ package
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 					if (FlxG.overlap(light, enemieshallucination.members[i])) {
 						var e:Enemy = enemieshallucination.members[i] as Enemy;
-						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < 15*light.scale.x) { //Assumes light.scale.x == light.scale.y
+						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < light.radius*light.scale.x) { //Assumes light.scale.x == light.scale.y
 							enemieshallucination.members[i].kill();
 							enemieshallucination.remove(enemieshallucination.members[i]);
 						}
