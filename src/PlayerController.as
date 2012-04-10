@@ -122,7 +122,7 @@ package
 			var p2:FlxPoint = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
 			player.angle = FlxU.getAngle(p1, p2);*/
 			
-			stepDis += Utils.getDistance(prePosition, whattomove.getMidpoint());
+			stepDis += Utils.getDistance(prePosition, player.getMidpoint());
 			if (stepDis >= stepLength) {
 				/*var rand:Number = Math.random();
 				if (rand < (1/3)) 			{	playerStep1.play(true); }

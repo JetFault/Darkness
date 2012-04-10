@@ -34,8 +34,8 @@ package
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
-						player.kill();
-						FlxG.shake();
+						killPlayerByEnemy();
+						FlxG.fade(0xff000000, 3, resetLevel);
 					}
 				}
 			}
@@ -83,6 +83,7 @@ package
 				if (item.getItemType() == ItemType.LANTERN)
 				{
 					light.loadLantern();
+					player.loadLantern();
 				}
 				if (item.getItemType() == ItemType.CLOCK)
 				{
@@ -91,6 +92,7 @@ package
 				}
 				item.kill();
 				player.inventory.push(item);
+				Persistence.inventory = player.inventory;
 			}
 			
 			//Exit level
@@ -102,11 +104,17 @@ package
 			super.update();
 		}
 		
-		private function killPlayerByEnemy() {
+		private function killPlayerByEnemy():void {
 			player.kill();
 			FlxG.shake();
+			Persistence.init();
 		}
 		
+		private function resetLevel():void {
+			FlxG.level = 0;
+			Persistence.init();
+			FlxG.switchState(new PlayState());
+		}
 	}
 
 }
