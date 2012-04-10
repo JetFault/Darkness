@@ -106,6 +106,7 @@ package
 		private function killPlayerByEnemy() {
 			player.kill();
 			FlxG.shake();
+			Persistence.init();
 		}
 		
 	}

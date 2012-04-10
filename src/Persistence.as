@@ -12,8 +12,11 @@ package
 		
 		static function init() {
 			numItems = 0;
+			for (var i:int = 0; i < inventory.length; i++)
+			{
+				inventory[i] = null;
+			}
 		}		
-		
 		
 	}
 
