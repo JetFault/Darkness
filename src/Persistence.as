@@ -14,7 +14,7 @@ package
 			numItems = 0;
 			for (var i:int = 0; i < inventory.length; i++)
 			{
-				inventory[i] = null;
+				inventory.pop();
 			}
 		}		
 		
