@@ -152,6 +152,7 @@ package
 			//TODO  Put this somewhere else
 			if (FlxG.keys.ENTER) {
 				FlxG.resetState();
+				Persistence.init();
 			}
 			if (FlxG.keys.N) {
 				FlxG.level++;
