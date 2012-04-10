@@ -104,13 +104,13 @@ package
 			super.update();
 		}
 		
-		private function killPlayerByEnemy() {
+		private function killPlayerByEnemy():void {
 			player.kill();
 			FlxG.shake();
 			Persistence.init();
 		}
 		
-		private function resetLevel() {
+		private function resetLevel():void {
 			FlxG.level = 0;
 			Persistence.init();
 			FlxG.switchState(new PlayState());
