@@ -17,11 +17,9 @@ package
 		private var enemyStep2:FlxSound;
 		private var enemyStep3:FlxSound;
 		private var highStaticSound:FlxSound;
-
-		
 		private var sirenSound:FlxSound;
-		
 		private var stepPlayed:Number;
+		
 		
 		private var player:Player;
 		private var enemy:Enemy;
@@ -42,11 +40,13 @@ package
 		
 		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint) 
 		{
+			//load sounds
 			enemyStep1 = FlxG.loadSound(EnemyStepSound1);
 			enemyStep2 = FlxG.loadSound(EnemyStepSound2);
 			enemyStep3 = FlxG.loadSound(EnemyStepSound3);
 			sirenSound = FlxG.loadSound(SirenSound);
 			highStaticSound = FlxG.loadSound(HighStaticSound);
+			
 			
 			this.player = player;
 			this.enemy = enemy;
@@ -65,10 +65,6 @@ package
 		}
 		
 		override public function update():void {
-			//enemyStep1.update();
-			//enemyStep2.update();
-			//enemyStep3.update();
-			//sirenSound.update();
 			
 			//Cleanup after hallucination died
 			if (!this.enemy.alive) {
@@ -123,27 +119,28 @@ package
 				FlxG.shake(0.02 * shake, 0.2 * shake, null, true, 0);
 				stepDis = 0;
 			}
-			prePosition = enemy.getMidpoint();
+			prePosition = enemyPos;
 			//End FootSteps---
 			
 			//SIREN---
 			if (ai.visible) {
 				sirenSound.play();
 				enemy.play("raged");
-			} else if (Utils.getDistance(playerPos, enemyPos) < 50) {
+			/*} else if (Utils.getDistance(playerPos, enemyPos) < 50) {
 				sirenSound.play();
-				enemy.play("raged");
+				enemy.play("raged");*/
 			} else {
 				sirenSound.stop();
 				enemy.play("walk");
 			}
 			//End SIREN---
+			
 			ai.doNextAction();
 			
+			
+			
 			//Time since last iteration
-			runTimer += FlxG.elapsed;
-			
-			
+			//runTimer += FlxG.elapsed;
 			/*
 			if (runTimer > 3 && enemy.getEnemyRunSpeed() < maxRunSpeed)
 			{
@@ -156,7 +153,14 @@ package
 			var origin:FlxPoint = new FlxPoint(0, 0);
 			enemy.angle = FlxU.getAngle(origin, velocityp);
 			//----FUCKING SPASTIC------
-			if (ai.visible || Utils.getDistance(playerPos, enemyPos) < 50) { enemy.angle += (Math.random() - 0.5) * 110;	}
+			if (ai.visible) 
+			{ 
+				enemy.angle += (Math.random() - 0.5) * 110;	
+			}
+			//else if (Utils.getDistance(playerPos, enemyPos) < 50) {
+			//	enemy.angle += (Math.random() - 0.5) * 110;	
+			//
+			//}
 			//----END OF SPASTIC-----
 			enemy.hitbox.x = enemy.getMidpoint().x - enemy.hitbox.width / 2;
 			enemy.hitbox.y = enemy.getMidpoint().y - enemy.hitbox.width / 2;

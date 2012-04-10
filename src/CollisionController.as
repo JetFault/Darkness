@@ -33,27 +33,25 @@ package
 			//Player collides with level
 			FlxG.collide(player.getHitbox(), level);
 			
-			//Real enemies that tag player kill player
 			
+			//Real enemies that tag player kill player
 			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
-					if (!e) {
-						trace(e);
-						trace(enemiesreal.members.length);
-					}
 					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
+						//TAG
 						killPlayerByEnemy();
 						FlxG.fade(0xff000000, .25, resetLevel);
+						//...no tagbacks XD
 					}
 				}
 			}
 			
-			//Hallucinations that tag player stay alive
+			//Hallucinations that tag player die
 			if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 					var e:Enemy = enemieshallucination.members[i] as Enemy;
-					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
+					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						enemieshallucination.members[i].kill();
 						enemieshallucination.remove(enemieshallucination.members[i]);
 					}
@@ -63,8 +61,8 @@ package
 			//Real enemies that tag light are attracted to player
 			if (FlxG.overlap(light, enemiesreal)) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
-					if (FlxG.overlap(light, enemiesreal.members[i])) {
-						var e:Enemy = enemiesreal.members[i] as Enemy;
+					var e:Enemy = enemiesreal.members[i] as Enemy;
+					if (e && FlxG.overlap(light, enemiesreal.members[i])) {
 						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < light.radius*light.scale.x) { //Assumes light.scale.x == light.scale.y
 							var ctrl:EnemyController = e.getController() as EnemyController;
 							ctrl.setPlayerVisible();
@@ -74,7 +72,7 @@ package
 			}
 			
 			//Hallucinations that tag light die
-			if (FlxG.overlap(light, enemieshallucination)) {
+			/*if (FlxG.overlap(light, enemieshallucination)) {
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 					if (FlxG.overlap(light, enemieshallucination.members[i])) {
 						var e:Enemy = enemieshallucination.members[i] as Enemy;
@@ -84,7 +82,7 @@ package
 						}
 					}
 				}
-			}
+			}*/
 			
 			
 			//Grab item

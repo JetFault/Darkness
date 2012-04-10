@@ -23,6 +23,8 @@ package
 		protected var pathcreated:Boolean;  //Is this guy doing a tree search?
 		protected var visibledistance:Number = 100;
 		protected var depth:Number = 50;
+		protected var time:Number = 1;
+		protected var timer:Number = 0;
 		
 		
 		public function EnemyAI(self:Enemy, player:Player, map:Map) 
@@ -39,9 +41,10 @@ package
 		public function doNextAction():void {
 			var playerPos:FlxPoint = this.player.getMidpoint();
 			var enemyPos:FlxPoint = this.self.getMidpoint();
-			var xDist:Number = playerPos.x - enemyPos.x;
-			var yDist:Number = playerPos.y - enemyPos.y;
-			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
+			var distance = Utils.getDistance(playerPos, enemyPos);
+			//var xDist:Number = playerPos.x - enemyPos.x;
+			//var yDist:Number = playerPos.y - enemyPos.y;
+			//var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
 			
 			//Check visibility
 			/*if (distance <= visibledistance) {
@@ -58,8 +61,8 @@ package
 			
 			
 			//Lose sight of player if too far
-			var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
-			if (thepath != null && Utils.getPathDistance(thepath) >= visibledistance) {
+			var thepath:FlxPath = this.map.findPath(enemyPos, playerPos);
+			if (thepath && Utils.getPathDistance(thepath) >= visibledistance) {
 				this.visible = false;
 			}
 			if (thepath) {
@@ -78,20 +81,27 @@ package
 						currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						pathcreated = true;
 					}else {
-						//Proceed to next part of DFS
-						if(Utils.getDistance(currentPoint,self.getMidpoint()) < 5){
+						//Proceed to next part of precomputed array
+						if(Utils.getDistance(currentPoint,enemyPos) < 5){
 							currentindex += 1;
 							currentindex %= closed.length;
+							trace("path: current index");
+							trace(currentindex)
 							currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						}
 						
+						//TODO:  Pathfinding optimization.  Try not to pathfind per frame.
+						//Note:  enemy sprites making this difficult, since too large and must go through walls.  Try to make the hitbox pathfollow instead.
+						//timer += FlxG.elapsed;
+						//if(timer >= time){
 						if (enemyPath) {
 							enemyPath.destroy();
 						}
-						enemyPath = this.map.findPath(self.getMidpoint(), currentPoint);
+						enemyPath = this.map.findPath(enemyPos, currentPoint);
 						if (enemyPath) {
 							this.self.followPath(enemyPath, self.getEnemyRunSpeed());
 						}
+						//}
 					}
 				//}
 			}else {
@@ -100,7 +110,7 @@ package
 					enemyPath.destroy();
 				}
 				//Find a new path between self and player
-				enemyPath = this.map.findPath(self.getMidpoint(), player.getMidpoint());
+				enemyPath = this.map.findPath(enemyPos, playerPos);
 				//If no path found, just sit still for that frame.  Otherwise, follow the path.
 				if (enemyPath == null) {
 					trace("No Path found");
@@ -118,7 +128,7 @@ package
 		
 		public function setPlayerVisible():void {
 			var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
-			if (thepath != null && Utils.getPathDistance(thepath) <= visibledistance) {
+			if (thepath && Utils.getPathDistance(thepath) <= visibledistance) {
 				this.visible = true;
 			}else {
 				this.visible = false;
