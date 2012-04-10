@@ -10,7 +10,7 @@ package
 		[Embed(source = "../bin/data/EnemyStep1.mp3")] protected var EnemyStepSound1:Class;
 		[Embed(source = "../bin/data/EnemyStep2.mp3")] protected var EnemyStepSound2:Class;
 		[Embed(source = "../bin/data/EnemyStep3.mp3")] protected var EnemyStepSound3:Class;
-		
+		[Embed(source = "../bin/data/HighStatic.mp3")] protected var HighStaticSound:Class;
 		[Embed(source = "../bin/data/whispersSound.mp3")] protected var SirenSound:Class;
 		
 		private var enemyStep1:FlxSound;
@@ -123,8 +123,13 @@ package
 			//SIREN---
 			if (ai.visible) {
 				sirenSound.play();
+				enemy.play("raged");
+			} else if (Utils.getDistance(playerPos, enemyPos) < 50) {
+				sirenSound.play();
+				enemy.play("raged");
 			} else {
 				sirenSound.stop();
+				enemy.play("walk");
 			}
 			//End SIREN---
 			ai.doNextAction();
@@ -141,10 +146,12 @@ package
 			}
 			*/
 			
-			/*var velocityp:FlxPoint = new FlxPoint(enemy.velocity.x, enemy.velocity.y);
+			var velocityp:FlxPoint = new FlxPoint(enemy.velocity.x, enemy.velocity.y);
 			var origin:FlxPoint = new FlxPoint(0, 0);
-			enemy.angle = FlxU.getAngle(origin, velocityp);*/
-			
+			enemy.angle = FlxU.getAngle(origin, velocityp);
+			//----FUCKING SPASTIC------
+			if (ai.visible || Utils.getDistance(playerPos, enemyPos) < 50) { enemy.angle += (Math.random() - 0.5) * 110;	}
+			//----END OF SPASTIC-----
 			enemy.hitbox.x = enemy.getMidpoint().x - enemy.hitbox.width / 2;
 			enemy.hitbox.y = enemy.getMidpoint().y - enemy.hitbox.width / 2;
 			

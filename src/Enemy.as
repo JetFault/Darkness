@@ -5,6 +5,8 @@ package
 	public class Enemy extends FlxSprite
 	{
 		//[Embed(source = "../bin/data/Enemy.png")] protected var ImgEnemy:Class;
+		[Embed(source = "../bin/data/EnemyAnimation4.png")] protected var ImgEnemy:Class;
+		
 		public var controller:EnemyController;
 		private var enemyRunSpeed:Number;
 		private var hallucination:Boolean;
@@ -16,7 +18,7 @@ package
 			super.x = x;
 			super.y = y;
 			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
-			hitbox.makeGraphic(1, 1, 0xffff0000);
+			hitbox.makeGraphic(1, 1, 0xff000000);
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
 			hitbox.y = this.getMidpoint().y - hitbox.width / 2;
 			this.enemyRunSpeed = 50;
@@ -33,12 +35,15 @@ package
 			//height = 1;
 			//offset.x = 10;
 			//offset.y = 10;
+			addAnimation("raged", [0, 1, 2], 10);//30
+			addAnimation("walk", [3, 4, 5, 4], 2);//30
+			play("walk");
 		}
 		
 		private function loadEnemy():void
 		{
-			//loadGraphic(ImgEnemy, true, true, 15, 14);
-			makeGraphic(18, 18, 0xff000000);
+			loadGraphic(ImgEnemy, true, true, 32, 33);
+			//makeGraphic(18, 18, 0xff000000);
 		}
 		
 		public function getEnemyRunSpeed():Number {

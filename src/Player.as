@@ -7,7 +7,8 @@ package
 	public class Player extends FlxSprite
 	{
 		//Sprite sheet
-		[Embed(source = "../bin/data/Player3.png")] protected var ImgPlayer:Class;
+		[Embed(source = "../bin/data/PlayerAnimation.png")] protected var ImgPlayer:Class;
+		[Embed(source = "../bin/data/PlayerLightAnimation.png")] protected var ImgPlayerLight:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;
@@ -33,6 +34,8 @@ package
 			lastPosition = new FlxPoint(this.x, this.y);
 			deltaPosition = new FlxPoint(0, 0);
 			inventory = new Array();
+			addAnimation("walk", [0, 1, 0, 2], 5);
+			addAnimation("stop", [0], 1);
 		}
 		
 		private function loadPlayer():void
@@ -49,7 +52,7 @@ package
 			this.playerAlive = false;
 			super.kill();
 		}
-		
+		 
 		public function getController(): BaseController {
 			return this.controller;
 		}

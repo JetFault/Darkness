@@ -93,6 +93,12 @@ package
 				{
 					player.velocity.y = -player.maxVelocity.y;
 				}
+				var length:Number = Utils.getDistance(new FlxPoint(0, 0), player.velocity);
+				if (length != 0) {
+					player.play("walk");
+				} else {
+					player.play("stop");
+				}
 			}
 			
 			if (controlScheme == 3)

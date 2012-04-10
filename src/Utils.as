@@ -26,12 +26,32 @@ package
 			return false;
 		}
 		
+		public static function getVolume(dis:Number, p1:FlxPoint, p2:FlxPoint):Number
+		{
+			var distance:Number = getDistance(p1, p2);
+			
+			var maxDis:Number = dis;
+			var m:Number = -1 / maxDis;
+			var b:Number = 1;
+			var x:Number = distance;
+			var y:Number = (m * x) + b;
+			return y;
+		}
+		
 		public static function getDistance(p1:FlxPoint, p2:FlxPoint):Number
 		{
 			var xDist:Number = p1.x - p2.x;
 			var yDist:Number = p1.y - p2.y;
 			var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
 			return distance;
+		}
+		
+		public static function getPointThatCentersObject(map:Map, object:FlxSprite):FlxPoint
+		{
+			object.x = (object.x + (map.getTileWidthInPixels() /2)) - (object.width / 2);
+			object.y = (object.y + (map.getTileHeightInPixels() / 2)) - (object.height / 2);
+			var point:FlxPoint = new FlxPoint(object.x, object.y);
+			return point;
 		}
 		
 		//Assumes only FlxSprites in g

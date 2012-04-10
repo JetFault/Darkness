@@ -7,6 +7,8 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
+		[Embed(source = "../bin/data/Exit6.png")] protected var ImgExit:Class;
+		
 		//Model
 		private var player:Player;
 		private var levelNum:Number;
@@ -99,7 +101,7 @@ package
 				add(e.getHitbox());
 			}
 			
-			spawnItem(level, ItemType.LANTERN);
+			spawnItem(level, ItemType.CLOCK);
 
 			loadExit(level);
 			
@@ -231,9 +233,12 @@ package
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
 		
 				exit = new FlxSprite(point.x, point.y, null);
-				exit.makeGraphic(12, 16, 0xff8B8682);
+				//exit.makeGraphic(12, 16, 0xff8B8682);
+				exit.loadGraphic(ImgExit, true, true, 17, 16);
+				var point:FlxPoint = Utils.getPointThatCentersObject(level, exit);
+				exit.x = point.x;
+				exit.y = point.y;
 				add(exit);
-				
 			}
 		}		
 
