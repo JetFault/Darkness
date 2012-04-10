@@ -255,7 +255,7 @@ package
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length * startPercent, validLocs.length - 1)].loc;
 				
 				item = new Item(point.x,point.y,player,level,itemType);
-				
+				add(item);
 			}
 		}
 
@@ -273,6 +273,7 @@ package
 				var point:FlxPoint = Utils.getPointThatCentersObject(level, exit);
 				exit.x = point.x;
 				exit.y = point.y;
+				add(exit);
 			}
 		}		
 
