@@ -106,13 +106,13 @@ package
 			
 			
 			//Load Items
-			spawnItem(level, ItemType.CLOCK);
+			spawnItem(level, ItemType.LANTERN);
 			
 
 			
 			//Load darkness and lights
 			loadDarkness();
-			add(darkness);
+			
 			loadLights(level);
 						
 						
@@ -128,7 +128,7 @@ package
 			//Adjust world bounds to maze size
 			FlxG.worldBounds.make( -10, -10, level.width+10, level.height+10);
 			
-			
+			add(darkness);
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
 			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light);
