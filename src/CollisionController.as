@@ -35,7 +35,7 @@ package
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						killPlayerByEnemy();
-						FlxG.fade(0xff000000, 3, resetLevel);
+						FlxG.fade(0xff000000, .25, resetLevel);
 					}
 				}
 			}
