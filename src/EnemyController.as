@@ -16,6 +16,8 @@ package
 		private var enemyStep1:FlxSound;
 		private var enemyStep2:FlxSound;
 		private var enemyStep3:FlxSound;
+		private var highStaticSound:FlxSound;
+
 		
 		private var sirenSound:FlxSound;
 		
@@ -43,8 +45,8 @@ package
 			enemyStep1 = FlxG.loadSound(EnemyStepSound1);
 			enemyStep2 = FlxG.loadSound(EnemyStepSound2);
 			enemyStep3 = FlxG.loadSound(EnemyStepSound3);
-			
 			sirenSound = FlxG.loadSound(SirenSound);
+			highStaticSound = FlxG.loadSound(HighStaticSound);
 			
 			this.player = player;
 			this.enemy = enemy;
@@ -88,7 +90,7 @@ package
 				stepLength = walkLength;
 			}
 			*/
-			
+			/*
 			var distance:Number = Utils.getDistance(playerPos, enemyPos);
 			
 			var maxDis:Number = 150;
@@ -96,13 +98,17 @@ package
 			var b:Number = 1;
 			var x:Number = distance;
 			var y:Number = (m * x) + b;
+			*/
+			highStaticSound.volume = Utils.getVolume(40, playerPos, enemyPos);
+			highStaticSound.play();
+			
+			var Volume:Number = Utils.getVolume(100, playerPos, enemyPos);
 			var shake:Number;
-			if (y > 0) {
-				shake = y;
+			if (Volume > 0) {
+				shake = Volume;
 			} else {
 				shake = 0;
 			}
-			var Volume:Number = y;
 			enemyStep1.volume = Volume;
 			enemyStep2.volume = Volume;
 			enemyStep3.volume = Volume;
