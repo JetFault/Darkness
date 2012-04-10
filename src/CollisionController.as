@@ -35,6 +35,7 @@ package
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						killPlayerByEnemy();
+						FlxG.fade(0xff000000, 3, resetLevel);
 					}
 				}
 			}
@@ -109,6 +110,11 @@ package
 			Persistence.init();
 		}
 		
+		private function resetLevel() {
+			FlxG.level = 0;
+			Persistence.init();
+			FlxG.switchState(new PlayState());
+		}
 	}
 
 }
