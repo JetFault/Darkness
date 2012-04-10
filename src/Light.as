@@ -17,6 +17,7 @@ package
 		public var level:Map;
 		public var scaletimer:Number = 0;
 		public var lastchord:FlxPoint;
+		public var radius:Number = 40;
 		
 		public function Light(x:Number, y:Number, darkness:FlxSprite, player:Player, level:Map):void
 		{

@@ -95,7 +95,7 @@ package
 				{
 					whattomove.velocity.y = -player.maxVelocity.y;
 				}
-				var length:Number = Utils.getDistance(new FlxPoint(0, 0), player.velocity);
+				var length:Number = Utils.getDistance(new FlxPoint(0, 0), whattomove.velocity);
 				if (length != 0) {
 					player.play("walk");
 				} else {
