@@ -48,7 +48,7 @@ package
 			timePassed += FlxG.elapsed;
 			rainMusic.volume = 0.04 + (Math.sin(timePassed * 0.10) * 0.025); //2
 			windMusic.volume = 0.06 + (Math.sin(timePassed * 0.15) * 0.025); //3
-			staticMusic.volume=0.03 + (Math.sin(timePassed * 0.25) * 0.03);  //5
+			staticMusic.volume=0.03 + (Math.sin(timePassed * 0.25) * 0.01);  //5
 			
 			
 			
