@@ -87,14 +87,19 @@ package
 			add(player);
 			add(player.getHitbox());
 			add(enemiesreal);
+			trace(enemiesreal.members.length);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 				var e:Enemy = enemiesreal.members[i] as Enemy;
-				add(e.getHitbox());
+				if(e){
+					add(e.getHitbox());
+				}
 			}
 			add(enemieshallucination);
-			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
-				var e:Enemy = enemieshallucination.members[i] as Enemy;
-				add(e.getHitbox());
+			for (i:uint = 0; i < enemieshallucination.members.length; i++) {
+				e:Enemy = enemieshallucination.members[i] as Enemy;
+				if(e){
+					add(e.getHitbox());
+				}
 			}
 			
 			
@@ -132,9 +137,11 @@ package
 			add(controllers);
 			//TODO:  Have a controller?
 			controllers.add(player.getController());
-			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
-				var e:Enemy = enemiesreal.members[i] as Enemy;
-				controllers.add(e.getController());
+			for (i:uint = 0; i < enemiesreal.members.length; i++) {
+				e:Enemy = enemiesreal.members[i] as Enemy;
+				if(e){
+					controllers.add(e.getController());
+				}
 				
 			}			
 			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
