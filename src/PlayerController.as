@@ -110,11 +110,18 @@ package
 			
 			
 			
+			
 			if(whattomove.velocity.x != 0 || whattomove.velocity.y != 0){
 				var velocityp:FlxPoint = new FlxPoint(whattomove.velocity.x, whattomove.velocity.y);
 				var origin:FlxPoint = new FlxPoint(0, 0);
 				whattomove.angle = FlxU.getAngle(origin, velocityp);
 				player.angle = FlxU.getAngle(origin, velocityp);
+			}
+			
+			if (Utils.getDistance(new FlxPoint(0, 0), whattomove.velocity) > player.maxVelocity.x) {
+				var diff:Number = Utils.getDistance(new FlxPoint(0, 0), whattomove.velocity)/ player.maxVelocity.x;
+				whattomove.velocity.x /= Math.sqrt(diff);
+				whattomove.velocity.y /= Math.sqrt(diff);
 			}
 			
 			
