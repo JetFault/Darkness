@@ -111,18 +111,6 @@ package
 			spawnItem(level, ItemType.LANTERN);
 			
 
-			
-			//Load darkness and lights
-			loadDarkness();
-			
-			loadLights(level);
-						
-						
-			//Load Lightning
-			//lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
-			//add(lightning);
-
-
 			//Set camera to follow player
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
