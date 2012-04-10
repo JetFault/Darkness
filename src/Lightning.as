@@ -45,6 +45,8 @@ package
 		private var howoften:uint = 0;
 		private var soundcutofftime:Number = 8; //Minimum amount of time until next flash
 		
+		private var flashdebug = false;
+		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemiesreal:FlxGroup,enemieshallucination:FlxGroup) 
 		{
@@ -72,6 +74,11 @@ package
 		}
 		
 		override public function update():void {
+			if (player.playerHasItem(ItemType.UMBRELLA)) {
+				Constants.lightningcolor = Constants.WITHUMBRELLACOLOR;
+			}else {
+				Constants.lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
+			}
 			if (FlxG.keys.justPressed("L")) {
 				if (Constants.darknesscolor == Constants.CLEARDARKNESSCOLOR) {
 					Constants.darknesscolor = Constants.DEFAULTDARKNESSCOLOR;
@@ -79,6 +86,12 @@ package
 					Constants.darknesscolor = Constants.CLEARDARKNESSCOLOR;
 				}
 			}
+			
+			if (FlxG.keys.justPressed("K")) {
+				this.flashdebug = true;
+			}
+			
+			
 			howoften += FlxG.elapsed;
 			looptimer += FlxG.elapsed;
 			soundtimer += FlxG.elapsed;
@@ -152,6 +165,11 @@ package
 		}
 		
 		private function shouldflash(criteria:String):Boolean {
+			
+			if (flashdebug) {
+				flashdebug = false;
+				return true;
+			}
 			
 			var scale:Number = 1.0;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {

@@ -38,6 +38,8 @@ package
 		
 		override public function update():void 
 		{
+			//var whattomove:FlxSprite = player;
+			var whattomove:FlxSprite = player.getHitbox();
 			/*
 			if (player.velocity.y != 0 || player.velocity.x != 0)
 			{
@@ -50,24 +52,24 @@ package
 			
 			if (controlScheme == 1)
 			{
-				player.acceleration.x = 0;
-				player.acceleration.y = 0;
+				whattomove.acceleration.x = 0;
+				whattomove.acceleration.y = 0;
 				
 				if (FlxG.keys.RIGHT || FlxG.keys.D)
 				{
-					player.acceleration.x = player.drag.x;
+					whattomove.acceleration.x = player.drag.x;
 				}	
 				if (FlxG.keys.LEFT || FlxG.keys.A)
 				{
-					player.acceleration.x = -player.drag.x;
+					whattomove.acceleration.x = -player.drag.x;
 				}
 				if (FlxG.keys.DOWN || FlxG.keys.S)
 				{
-					player.acceleration.y = player.drag.y;
+					whattomove.acceleration.y = player.drag.y;
 				}
 				if (FlxG.keys.UP || FlxG.keys.W)
 				{
-					player.acceleration.y = -player.drag.y;
+					whattomove.acceleration.y = -player.drag.y;
 				}
 			}
 			
@@ -79,19 +81,19 @@ package
 				
 				if (FlxG.keys.RIGHT || FlxG.keys.D)
 				{
-					player.velocity.x = player.maxVelocity.x;
+					whattomove.velocity.x = player.maxVelocity.x;
 				}
 				if (FlxG.keys.LEFT || FlxG.keys.A)
 				{
-					player.velocity.x = -player.maxVelocity.x;
+					whattomove.velocity.x = -player.maxVelocity.x;
 				}
 				if (FlxG.keys.DOWN || FlxG.keys.S)
 				{
-					player.velocity.y = player.maxVelocity.y;
+					whattomove.velocity.y = player.maxVelocity.y;
 				}
 				if (FlxG.keys.UP || FlxG.keys.W)
 				{
-					player.velocity.y = -player.maxVelocity.y;
+					whattomove.velocity.y = -player.maxVelocity.y;
 				}
 				var length:Number = Utils.getDistance(new FlxPoint(0, 0), player.velocity);
 				if (length != 0) {
@@ -108,9 +110,10 @@ package
 			
 			
 			
-			if(player.velocity.x != 0 || player.velocity.y != 0){
-				var velocityp:FlxPoint = new FlxPoint(player.velocity.x, player.velocity.y);
+			if(whattomove.velocity.x != 0 || whattomove.velocity.y != 0){
+				var velocityp:FlxPoint = new FlxPoint(whattomove.velocity.x, whattomove.velocity.y);
 				var origin:FlxPoint = new FlxPoint(0, 0);
+				whattomove.angle = FlxU.getAngle(origin, velocityp);
 				player.angle = FlxU.getAngle(origin, velocityp);
 			}
 			
@@ -119,7 +122,7 @@ package
 			var p2:FlxPoint = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
 			player.angle = FlxU.getAngle(p1, p2);*/
 			
-			stepDis += Utils.getDistance(prePosition, player.getMidpoint());
+			stepDis += Utils.getDistance(prePosition, whattomove.getMidpoint());
 			if (stepDis >= stepLength) {
 				/*var rand:Number = Math.random();
 				if (rand < (1/3)) 			{	playerStep1.play(true); }
@@ -138,10 +141,12 @@ package
 			prePosition = player.getMidpoint();
 			
 			
-			player.deltaPosition.x = player.x - player.lastPosition.x;
-			player.deltaPosition.y = player.y - player.lastPosition.y;
-			player.lastPosition.x = player.x;
-			player.lastPosition.y = player.y;
+			player.deltaPosition.x = whattomove.x - player.lastPosition.x;
+			player.deltaPosition.y = whattomove.y - player.lastPosition.y;
+			player.lastPosition.x = whattomove.x;
+			player.lastPosition.y = whattomove.y;
+			player.x = player.getHitbox().getMidpoint().x - player.width/2;
+			player.y = player.getHitbox().getMidpoint().y - player.height/2;
 			super.update();
 		}
 	}
