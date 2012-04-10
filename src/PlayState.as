@@ -7,7 +7,7 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
-		[Embed(source = "../bin/data/Exit8.png")] protected var ImgExit:Class;
+		[Embed(source = "../bin/data/Exit1.png")] protected var ImgExit:Class;
 		
 		//Model
 		private var player:Player;
@@ -45,10 +45,10 @@ package
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
 			backgroundtemplate.solid = false;
 			FlxG.bgColor = 0xff000000;
-
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
 			backgroundgroup = new FlxGroup();
+			//Thankfully, we always have 2^n members in this group :-)...right?
 			for (var i:uint = 0; i < widthLimit; i++) {
 				for (var j:uint = 0; j < heightLimit; j++) {
 					var bg:FlxSprite = new FlxSprite(backgroundtemplate.width * i, backgroundtemplate.height * j, BgTexture7);
@@ -72,7 +72,6 @@ package
 			//add enemies
 			enemiesreal = new FlxGroup();
 			enemieshallucination = new FlxGroup();
-
 			/*
 			 *  TODO:  Spawn enemies as function of level
 			 */
@@ -93,17 +92,16 @@ package
 			add(player);
 			add(player.getHitbox());						
 			add(enemiesreal);
-			trace(enemiesreal.members.length);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 				var e:Enemy = enemiesreal.members[i] as Enemy;
-				if(e){
+				if(e){  //Check for null reference in 2^n size array
 					add(e.getHitbox());
 				}
 			}
 			add(enemieshallucination);
 			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 				var e:Enemy = enemieshallucination.members[i] as Enemy;
-				if(e){
+				if(e){  //Check for null reference in 2^n size array
 					add(e.getHitbox());
 				}
 			}
@@ -117,21 +115,22 @@ package
 
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
-			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light);
+			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light, level);
 
+			//Add controllers (player controller, enemy controllers, etc.)
 			add(controllers);
-			//TODO:  Have a controller?
 			controllers.add(player.getController());
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 				var e:Enemy = enemiesreal.members[i] as Enemy;
-				if(e){
+				if(e){ //Check for null reference in 2^n size array
 					controllers.add(e.getController());
-				}
-				
-			}			
+				}	
+			}		
 			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 				var e:Enemy = enemieshallucination.members[i] as Enemy;
-				controllers.add(e.getController());
+				if(e){ //Check for null reference in 2^n size array
+					controllers.add(e.getController());
+				}
 			}
 			
 			checkPlayerInventory();
@@ -146,7 +145,7 @@ package
 		
 		override public function update():void
 		{
-			//TODO  Put this somewhere else
+			//Debug input
 			if (FlxG.keys.ENTER && Constants.debug) {
 				FlxG.resetState();
 				Persistence.init();
@@ -154,12 +153,8 @@ package
 			if (FlxG.keys.N && Constants.debug) {
 				FlxG.level++;
 				FlxG.switchState(new PlayState());
-			}
-			
-			super.update();
-			
-			//Collision Resolution
-			FlxG.collide(player.getHitbox(), level);
+			}	
+			super.update();			
 		}
 		
 		override public function draw():void
@@ -210,11 +205,10 @@ package
 		}
 		
 		private function spawnEnemy(level:Map, hallucination:Boolean = false):void {
-			
 			if (this.validLocs.length > 0) {
-				
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.enemyPlacePercent, validLocs.length - 1)].loc;
 		
+				//Just set the hallucination argument to false
 				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.UCS_PATHER);
 				if(!enemy.isHallucination()) {
 					enemiesreal.add(enemy);
@@ -226,6 +220,7 @@ package
 		}
 		
 		private function spawnEnemies(level:Map):void {
+			//Freaking switch-case :-P
 			switch(this.levelNum) {
 				case 1:
 					spawnEnemy(level, false);
@@ -278,7 +273,6 @@ package
 		private function spawnItem(level:Map, itemType:ItemType):void {
 			if (this.validLocs.length > 0) {
 				var found:Boolean = false;
-				
 				/*
 				 * Try to find random place to put item 10 times.
 				 * If we spawn in the exit, try to find another location.
@@ -330,9 +324,7 @@ package
 		}
 
 		private function loadExit(level:Map):void {			
-			
 			if (this.validLocs.length > 0) {
-				
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.exitPlacePercent, validLocs.length - 1)].loc;
 		
 				exit = new FlxSprite(point.x, point.y, null);
@@ -359,10 +351,6 @@ package
 			var lightSize:FlxPoint = new FlxPoint(1, 1);
 			light.scale = lightSize;
 			add(light);
-			//flashlight = new FlashLight(12, 12, darkness, player);
-			//var lightSize:FlxPoint = new FlxPoint(1, 1);
-			//light.scale = lightSize;
-			//add(flashlight);
 		}
 		
 		private function checkPlayerInventory():void

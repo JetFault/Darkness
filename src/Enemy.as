@@ -21,7 +21,7 @@ package
 
 			hitbox.makeGraphic(1, 1, 0xff000000);
 
-			hitbox.makeGraphic(9, 9, 0x00ff0000);
+			hitbox.makeGraphic(9, 9, 0xffff0000);
 
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
 			hitbox.y = this.getMidpoint().y - hitbox.height / 2;

@@ -16,7 +16,8 @@ package
 		private var enemieshallucination:FlxGroup;
 		private var item:Item;
 		private var light:Light;
-		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, exit:FlxSprite, item:Item, light:Light) 
+		private var level:Map;
+		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, exit:FlxSprite, item:Item, light:Light, level:Map) 
 		{
 			this.player = player;
 			this.enemiesreal = enemiesreal;
@@ -24,16 +25,24 @@ package
 			this.enemieshallucination = enemieshallucination;
 			this.item = item;
 			this.light = light;
+			this.level = level;
 			super();
 		}
 		
 		override public function update(): void {
+			//Player collides with level
+			FlxG.collide(player.getHitbox(), level);
+			
 			//Real enemies that tag player kill player
 			
 			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
-					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
+					if (!e) {
+						trace(e);
+						trace(enemiesreal.members.length);
+					}
+					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						killPlayerByEnemy();
 						FlxG.fade(0xff000000, .25, resetLevel);
 					}
