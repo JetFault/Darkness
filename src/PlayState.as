@@ -88,6 +88,7 @@ package
 			add(backgroundgroup);
 			add(level);
 			add(player);
+			add(player.getHitbox());
 			add(enemiesreal);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 				var e:Enemy = enemiesreal.members[i] as Enemy;
@@ -142,7 +143,7 @@ package
 			super.update();
 			
 			//Collision Resolution
-			FlxG.collide(player, level);
+			FlxG.collide(player.getHitbox(), level);
 		}
 		
 		override public function draw():void

@@ -33,7 +33,7 @@ package
 			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
-					if (FlxG.overlap(player, e.getHitbox())) {
+					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						player.kill();
 						FlxG.shake();
 					}
@@ -44,7 +44,7 @@ package
 			if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 					var e:Enemy = enemieshallucination.members[i] as Enemy;
-					if (FlxG.overlap(player, e.getHitbox())) {
+					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						enemieshallucination.members[i].kill();
 						enemieshallucination.remove(enemieshallucination.members[i]);
 					}
@@ -78,8 +78,8 @@ package
 			}
 			
 			
-			
-			if (FlxG.overlap(player, item) && player.isAlive()) {
+			//Grab item
+			if (FlxG.overlap(player.getHitbox(), item) && player.isAlive()) {
 				if (item.getItemType() == ItemType.LANTERN)
 				{
 					light.loadLantern();
@@ -88,8 +88,8 @@ package
 				player.inventory.push(item);
 			}
 			
-			
-			if (FlxG.overlap(player, exit) && player.isAlive()) {				
+			//Exit level
+			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {				
 				player.kill();
 				FlxG.level++;
 				FlxG.switchState(new PlayState());

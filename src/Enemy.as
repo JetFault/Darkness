@@ -18,7 +18,7 @@ package
 			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
 			hitbox.makeGraphic(1, 1, 0xffff0000);
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
-			hitbox.y = this.getMidpoint().y - hitbox.width / 2;
+			hitbox.y = this.getMidpoint().y - hitbox.height / 2;
 			this.enemyRunSpeed = 50;
 			this.hallucination = hallucination;
 			loadEnemy();
