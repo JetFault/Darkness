@@ -6,6 +6,7 @@ package
 	 */
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	public class LightController extends BaseController
 	{
 		private var light:Light;
@@ -21,8 +22,8 @@ package
 		{
 			this.light = light;
 			this.player = player;
-			
-			preVelocity = player.velocity;
+			var thespriteicareabout:FlxSprite = player.getHitbox();
+			preVelocity = thespriteicareabout.velocity;
 			preChange = Utils.getDistance(new FlxPoint(0,0), player.maxVelocity);
 		}
 		
@@ -38,21 +39,22 @@ package
 			var angle:Number = 0;
 			var center:Boolean = false;
 			var radius:Number = 7;
-			if (Utils.sign(player.velocity.x)> 0 && Utils.sign(player.velocity.y) > 0) {
+			var thespriteicareabout:FlxSprite = player.getHitbox();
+			if (Utils.sign(thespriteicareabout.velocity.x)> 0 && Utils.sign(thespriteicareabout.velocity.y) > 0) {
 				angle = 45;
-			}else if (Utils.sign(player.velocity.x)> 0 && Utils.sign(player.velocity.y) == 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x)> 0 && Utils.sign(thespriteicareabout.velocity.y) == 0) {
 				angle = 0;
-			}else if (Utils.sign(player.velocity.x)> 0 && Utils.sign(player.velocity.y) < 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x)> 0 && Utils.sign(thespriteicareabout.velocity.y) < 0) {
 				angle = 315;
-			}else if (Utils.sign(player.velocity.x)< 0 && Utils.sign(player.velocity.y) > 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x)< 0 && Utils.sign(thespriteicareabout.velocity.y) > 0) {
 				angle = 135;
-			}else if (Utils.sign(player.velocity.x) < 0 && Utils.sign(player.velocity.y) == 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x) < 0 && Utils.sign(thespriteicareabout.velocity.y) == 0) {
 				angle = 180;
-			}else if (Utils.sign(player.velocity.x) < 0 && Utils.sign(player.velocity.y) < 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x) < 0 && Utils.sign(thespriteicareabout.velocity.y) < 0) {
 				angle = 225;
-			}else if (Utils.sign(player.velocity.x)== 0 && Utils.sign(player.velocity.y) > 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x)== 0 && Utils.sign(thespriteicareabout.velocity.y) > 0) {
 				angle = 90;
-			}else if (Utils.sign(player.velocity.x) == 0 && Utils.sign(player.velocity.y) < 0) {
+			}else if (Utils.sign(thespriteicareabout.velocity.x) == 0 && Utils.sign(thespriteicareabout.velocity.y) < 0) {
 				angle = 270;
 			}else {
 				center = true;
