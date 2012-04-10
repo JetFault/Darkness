@@ -46,7 +46,7 @@ package
 		{
 			if (itemType == ItemType.LANTERN)
 			{
-				loadGraphic(ImgLighter, true, true, 7, 9);
+				loadGraphic(ImgLighter, true, true, 7, 11);
 			}
 			if (itemType == ItemType.UMBRELLA) 
 			{

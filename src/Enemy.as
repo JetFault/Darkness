@@ -42,6 +42,11 @@ package
 			addAnimation("raged", [0, 1, 2], 10);//30
 			addAnimation("walk", [3, 4, 5, 4], 2);//30
 			play("walk");
+			
+			if (this.hallucination) {
+				this.hitbox.y -= 10;
+				this.y -= 10;
+			}
 		}
 		
 		private function loadEnemy():void
