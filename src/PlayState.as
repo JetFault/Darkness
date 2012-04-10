@@ -306,13 +306,24 @@ package
 				var randItem:Number = Utils.randInt(0, 2);
 				switch(randItem) {
 					case 0:
-						spawnItem(level, ItemType.LANTERN);
+						if(Persistence.itemsSeen.indexOf(0) == -1) {
+							spawnItem(level, ItemType.LANTERN);
+							Persistence.itemsSeen.push(0);
+						}
 						break;
 					case 1:
-						spawnItem(level, ItemType.CLOCK);
+						if(Persistence.itemsSeen.indexOf(1) == -1) {
+							spawnItem(level, ItemType.CLOCK);
+							Persistence.itemsSeen.push(1);
+
+						}
 						break;
 					case 2:
-						spawnItem(level, ItemType.UMBRELLA);
+						if(Persistence.itemsSeen.indexOf(2) == -1) {
+							spawnItem(level, ItemType.UMBRELLA);
+							Persistence.itemsSeen.push(2);
+
+						}
 						break;
 				}
 			}

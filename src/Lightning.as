@@ -77,7 +77,7 @@ package
 		
 		override public function update():void {
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
-				lightningcolor = Constants.WITHUMBRELLACOLOR;
+				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}else {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}

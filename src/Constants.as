@@ -40,7 +40,7 @@ package
 		public static var CLEARDARKNESSCOLOR:uint = 0x00ffffff;
 		
 		//Item Spawn Chance
-		public static var itemSpawnPercent:Number = 10;
+		public static var itemSpawnPercent:Number = 100;
 		
 		//Enemy Placing Percent Location from Player
 		public static var enemyPlacePercent:Number = 0.60;
