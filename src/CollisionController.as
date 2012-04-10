@@ -84,12 +84,11 @@ package
 				{
 					light.loadLantern();
 				}
-				/*
 				if (item.getItemType() == ItemType.CLOCK)
 				{
 					player.maxVelocity.x = 62;
 					player.maxVelocity.y = 62;
-				}*/
+				}
 				item.kill();
 				player.inventory.push(item);
 			}

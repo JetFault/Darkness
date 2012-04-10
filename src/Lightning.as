@@ -46,6 +46,8 @@ package
 		private var soundcutofftime:Number = 8; //Minimum amount of time until next flash
 		
 		private var flashdebug = false;
+		public var lightningcolor:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
+
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemiesreal:FlxGroup,enemieshallucination:FlxGroup) 
@@ -75,9 +77,9 @@ package
 		
 		override public function update():void {
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
-				Constants.lightningcolor = Constants.WITHUMBRELLACOLOR;
+				lightningcolor = Constants.WITHUMBRELLACOLOR;
 			}else {
-				Constants.lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
+				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}
 			if (FlxG.keys.justPressed("L")) {
 				if (Constants.darknesscolor == Constants.CLEARDARKNESSCOLOR) {
@@ -148,7 +150,7 @@ package
 			}
 			var darknesstransparency:Number = uint(0xff - Constants.cameralightningdiff*cameratransparency); //Constants.flashfunction(flashtimer / Constants.flashduration)
 			darkness.fill((darknesstransparency << 24) + Constants.darknesscolor); 
-			this.camera.fill(Constants.lightningcolor + (cameratransparency<<24));
+			this.camera.fill(lightningcolor + (cameratransparency<<24));
 		}
 		
 		private function startFlashing():void {
