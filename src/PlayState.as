@@ -89,7 +89,15 @@ package
 			add(level);
 			add(player);
 			add(enemiesreal);
+			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				var e:Enemy = enemiesreal.members[i] as Enemy;
+				add(e.getHitbox());
+			}
 			add(enemieshallucination);
+			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
+				var e:Enemy = enemieshallucination.members[i] as Enemy;
+				add(e.getHitbox());
+			}
 			
 			spawnItem(level, ItemType.LANTERN);
 

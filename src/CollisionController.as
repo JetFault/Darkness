@@ -28,20 +28,56 @@ package
 		}
 		
 		override public function update(): void {
-
+			//Real enemies that tag player kill player
+			
 			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
-				player.kill();
-				FlxG.shake();
+				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+					var e:Enemy = enemiesreal.members[i] as Enemy;
+					if (FlxG.overlap(player, e.getHitbox())) {
+						player.kill();
+						FlxG.shake();
+					}
+				}
 			}
 			
+			//Hallucinations that tag player stay alive
 			if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
-					if (FlxG.overlap(player, enemieshallucination.members[i])) {
+					var e:Enemy = enemieshallucination.members[i] as Enemy;
+					if (FlxG.overlap(player, e.getHitbox())) {
 						enemieshallucination.members[i].kill();
 						enemieshallucination.remove(enemieshallucination.members[i]);
 					}
 				}
 			}
+			
+			//Real enemies that tag light are attracted to player
+			if (FlxG.overlap(light, enemiesreal)) {
+				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+					if (FlxG.overlap(light, enemiesreal.members[i])) {
+						var e:Enemy = enemiesreal.members[i] as Enemy;
+						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < 40*light.scale.x) { //Assumes light.scale.x == light.scale.y
+							var ctrl:EnemyController = e.getController() as EnemyController;
+							ctrl.setPlayerVisible();
+						}
+					}
+				}
+			}
+			
+			//Hallucinations that tag light die
+			if (FlxG.overlap(light, enemieshallucination)) {
+				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
+					if (FlxG.overlap(light, enemieshallucination.members[i])) {
+						var e:Enemy = enemieshallucination.members[i] as Enemy;
+						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < 15*light.scale.x) { //Assumes light.scale.x == light.scale.y
+							enemieshallucination.members[i].kill();
+							enemieshallucination.remove(enemieshallucination.members[i]);
+						}
+					}
+				}
+			}
+			
+			
 			
 			if (FlxG.overlap(player, item) && player.isAlive()) {
 				if (item.getItemType() == ItemType.LANTERN)
@@ -52,12 +88,18 @@ package
 				player.inventory.push(item);
 			}
 			
+			
 			if (FlxG.overlap(player, exit) && player.isAlive()) {				
 				player.kill();
 				FlxG.level++;
 				FlxG.switchState(new PlayState());
 			}
 			super.update();
+		}
+		
+		private function killPlayerByEnemy() {
+			player.kill();
+			FlxG.shake();
 		}
 		
 	}

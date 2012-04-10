@@ -55,6 +55,8 @@ package
 				this.ai = new DFSSearchAI(enemy, player, level);
 			}else if (enemyType == EnemyType.UCS_PATHER) {
 				this.ai = new UCSSearchAI(enemy, player, level);
+			}else if (enemyType == EnemyType.DO_NOTHING) {
+				this.ai = new DoNothingAI(enemy, player, level);
 			}
 			
 			prePosition = enemy.getMidpoint();
@@ -143,6 +145,9 @@ package
 			var origin:FlxPoint = new FlxPoint(0, 0);
 			enemy.angle = FlxU.getAngle(origin, velocityp);*/
 			
+			enemy.hitbox.x = enemy.getMidpoint().x - enemy.hitbox.width / 2;
+			enemy.hitbox.y = enemy.getMidpoint().y - enemy.hitbox.width / 2;
+			
 			super.update();
 		}
 		
@@ -151,6 +156,10 @@ package
 				sirenSound.stop();
 			}
 			super.destroy();
+		}
+		
+		public function setPlayerVisible(): void {
+			this.ai.setPlayerVisible();
 		}
 	}
 
