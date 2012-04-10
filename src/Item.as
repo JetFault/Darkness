@@ -77,9 +77,7 @@ package
 				clockSound.volume = Utils.getVolume(100, this.getMidpoint(), player.getMidpoint()) * 0.1;
 				clockSound.play();
 			}
-		}
-			
-			
+		
 			super.update();
 		}
 		
@@ -87,6 +85,7 @@ package
 		{
 			return this.itemType;
 		}
+		
 		override public function destroy(): void {
 			if (lighterSound.active) {
 				lighterSound.stop();
@@ -95,5 +94,5 @@ package
 		}
 		
 	}
-
 }
+
