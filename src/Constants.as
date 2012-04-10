@@ -39,6 +39,15 @@ package
 		public static var DEFAULTDARKNESSCOLOR:uint = 0x00000000;
 		public static var CLEARDARKNESSCOLOR:uint = 0x00ffffff;
 		
+		//Item Spawn Chance
+		public static var itemSpawnPercent:Number = 10;
+		
+		//Enemy Placing Percent Location from Player
+		public static var enemyPlacePercent:Number = 0.60;
+		//Item Placing Percent Location from Player
+		public static var itemPlacePercent:Number = 0.40;
+		//Exit Placing Percent Location from Player
+		public static var exitPlacePercent:Number = 0.75;
 		
 		public static var EMPTYTILEINDEX:Number = 0;
 		

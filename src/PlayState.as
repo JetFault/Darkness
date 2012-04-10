@@ -108,7 +108,7 @@ package
 			
 			
 			//Load Items
-			spawnItem(level, ItemType.LANTERN);
+			spawnItems(level);
 			
 
 			//Set camera to follow player
@@ -213,9 +213,7 @@ package
 			
 			if (this.validLocs.length > 0) {
 				
-				var startPercent:Number = 0.60;
-				
-				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.enemyPlacePercent, validLocs.length - 1)].loc;
 		
 				enemy = new Enemy(point.x, point.y, this.player, level, hallucination, EnemyType.UCS_PATHER);
 				if(!hallucination) {
@@ -254,6 +252,24 @@ package
 					spawnEnemy(level, false);
 					break;
 					
+				case 6:
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					break;
+					
+				case 7:
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					break;
+					
+				case 8:
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					break;
+
 				default:
 			}
 			
@@ -261,12 +277,44 @@ package
 		
 		private function spawnItem(level:Map, itemType:ItemType):void {
 			if (this.validLocs.length > 0) {
-				var startPercent:Number = .40;
+				var found:Boolean = false;
 				
-				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length * startPercent, validLocs.length - 1)].loc;
+				/*
+				 * Try to find random place to put item 10 times.
+				 * If we spawn in the exit, try to find another location.
+				 * We do a max of 10 times in case the only place to put it is exit.
+				 */
+				for (var i:uint = 0; i < 10; i++) {
+					var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length * Constants.itemPlacePercent, validLocs.length - 1)].loc;
+					if ( (Utils.pointToTileCoords(level, point).x != Utils.pointToTileCoords(level, this.exit.getMidpoint()).x)
+						&& (Utils.pointToTileCoords(level, point).y != Utils.pointToTileCoords(level, this.exit.getMidpoint()).y)) {
+							found = true;
+							break;
+					}
+				}
 				
-				item = new Item(point.x,point.y,player,level,itemType);
-				add(item);
+				// Don't add if only spawn point is on exit
+				if (found) {
+					item = new Item(point.x,point.y,player,level,itemType);
+					add(item);
+				}
+			}
+		}
+		
+		private function spawnItems(level:Map):void {
+			if (Constants.itemSpawnPercent >= Utils.randInt(0, 100)) {
+				var randItem:Number = Utils.randInt(0, 2);
+				switch(randItem) {
+					case 0:
+						spawnItem(level, ItemType.LANTERN);
+						break;
+					case 1:
+						spawnItem(level, ItemType.CLOCK);
+						break;
+					case 2:
+						spawnItem(level, ItemType.UMBRELLA);
+						break;
+				}
 			}
 		}
 
@@ -274,9 +322,7 @@ package
 			
 			if (this.validLocs.length > 0) {
 				
-				var startPercent:Number = 0.75;
-				
-				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*startPercent, validLocs.length - 1)].loc;
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.exitPlacePercent, validLocs.length - 1)].loc;
 		
 				exit = new FlxSprite(point.x, point.y, null);
 				//exit.makeGraphic(12, 16, 0xff8B8682);

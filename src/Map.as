@@ -77,12 +77,33 @@ package
 				case 4:
 					_width = 24;
 					_height = 18;
-					_factor = 0.05;
+					_factor = 0.06;
 					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;	
 					break;
 					
 				case 5:
 					_width = 30;
+					_height = 24;
+					_factor = 0.05;
+					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;	
+					break;
+					
+				case 6:
+					_width = 30;
+					_height = 26;
+					_factor = 0.05;
+					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;	
+					break;
+					
+				case 7:
+					_width = 30;
+					_height = 28;
+					_factor = 0.05;
+					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;	
+					break;
+
+				case 8:
+					_width = 32;
 					_height = 24;
 					_factor = 0.05;
 					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;	

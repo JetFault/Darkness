@@ -9,7 +9,7 @@ package
 		/*Items*/
 		static public var numItems:uint;
 		
-		static function init() {
+		static function init():void {
 			numItems = 0;
 		}		
 	}
