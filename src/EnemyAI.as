@@ -3,6 +3,7 @@ package
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxG;
 	/**
 	 * ...
 	 * @author Darkness Team
@@ -21,6 +22,7 @@ package
 		protected var currentPoint:FlxPoint = new FlxPoint(0, 0);
 		protected var pathcreated:Boolean;  //Is this guy doing a tree search?
 		protected var visibledistance:Number = 100;
+		protected var depth:Number = 50;
 		
 		
 		public function EnemyAI(self:Enemy, player:Player, map:Map) 
@@ -29,6 +31,9 @@ package
 			this.player = player;
 			this.map = map;
 			this.visible = false;
+			if (FlxG.level > 0) {
+				this.depth *= FlxG.level;
+			}
 		}
 		
 		public function doNextAction():void {

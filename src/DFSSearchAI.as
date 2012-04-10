@@ -17,13 +17,12 @@ package
 	 */
 	public class DFSSearchAI extends EnemyAI 
 	{
-		private var depth:Number; //Ideally variable?
 		private var root:Array;
 		
 		public function DFSSearchAI(self:Enemy,player:Player, map:Map) 
 		{
-			super(self, player, map);
 			depth = 20;
+			super(self, player, map);
 			this.xpos = 30;
 			this.ypos = 2;
 		}

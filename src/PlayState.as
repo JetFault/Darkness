@@ -95,8 +95,8 @@ package
 				}
 			}
 			add(enemieshallucination);
-			for (i:uint = 0; i < enemieshallucination.members.length; i++) {
-				e:Enemy = enemieshallucination.members[i] as Enemy;
+			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
+				var e:Enemy = enemieshallucination.members[i] as Enemy;
 				if(e){
 					add(e.getHitbox());
 				}
@@ -119,8 +119,8 @@ package
 						
 						
 			//Load Lightning
-			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
-			add(lightning);
+			//lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
+			//add(lightning);
 
 
 			//Set camera to follow player
@@ -137,8 +137,8 @@ package
 			add(controllers);
 			//TODO:  Have a controller?
 			controllers.add(player.getController());
-			for (i:uint = 0; i < enemiesreal.members.length; i++) {
-				e:Enemy = enemiesreal.members[i] as Enemy;
+			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				var e:Enemy = enemiesreal.members[i] as Enemy;
 				if(e){
 					controllers.add(e.getController());
 				}
