@@ -147,11 +147,11 @@ package
 		override public function update():void
 		{
 			//TODO  Put this somewhere else
-			if (FlxG.keys.ENTER) {
+			if (FlxG.keys.ENTER && Constants.debug) {
 				FlxG.resetState();
 				Persistence.init();
 			}
-			if (FlxG.keys.N) {
+			if (FlxG.keys.N && Constants.debug) {
 				FlxG.level++;
 				FlxG.switchState(new PlayState());
 			}

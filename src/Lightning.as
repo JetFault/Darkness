@@ -47,6 +47,8 @@ package
 		
 		private var flashdebug = false;
 		public var lightningcolor:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
+		private var firstflashed:Boolean = false;
+		private var firstflashedtimer:Number = 0;
 
 		
 		
@@ -76,12 +78,13 @@ package
 		}
 		
 		override public function update():void {
+			firstflashedtimer += FlxG.elapsed;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}else {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}
-			if (FlxG.keys.justPressed("L")) {
+			if (FlxG.keys.justPressed("L") && Constants.debug) {
 				if (Constants.darknesscolor == Constants.CLEARDARKNESSCOLOR) {
 					Constants.darknesscolor = Constants.DEFAULTDARKNESSCOLOR;
 				}else if (Constants.darknesscolor == Constants.DEFAULTDARKNESSCOLOR) {
@@ -89,7 +92,7 @@ package
 				}
 			}
 			
-			if (FlxG.keys.justPressed("K")) {
+			if (FlxG.keys.justPressed("K") && Constants.debug) {
 				this.flashdebug = true;
 			}
 			
@@ -168,6 +171,14 @@ package
 		
 		private function shouldflash(criteria:String):Boolean {
 			
+			if (!firstflashed) {
+				if(firstflashedtimer >= 0.5){
+					firstflashed = true;
+					return true;
+				}else {
+					return false;
+				}
+			}
 			if (flashdebug) {
 				flashdebug = false;
 				return true;
