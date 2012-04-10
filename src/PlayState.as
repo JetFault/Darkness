@@ -37,18 +37,15 @@ package
 
 		override public function create():void
 		{
-			
 			this.levelNum = FlxG.level + 1;
-			
-			
-			//Create Map
+
 			level = new Map(this.levelNum);
-			
+
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
 			backgroundtemplate.solid = false;
 			FlxG.bgColor = 0xff000000;
-			
+
 			var widthLimit:uint = Math.ceil(level.width/backgroundtemplate.width);
 			var heightLimit:uint = Math.ceil(level.height / backgroundtemplate.height);
 			backgroundgroup = new FlxGroup();
@@ -59,36 +56,36 @@ package
 					backgroundgroup.add(bg);
 				}
 			}
-			add(backgroundgroup);
 
-			
-			add(level);			
-			
+
 			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
-			add(player);
-			add(player.getHitbox());
-			
-			
-			//Find valid locations
 			findValidLocations(level);
-			
 /*TRACING			
 			for (var i:uint = 0; i < this.validLocs.length; i++) {
 				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
 				trace("Dist", validLocs[i].distance);
 			}
 */
-			
+
+			//add enemies
+			enemiesreal = new FlxGroup();
+			enemieshallucination = new FlxGroup();
+
 			/*
 			 *  TODO:  Spawn enemies as function of level
 			 */
-			enemiesreal = new FlxGroup();
-			enemieshallucination = new FlxGroup();
-			
 			spawnEnemies(level);
-			
+
+			//Load darkness and lights
+			loadDarkness();
+			loadLights(level);
+
+			add(backgroundgroup);
+			add(level);
+			add(player);
+			add(player.getHitbox());
 			add(enemiesreal);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 				var e:Enemy = enemiesreal.members[i] as Enemy;
@@ -120,15 +117,14 @@ package
 			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
 
-			
+
 			//Set camera to follow player
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
 			FlxG.camera.follow(player);
-			
+
 			//Adjust world bounds to maze size
 			FlxG.worldBounds.make( -10, -10, level.width+10, level.height+10);
-			
-			add(darkness);
+
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
 			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light);
@@ -136,11 +132,22 @@ package
 			add(controllers);
 			//TODO:  Have a controller?
 			controllers.add(player.getController());
-			controllers.add(enemy.getController());
+			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				var e:Enemy = enemiesreal.members[i] as Enemy;
+				controllers.add(e.getController());
+				
+			}			
+			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
+				var e:Enemy = enemieshallucination.members[i] as Enemy;
+				controllers.add(e.getController());
+			}
+
 			controllers.add(light.getController());
-			//controllers.add(flashlight.getController());
 			controllers.add(musicController);
 			controllers.add(collisionController);
+			add(darkness);
+			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
+			add(lightning);
 		}
 		
 		override public function update():void
@@ -264,7 +271,6 @@ package
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length * startPercent, validLocs.length - 1)].loc;
 				
 				item = new Item(point.x,point.y,player,level,itemType);
-				
 				add(item);
 			}
 		}
