@@ -84,8 +84,14 @@ package
 
 			add(backgroundgroup);
 			add(level);
+					
+			//Load Exit
+			loadExit(level);
+			//Load Items
+			spawnItems(level);
+			
 			add(player);
-			add(player.getHitbox());
+			add(player.getHitbox());						
 			add(enemiesreal);
 			trace(enemiesreal.members.length);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
@@ -101,15 +107,6 @@ package
 					add(e.getHitbox());
 				}
 			}
-			
-			
-			//Load Exit
-			loadExit(level);
-			
-			
-			//Load Items
-			spawnItems(level);
-			
 
 			//Set camera to follow player
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
