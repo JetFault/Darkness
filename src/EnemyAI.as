@@ -31,9 +31,9 @@ package
 			this.player = player;
 			this.map = map;
 			this.visible = false;
-			if (FlxG.level > 0) {
+			/*if (FlxG.level > 0) {
 				this.depth *= FlxG.level;
-			}
+			}*/
 		}
 		
 		public function doNextAction():void {
