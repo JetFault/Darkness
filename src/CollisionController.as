@@ -91,6 +91,7 @@ package
 				}
 				item.kill();
 				player.inventory.push(item);
+				Persistence.inventory = player.inventory;
 			}
 			
 			//Exit level

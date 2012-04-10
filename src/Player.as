@@ -41,7 +41,7 @@ package
 			hitbox.elasticity = elasticity;
 			lastPosition = new FlxPoint(this.x, this.y);
 			deltaPosition = new FlxPoint(0, 0);
-			inventory = new Array();
+			inventory = Persistence.inventory;
 
 			addAnimation("walk", [0, 1, 0, 2], 5);
 			addAnimation("stop", [0], 1);

@@ -7,7 +7,7 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7.png")] protected var BgTexture7:Class;
-		[Embed(source = "../bin/data/Exit6.png")] protected var ImgExit:Class;
+		[Embed(source = "../bin/data/Exit1-1.png")] protected var ImgExit:Class;
 		
 		//Model
 		private var player:Player;
@@ -108,9 +108,8 @@ package
 			
 			
 			//Load Items
-			spawnItem(level, ItemType.LANTERN);
+			spawnItem(level, ItemType.CLOCK);
 			
-
 			
 			//Load darkness and lights
 			loadDarkness();
@@ -148,6 +147,8 @@ package
 				var e:Enemy = enemieshallucination.members[i] as Enemy;
 				controllers.add(e.getController());
 			}
+			
+			checkPlayerInventory();
 
 			controllers.add(light.getController());
 			controllers.add(musicController);
@@ -318,6 +319,19 @@ package
 			//var lightSize:FlxPoint = new FlxPoint(1, 1);
 			//light.scale = lightSize;
 			//add(flashlight);
+		}
+		
+		private function checkPlayerInventory():void
+		{
+			if (player.playerHasItem(ItemType.LANTERN))
+			{
+				light.loadLantern();
+			}
+			if (player.playerHasItem(ItemType.CLOCK))
+			{
+				player.maxVelocity.x = 62;
+				player.maxVelocity.y = 62;
+			}
 		}
 	}
 
