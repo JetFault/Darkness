@@ -37,11 +37,14 @@ package
 
 		override public function create():void
 		{
-			//Create player, map, enemies, exit, darkness, lights, and respective controllers
 			
 			this.levelNum = FlxG.level + 1;
 			
+			
+			//Create Map
 			level = new Map(this.levelNum);
+			add(level);
+			
 			
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
@@ -58,12 +61,20 @@ package
 					backgroundgroup.add(bg);
 				}
 			}
+			add(backgroundgroup);
 
+		
 			
 			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
+			add(player);
+			add(player.getHitbox());
+			
+			
+			//Find valid locations
 			findValidLocations(level);
+			
 /*TRACING			
 			for (var i:uint = 0; i < this.validLocs.length; i++) {
 				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
@@ -71,26 +82,13 @@ package
 			}
 */
 			
-			//add enemies
-			enemiesreal = new FlxGroup();
-			enemieshallucination = new FlxGroup();
-
 			/*
 			 *  TODO:  Spawn enemies as function of level
 			 */
-			spawnEnemy(level,false);
+			enemiesreal = new FlxGroup();
+			enemieshallucination = new FlxGroup();
+			spawnEnemy(level, false);
 			
-			//Load darkness and lights
-			/*
-			 * 
-			 */ 
-			loadDarkness();
-			loadLights(level);
-			
-			add(backgroundgroup);
-			add(level);
-			add(player);
-			add(player.getHitbox());
 			add(enemiesreal);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 				var e:Enemy = enemiesreal.members[i] as Enemy;
@@ -102,9 +100,25 @@ package
 				add(e.getHitbox());
 			}
 			
+			
+			//Load darkness and lights
+			loadDarkness();
+			add(darkness);
+			loadLights(level);
+						
+						
+			//Load Lightning
+			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
+			add(lightning);
+
+			
+			//Load Exit
+			loadExit(level);
+			
+			
+			//Load Items
 			spawnItem(level, ItemType.CLOCK);
 
-			loadExit(level);
 			
 			//Set camera to follow player
 			FlxG.camera.setBounds(0, 0, level.width, level.height);
@@ -126,9 +140,6 @@ package
 			//controllers.add(flashlight.getController());
 			controllers.add(musicController);
 			controllers.add(collisionController);
-			add(darkness);
-			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
-			add(lightning);
 		}
 		
 		override public function update():void
