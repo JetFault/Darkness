@@ -6,15 +6,9 @@ package
 	 */
 	public class ItemType 
 	{
-		public static const LANTERN:ItemType = ItemType.LANTERN;
-		public static const UMBRELLA:ItemType = ItemType.UMBRELLA;
-		public static const CLOCK:ItemType = ItemType.CLOCK;
-		
-		public function ItemType() 
-		{
-			
-		}
-		
+		public static const LANTERN:ItemType = new ItemType();
+		public static const UMBRELLA:ItemType = new ItemType();
+		public static const CLOCK:ItemType = new ItemType();
 	}
 
 }
