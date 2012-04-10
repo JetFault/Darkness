@@ -83,6 +83,7 @@ package
 				if (item.getItemType() == ItemType.LANTERN)
 				{
 					light.loadLantern();
+					player.loadLantern();
 				}
 				if (item.getItemType() == ItemType.CLOCK)
 				{
