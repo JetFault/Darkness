@@ -85,10 +85,19 @@ package
 			return this.itemType;
 		}
 		
-		override public function destroy(): void {
+		override public function kill():void {
 			if (lighterSound.active) {
 				lighterSound.stop();
 			}
+			if (umbrellaSound.active) {
+				umbrellaSound.stop();
+			}
+			if (clockSound.active) {
+				clockSound.stop();
+			}
+			super.kill();
+		}
+		override public function destroy(): void {
 			super.destroy();
 		}
 		
