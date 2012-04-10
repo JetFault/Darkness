@@ -28,11 +28,11 @@ package
 			this.enemyRunSpeed = 50;
 			this.hallucination = hallucination;
 			loadEnemy();
-			//if (this.hallucination) {
-			//	this.controller = new EnemyController(this, player, level, enemyRunSpeed, EnemyType.DO_NOTHING);
-			//}else{
+			if (this.hallucination) {
+				this.controller = new EnemyController(this, player, level, enemyRunSpeed, EnemyType.DO_NOTHING);
+			}else{
 				this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType);
-			//}
+			}
 			this.enemyType = enemyType;
 			//Deliberately commented these out.  Try something else...
 			//width = 1;

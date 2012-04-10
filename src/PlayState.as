@@ -215,8 +215,8 @@ package
 				
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.enemyPlacePercent, validLocs.length - 1)].loc;
 		
-				enemy = new Enemy(point.x, point.y, this.player, level, hallucination, EnemyType.UCS_PATHER);
-				if(!hallucination) {
+				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.UCS_PATHER);
+				if(!enemy.isHallucination()) {
 					enemiesreal.add(enemy);
 				}
 				else {
