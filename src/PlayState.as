@@ -43,8 +43,6 @@ package
 			
 			//Create Map
 			level = new Map(this.levelNum);
-			add(level);
-			
 			
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
@@ -63,7 +61,8 @@ package
 			}
 			add(backgroundgroup);
 
-		
+			
+			add(level);			
 			
 			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
@@ -87,7 +86,8 @@ package
 			 */
 			enemiesreal = new FlxGroup();
 			enemieshallucination = new FlxGroup();
-			spawnEnemy(level, false);
+			
+			spawnEnemies(level);
 			
 			add(enemiesreal);
 			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
@@ -101,6 +101,15 @@ package
 			}
 			
 			
+			//Load Exit
+			loadExit(level);
+			
+			
+			//Load Items
+			spawnItem(level, ItemType.CLOCK);
+			
+
+			
 			//Load darkness and lights
 			loadDarkness();
 			add(darkness);
@@ -110,14 +119,6 @@ package
 			//Load Lightning
 			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
-
-			
-			//Load Exit
-			loadExit(level);
-			
-			
-			//Load Items
-			spawnItem(level, ItemType.CLOCK);
 
 			
 			//Set camera to follow player
@@ -222,6 +223,38 @@ package
 					enemieshallucination.add(enemy);
 				}
 			}
+		}
+		
+		private function spawnEnemies(level:Map):void {
+			switch(this.levelNum) {
+				case 1:
+					spawnEnemy(level, false);
+					break;
+					
+				case 2:
+					spawnEnemy(level, false);
+					spawnEnemy(level, true);
+					break;
+					
+				case 3:
+					spawnEnemy(level, false);
+					break;
+					
+				case 4:
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					spawnEnemy(level, true);
+					break;
+					
+				case 5:
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					spawnEnemy(level, false);
+					break;
+					
+				default:
+			}
+			
 		}
 		
 		private function spawnItem(level:Map, itemType:ItemType):void {
