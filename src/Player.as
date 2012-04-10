@@ -52,6 +52,10 @@ package
 			loadGraphic(ImgPlayer, true, true, 15, 15);
 			//super.makeGraphic(10, 10, 0xff007fff);
 		}
+		public function loadLantern():void {
+			loadGraphic(ImgPlayerLight, true, true, 15, 15);
+			//addAnimation("walk", [0, 1, 0, 2], 5);
+		}
 		
 		public function isAlive():Boolean {
 			return this.playerAlive;

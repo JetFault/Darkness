@@ -108,7 +108,7 @@ package
 			
 			
 			//Load Items
-			spawnItem(level, ItemType.CLOCK);
+			spawnItem(level, ItemType.LANTERN);
 			
 
 			//Set camera to follow player
@@ -315,6 +315,7 @@ package
 			if (player.playerHasItem(ItemType.LANTERN))
 			{
 				light.loadLantern();
+				player.loadLantern();
 			}
 			if (player.playerHasItem(ItemType.CLOCK))
 			{
