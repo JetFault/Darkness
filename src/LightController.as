@@ -33,7 +33,6 @@ package
 			}else {
 				LargeScale = 1.5;
 			}
-			trace(LargeScale);
 			light.lastchord.x = light.x-(player.x +4);
 			light.lastchord.y = light.y - (player.y +5);
 			var angle:Number = 0;
