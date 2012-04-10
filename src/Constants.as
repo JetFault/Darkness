@@ -12,7 +12,7 @@ package
 		//Will putting embedded files in here work?
 		
 		//Lightning variables
-		public static var cameralightningdiff:Number = .3; //in [0,1].  originally 1
+		public static var cameralightningdiff:Number = .8; //in [0,1].  originally 1
 		public static var WITHOUTUMBRELLACOLOR:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
 		public static var WITHUMBRELLACOLOR:uint = 0x00c444ff;
 		public static var looptime:Number = 15;
