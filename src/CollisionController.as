@@ -34,8 +34,7 @@ package
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (FlxG.overlap(player.getHitbox(), e.getHitbox())) {
-						player.kill();
-						FlxG.shake();
+						killPlayerByEnemy();
 					}
 				}
 			}
