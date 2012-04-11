@@ -85,8 +85,6 @@ package
 						if(Utils.getDistance(currentPoint,enemyPos) < 5){
 							currentindex += 1;
 							currentindex %= closed.length;
-							trace("path: current index");
-							trace(currentindex)
 							currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						}
 						

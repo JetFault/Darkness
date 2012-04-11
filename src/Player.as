@@ -23,12 +23,16 @@ package
 			super(x, y, null);
 			this.x = x;
 			this.y = y;
+			//hitbox
 			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
 			hitbox.makeGraphic(8, 8, 0x00ff0000);
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
 			hitbox.y = this.getMidpoint().y - hitbox.height / 2;
+			
 			this.playerAlive = true;
 			loadPlayer();
+			
+			//velocity/controls parameters
 			maxVelocity.x = 52;
 			maxVelocity.y = 52;
 			hitbox.maxVelocity = maxVelocity;
@@ -36,9 +40,11 @@ package
 			drag.x = _runspeed * 2.3;
 			drag.y = _runspeed * 2.3;
 			hitbox.drag = this.drag;
-			this.controller = new PlayerController(this, Constants.controlScheme);
 			elasticity = .7;
 			hitbox.elasticity = elasticity;
+			this.controller = new PlayerController(this, Constants.controlScheme);
+			
+			
 			lastPosition = new FlxPoint(this.x, this.y);
 			deltaPosition = new FlxPoint(0, 0);
 			inventory = Persistence.inventory;

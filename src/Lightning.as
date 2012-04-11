@@ -45,7 +45,7 @@ package
 		private var howoften:uint = 0;
 		private var soundcutofftime:Number = 8; //Minimum amount of time until next flash
 		
-		private var flashdebug = false;
+		private var flashdebug:Boolean = false;
 		public var lightningcolor:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
 		private var firstflashed:Boolean = false;
 		private var firstflashedtimer:Number = 0;
@@ -54,9 +54,11 @@ package
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemiesreal:FlxGroup,enemieshallucination:FlxGroup) 
 		{
-			this.darkness = darkness;
+			//load sounds
 			rumbleflxsound = FlxG.loadSound(RumbleSound);
 			crashflxsound = FlxG.loadSound(CrashSound);
+			
+			this.darkness = darkness;
 			this.player = player;
 			this.enemiesreal = enemiesreal;
 			this.enemieshallucination = enemieshallucination;
@@ -78,12 +80,16 @@ package
 		}
 		
 		override public function update():void {
+			//Timer for first flash
 			firstflashedtimer += FlxG.elapsed;
+			//Umbrella check
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}else {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}
+			
+			//Debug controls
 			if (FlxG.keys.justPressed("L") && Constants.debug) {
 				if (Constants.darknesscolor == Constants.CLEARDARKNESSCOLOR) {
 					Constants.darknesscolor = Constants.DEFAULTDARKNESSCOLOR;
@@ -91,16 +97,17 @@ package
 					Constants.darknesscolor = Constants.CLEARDARKNESSCOLOR;
 				}
 			}
-			
 			if (FlxG.keys.justPressed("K") && Constants.debug) {
 				this.flashdebug = true;
 			}
 			
 			
+			//More timers
 			howoften += FlxG.elapsed;
 			looptimer += FlxG.elapsed;
 			soundtimer += FlxG.elapsed;
 			soundplayedtimer += FlxG.elapsed;
+			//Timer for flash
 			if (flashing) {
 				flashtimer += FlxG.elapsed;
 			}	
@@ -171,6 +178,11 @@ package
 		
 		private function shouldflash(criteria:String):Boolean {
 			
+			if (flashdebug) {
+				flashdebug = false;
+				return true;
+			}
+			//First flash
 			if (!firstflashed) {
 				if(firstflashedtimer >= 0.5){
 					firstflashed = true;
@@ -178,10 +190,6 @@ package
 				}else {
 					return false;
 				}
-			}
-			if (flashdebug) {
-				flashdebug = false;
-				return true;
 			}
 			
 			var scale:Number = 1.0;
@@ -193,20 +201,16 @@ package
 				var threshold:Number = 0;
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
-					if (!e || !e.alive) {
-						continue;
+					if (e && e.alive) {
+						threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 					}
-					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 				}
 				for (i = 0; i < enemieshallucination.members.length; i++) {
 					e = enemieshallucination.members[i] as Enemy;
-					if (!e || !e.alive) {
-						continue;
+					if (e && e.alive){
+						threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 					}
-					var mp:FlxPoint = e.getMidpoint();
-					threshold = Math.max(threshold, Utils.inverseeuclidean(player.getMidpoint(), e.getMidpoint(), .5) * scale);
 				}
-
 				return c <= threshold;
 			}else if (criteria == "flashcount") {
 				var s:Number = Utils.sampleradial(Math.pow(50, flashcount));

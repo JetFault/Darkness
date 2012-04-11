@@ -7,6 +7,7 @@ package
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxU;
 	public class LightController extends BaseController
 	{
 		private var light:Light;
@@ -52,8 +53,15 @@ package
 			}else {
 				radius = LightArmDis;
 			}
+			
 			var thespriteicareabout:FlxSprite = player.getHitbox();
-			if (Utils.sign(thespriteicareabout.velocity.x)> 0 && Utils.sign(thespriteicareabout.velocity.y) > 0) {
+			if (thespriteicareabout.velocity.x == 0 && thespriteicareabout.velocity.y == 0) {
+				center = true;
+			}else {
+				angle = FlxU.getAngle(new FlxPoint(0, 0), new FlxPoint(Utils.sign(thespriteicareabout.velocity.x), Utils.sign(thespriteicareabout.velocity.y)));
+			}
+			
+			/*if (Utils.sign(thespriteicareabout.velocity.x)> 0 && Utils.sign(thespriteicareabout.velocity.y) > 0) {
 				angle = 45;
 			}else if (Utils.sign(thespriteicareabout.velocity.x)> 0 && Utils.sign(thespriteicareabout.velocity.y) == 0) {
 				angle = 0;
@@ -71,8 +79,9 @@ package
 				angle = 270;
 			}else {
 				center = true;
-			}
+			}*/
 			
+			angle += 270;
 			angle *= Math.PI / 180;
 			light.x = player.x + 4 + light.lastchord.x;
 			light.y = player.y + 5 + light.lastchord.y;
@@ -112,9 +121,6 @@ package
 			light.scale.y = scaleValue;
 						
 			preChange = change;
-			if (scaleValue < 0) {
-				trace(scaleValue);
-			}
 			
 			super.update();
 		}
