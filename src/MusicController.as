@@ -8,7 +8,6 @@ package
 	public class MusicController extends BaseController
 	{
 		
-		[Embed(source = "../bin/data/music.mp3")] protected var BgMusic:Class;
 		[Embed(source = "../bin/data/RainSound1-2.mp3")] protected var RainMusic:Class;
 		[Embed(source = "../bin/data/WindSound.mp3")] protected var WindMusic:Class;
 		[Embed(source = "../bin/data/NormalStatic.mp3")] protected var StaticMusic:Class;
