@@ -204,9 +204,9 @@ package
 			validLocs.sortOn('distance', Array.NUMERIC);
 		}
 		
-		private function spawnEnemy(level:Map, hallucination:Boolean = false):void {
+		private function spawnEnemy(enemyLowerBoundSpawn:Number, enemyUpperBoundSpawn:Number, level:Map, hallucination:Boolean = false):void {
 			if (this.validLocs.length > 0) {
-				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.enemyPlacePercent, validLocs.length - 1)].loc;
+				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*enemyLowerBoundSpawn, (validLocs.length - 1)*enemyUpperBoundSpawn)].loc;
 		
 				//Just set the hallucination argument to false
 				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.UCS_PATHER);
@@ -223,46 +223,46 @@ package
 			//Freaking switch-case :-P
 			switch(this.levelNum) {
 				case 1:
-					spawnEnemy(level, false);
+					spawnEnemy(.20,.50,level, false);
 					break;
 					
 				case 2:
-					spawnEnemy(level, false);
-					spawnEnemy(level, true);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.50,.90,level, true);
 					break;
 					
 				case 3:
-					spawnEnemy(level, false);
+					spawnEnemy(.20,.50,level, false);
 					break;
 					
 				case 4:
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
-					spawnEnemy(level, true);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.50,.90,level, true);
 					break;
 					
 				case 5:
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 					
 				case 6:
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 					
 				case 7:
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 					
 				case 8:
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
-					spawnEnemy(level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 
 				default:
