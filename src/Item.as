@@ -7,9 +7,9 @@ package
 	 */
 	public class Item extends FlxSprite
 	{
-		[Embed(source = "../bin/data/UmbrellaItem.png")] protected var ImgUmbrella:Class;
-		[Embed(source = "../bin/data/LighterItem5.png")] protected var ImgLighter:Class;
-		[Embed(source = "../bin/data/ClockItem2.png")] protected var ImgClock:Class;
+		[Embed(source = "../bin/data/UmbrellaItem3.png")] protected var ImgUmbrella:Class;
+		[Embed(source = "../bin/data/LighterItem8.png")] protected var ImgLighter:Class;
+		[Embed(source = "../bin/data/ClockItem4.png")] protected var ImgClock:Class;
 		[Embed(source = "../bin/data/Bamboo.mp3")] protected var SoundUmbrella:Class;
 		[Embed(source = "../bin/data/Chant.mp3")] protected var SoundLighter:Class;
 		[Embed(source = "../bin/data/GrandfatherClock.mp3")] protected var SoundClock:Class;
@@ -46,15 +46,15 @@ package
 		{
 			if (itemType == ItemType.LANTERN)
 			{
-				loadGraphic(ImgLighter, true, true, 7, 11);
+				loadGraphic(ImgLighter);
 			}
 			if (itemType == ItemType.UMBRELLA) 
 			{
-				loadGraphic(ImgUmbrella, true, true, 9, 18);
+				loadGraphic(ImgUmbrella);
 			}
 			if (itemType == ItemType.CLOCK)
 			{
-				loadGraphic(ImgClock, true, true, 11, 9);
+				loadGraphic(ImgClock);
 			}
 		}
 		

@@ -40,8 +40,8 @@ package
 		
 		public function doNextAction():void {
 			var playerPos:FlxPoint = this.player.getMidpoint();
-			var enemyPos:FlxPoint = this.self.getMidpoint();
-			var distance = Utils.getDistance(playerPos, enemyPos);
+			var enemyPos:FlxPoint = this.self.getHitbox().getMidpoint();
+			var distance:Number = Utils.getDistance(playerPos, enemyPos);
 			//var xDist:Number = playerPos.x - enemyPos.x;
 			//var yDist:Number = playerPos.y - enemyPos.y;
 			//var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
@@ -84,6 +84,8 @@ package
 						//Proceed to next part of precomputed array
 						if(Utils.getDistance(currentPoint,enemyPos) < 5){
 							currentindex += 1;
+							trace(currentindex);
+							trace(closed.length);
 							currentindex %= closed.length;
 							currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						}
@@ -97,7 +99,7 @@ package
 						}
 						enemyPath = this.map.findPath(enemyPos, currentPoint);
 						if (enemyPath) {
-							this.self.followPath(enemyPath, self.getEnemyRunSpeed());
+							this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed());
 						}
 						//}
 					}
@@ -112,10 +114,10 @@ package
 				//If no path found, just sit still for that frame.  Otherwise, follow the path.
 				if (enemyPath == null) {
 					trace("No Path found");
-					this.self.stopFollowingPath(true);
+					this.self.getHitbox().stopFollowingPath(true);
 				}
 				else  {
-					this.self.followPath(enemyPath, self.getEnemyRunSpeed());
+					this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed());
 				}
 			}
 		}
