@@ -75,8 +75,6 @@ package
 			
 			var playerPos:FlxPoint = player.getMidpoint();
 			var enemyPos:FlxPoint = enemy.getMidpoint();
-			
-			
 			//TODO:  Get collision detection out of here.
 			//FootSteps---
 			/*
@@ -134,7 +132,6 @@ package
 				enemy.play("walk");
 			}
 			//End SIREN---
-			
 			ai.doNextAction();
 			
 			
@@ -149,21 +146,27 @@ package
 			}
 			*/
 			
-			var velocityp:FlxPoint = new FlxPoint(enemy.velocity.x, enemy.velocity.y);
+			var thespritethatmatters:FlxSprite = enemy.getHitbox();
+			var theothersprite:FlxSprite = enemy;
+			
+			var velocityp:FlxPoint = new FlxPoint(thespritethatmatters.velocity.x, thespritethatmatters.velocity.y);
 			var origin:FlxPoint = new FlxPoint(0, 0);
-			enemy.angle = FlxU.getAngle(origin, velocityp);
+			theothersprite.angle = FlxU.getAngle(origin, velocityp);
 			//----FUCKING SPASTIC------
 			if (ai.visible) 
 			{ 
-				enemy.angle += (Math.random() - 0.5) * 110;	
+				theothersprite.angle += (Math.random() - 0.5) * 110;	
 			}
 			//else if (Utils.getDistance(playerPos, enemyPos) < 50) {
 			//	enemy.angle += (Math.random() - 0.5) * 110;	
 			//
 			//}
 			//----END OF SPASTIC-----
-			enemy.hitbox.x = enemy.getMidpoint().x - enemy.hitbox.width / 2;
-			enemy.hitbox.y = enemy.getMidpoint().y - enemy.hitbox.width / 2;
+			//enemy.hitbox.x = enemy.getMidpoint().x - enemy.hitbox.width / 2;
+			//enemy.hitbox.y = enemy.getMidpoint().y - enemy.hitbox.width / 2;
+			
+			theothersprite.x = thespritethatmatters.getMidpoint().x - theothersprite.width / 2;
+			theothersprite.y = thespritethatmatters.getMidpoint().y - theothersprite.height / 2;
 			
 			super.update();
 		}
