@@ -13,7 +13,7 @@ package
 		private var enemyType:uint;
 		public var hitbox:FlxSprite;
 		
-		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean, enemyType:uint) 
+		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean, enemyType:uint, onpathcompletion:String) 
 		{
 			super(0, 0, null);
 			super.x = x;
@@ -29,9 +29,9 @@ package
 			//Hallucination code
 			this.hallucination = hallucination;
 			if (this.hallucination) {
-				this.controller = new EnemyController(this, player, level, enemyRunSpeed, EnemyType.DO_NOTHING);
+				this.controller = new EnemyController(this, player, level, enemyRunSpeed, EnemyType.DO_NOTHING, onpathcompletion);
 			}else{
-				this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType);
+				this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType, onpathcompletion);
 			}
 			this.enemyType = enemyType;
 			//Add animations

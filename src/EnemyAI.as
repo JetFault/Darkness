@@ -4,6 +4,7 @@ package
 	import org.flixel.FlxPath;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxG;
+	import org.flixel.FlxObject;
 	/**
 	 * ...
 	 * @author Darkness Team
@@ -25,9 +26,11 @@ package
 		protected var depth:Number = 50;
 		protected var time:Number = 1;
 		protected var timer:Number = 0;
+		protected var onpathcompletion:String = null;
+		protected var followingpath:Boolean = false;
 		
 		
-		public function EnemyAI(self:Enemy, player:Player, map:Map) 
+		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop") 
 		{
 			this.self = self;
 			this.player = player;
@@ -36,6 +39,7 @@ package
 			/*if (FlxG.level > 0) {
 				this.depth *= FlxG.level;
 			}*/
+			this.onpathcompletion = "loop";
 		}
 		
 		public function doNextAction():void {
@@ -71,29 +75,62 @@ package
 			
 			//If found, just follow.  Else, go around predetermined path
 			if (!this.visible) {
+				//FlxObject.PATH_LOOP_FORWARD FlxObject.PATH_YOYO
 				/*if (distance < 80) {
 					this.visible = true;
 					this.pathcreated = false;
 				}else {*/
 					if (!pathcreated) {
 						currentindex = 0;
-						closed = getAutoPath();
-						currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
+						closed = getAutoPath(self.getHitbox().getMidpoint());
+						//currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
+						//trace(closed.length);
+						enemyPath = new FlxPath();
+						for (var i:uint = 0; i < closed.length; i++) {
+							closed[i] = Utils.tileToMidpoint(map, closed[i][0], closed[i][1]);
+						}
+						//trace(closed.length);
+						
+						for (var i:uint = 0; i < closed.length - 1; i++) {
+							var p1:FlxPoint = closed[i] as FlxPoint;
+							var p2:FlxPoint = closed[i + 1] as FlxPoint;
+							var temppath:FlxPath = this.map.findPath(p1, p2);
+							while (temppath.nodes.length > 0) {
+								enemyPath.addPoint(temppath.removeAt(0));
+							}
+							if(temppath){
+								temppath.destroy();
+							}
+						}
+						this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed(), FlxObject.PATH_FORWARD);
 						pathcreated = true;
 					}else {
+						if (enemyPath && Utils.getDistance(self.getHitbox().getMidpoint(), enemyPath.head()) < 5) {
+							enemyPath.removeAt(0);
+							if (enemyPath.nodes.length == 0) {
+								enemyPath.destroy;
+								pathcreated = false;
+							}
+						}
+						
+						//this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed(), FlxObject.PATH_LOOP_FORWARD);
+						//pathcreated = true;
+						/*
 						//Proceed to next part of precomputed array
 						if(Utils.getDistance(currentPoint,enemyPos) < 5){
 							currentindex += 1;
 							trace(currentindex);
 							trace(closed.length);
+							if (currentindex == closed.length) {
+								pathcreated = false;
+								return;
+							}
 							currentindex %= closed.length;
 							currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						}
 						
 						//TODO:  Pathfinding optimization.  Try not to pathfind per frame.
 						//Note:  enemy sprites making this difficult, since too large and must go through walls.  Try to make the hitbox pathfollow instead.
-						//timer += FlxG.elapsed;
-						//if(timer >= time){
 						if (enemyPath) {
 							enemyPath.destroy();
 						}
@@ -101,6 +138,7 @@ package
 						if (enemyPath) {
 							this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed());
 						}
+						*/
 						//}
 					}
 				//}
@@ -122,7 +160,7 @@ package
 			}
 		}
 		
-		protected function getAutoPath():Array {
+		protected function getAutoPath(currentpoint:FlxPoint):Array {
 			return null;
 		}
 		
