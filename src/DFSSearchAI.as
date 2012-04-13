@@ -11,16 +11,17 @@ package
 	 */
 	public class DFSSearchAI extends EnemyAI 
 	{		
-		public function DFSSearchAI(self:Enemy,player:Player, map:Map) 
+		public function DFSSearchAI(self:Enemy, player:Player, map:Map, onpathcompletion:String) 
 		{
-			depth = 20;
-			super(self, player, map);
+			
+			super(self, player, map, onpathcompletion);
 			this.xpos = 30;
 			this.ypos = 2;
+			this.depth = 5;
 		}
 		
-		override protected function getAutoPath():Array {
-			return Utils.createDFSPath(map, depth, self);
+		override protected function getAutoPath(currentpoint:FlxPoint):Array {
+			return Utils.createDFSPath(map, depth, currentpoint);
 		}
 	}
 }

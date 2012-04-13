@@ -136,10 +136,10 @@ package
 		 * @param	enemy
 		 * @return
 		 */
-		public static function createDFSPath(map:Map, depth:Number, enemy:Enemy):Array {
+		public static function createDFSPath(map:Map, depth:Number, enemypoint:FlxPoint):Array {
 			
 			//Initialization
-			var starttile:FlxPoint = Utils.pointToTileCoords(map, enemy.getMidpoint());
+			var starttile:FlxPoint = Utils.pointToTileCoords(map, enemypoint);
 			var root:Array = new Array(starttile.x, starttile.y, 0);	
 						
 			var closed:Array = new Array();			
@@ -152,7 +152,8 @@ package
 				//frontier = frontier.reverse();
 				var node:Array = frontier.pop();
 				//frontier = frontier.reverse();
-
+	
+				
 				//Base case: depth
 				if (node[2] >= depth) {
 					continue;
@@ -203,10 +204,10 @@ package
 		 * @param	enemy
 		 * @return
 		 */
-		public static function createUCSPath(map:Map, depth:Number, enemy:Enemy, player:Player):Array {
+		public static function createUCSPath(map:Map, depth:Number, enemypoint:FlxPoint, player:Player):Array {
 			
 			//Initialization
-			var starttile:FlxPoint = Utils.pointToTileCoords(map, enemy.getMidpoint());
+			var starttile:FlxPoint = Utils.pointToTileCoords(map, enemypoint);
 			var root:HeapItem = new HeapItem(map, player.getMidpoint(), new FlxPoint(starttile.x, starttile.y), 0, 0);	
 			
 			var closed:Array = new Array();			
@@ -237,7 +238,7 @@ package
 				 */
 				//Base case: depth
 				if (numnodes >= depth) {
-					continue;
+					break;
 				}
 					
 				//Base case: Node has already been visited
@@ -301,6 +302,31 @@ package
 			return closedarrayofarrays;
 		}
 		
+		/**
+		 * 
+		 * @param	map
+		 * @param	depth
+		 * @param	enemy
+		 * @return
+		 */
+		public static function randomDFS(map:Map, depth:Number, enemypoint:FlxPoint):Array {
+			var p:FlxPoint = Utils.pointToTileCoords(map, enemypoint);
+			while (true) {
+				var tilex:uint = p.x + uint(samplegauss(0, 5));
+				var tiley:uint = p.y + uint(samplegauss(0, 5));
+				if (tilex >= 0 && tilex < map.widthInTiles && 
+					tiley >= 0 && tiley < map.heightInTiles &&
+					map.getTile(tilex, tiley) == Constants.EMPTYTILEINDEX) {
+						var a:Array = createDFSPath(map, depth, Utils.tilePtToMidpoint(map, new FlxPoint(tilex, tiley)));
+						a = a.reverse();
+						a.push(new Array(p.x, p.y, 0));
+						a = a.reverse();
+						return a;
+					}
+			}
+			
+			return null;
+		}
 		
 		
 		private static function inArray(array:Array, arr2:Array): Boolean {
