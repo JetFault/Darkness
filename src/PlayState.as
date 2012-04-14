@@ -244,7 +244,7 @@ package
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*enemyLowerBoundSpawn, (validLocs.length - 1)*enemyUpperBoundSpawn)].loc;
 		
 				//Just set the hallucination argument to false
-				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.DFS_PATHER, "loop");
+				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.DFS_PATHER, "fromcurrentposition");
 				if(!enemy.isHallucination()) {
 					enemiesreal.add(enemy);
 				}
