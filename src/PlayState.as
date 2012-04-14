@@ -25,6 +25,10 @@ package
 		private var backgroundtemplate:FlxSprite;
 		private var backgroundgroup:FlxGroup;
 		private var currentExitPoint:FlxPoint;
+		private var timetonames:Number = 6;
+		private var namestimer:Number = 0;
+		private var namesrendered = false;
+		private var textrenderer:TextRenderer;
 		
 		//Controllers
 		private var controllers:GameControllers;
@@ -42,9 +46,8 @@ package
 
 			level = new Map(this.levelNum);
 			
-			var textrenderer:TextRenderer = new TextRenderer();
-			textrenderer.renderText(new FlxText(10, 10, 100, "Darkness"), true, 3);
-			
+			textrenderer = new TextRenderer();
+
 			/*var titlegroup:FlxGroup = new FlxGroup();
 			titlegroup.add(new FlxText(50, 50, 80, "D"));
 			titlegroup.add(new FlxText(50, 60, 10, "a"));
@@ -182,12 +185,21 @@ package
 			if (levelNum != 0)
 			{
 				add(levelText);
+			}else {
+				textrenderer.renderText(new FlxText(10, 10, 100, "Darkness"), true, timetonames);
 			}
 			add(textrenderer);
 		}
 		
 		override public function update():void
 		{
+			if (FlxG.level == 0) {
+				namestimer += FlxG.elapsed;
+				if (!namesrendered && namestimer >= timetonames) {
+					namesrendered = true;
+					textrenderer.renderText(new FlxText(10, 10, 100, "Elliot Goodzeit Alex Kuribayashi Matthew Mitsui Jerry Reptak"), true, 6);
+				}
+			}
 			//Debug input
 			if (FlxG.keys.ENTER && Constants.debug) {
 				FlxG.resetState();

@@ -38,7 +38,7 @@ package
 			
 			
 			//Real enemies that tag player kill player
-			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
+			//if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
@@ -48,7 +48,7 @@ package
 						//...no tagbacks XD
 					}
 				}
-			}
+			//}
 			
 			//Hallucinations that tag player die
 			/*if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {

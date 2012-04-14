@@ -489,7 +489,7 @@ package
 		 * @param	thearray
 		 * @param	iterationnum
 		 */
-		private static function brownian_helper(firstindex:uint, lastindex:uint, thearray:Array, iterationnum:Number ):void {
+		private static function brownian_helper(firstindex:uint, lastindex:uint, thearray:Array, iterationnum:Number):void {
 			var someconstant:Number = 1;
 			if (lastindex - firstindex <= 1) {
 				return;
@@ -514,6 +514,17 @@ package
 				return 1;
 			if (x < 0)
 				return -1;
+			return 0;
+		}
+		
+		public static function hill(x:Number):Number {
+			if (x < 0.33) {
+				return Math.min(1,x/.33);
+			}else if (x >= .33 && x < .66) {
+				return 1;
+			}else {
+				return Math.max(0,1-(x-.66)/.33);
+			}
 			return 0;
 		}
 	}
