@@ -364,7 +364,7 @@ package
 		
 				exit = new FlxSprite(point.x, point.y, null);
 				//exit.makeGraphic(12, 16, 0xff8B8682);
-				exit.loadGraphic(ImgExit, true, true, 17, 16);
+				exit.loadGraphic(ImgExit);
 				var point:FlxPoint = Utils.getPointThatCentersObject(level, exit);
 				exit.x = point.x;
 				exit.y = point.y;
