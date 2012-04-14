@@ -47,6 +47,8 @@ package
 			var playerPos:FlxPoint = this.player.getMidpoint();
 			var enemyPos:FlxPoint = this.self.getHitbox().getMidpoint();
 			var distance:Number = Utils.getDistance(playerPos, enemyPos);
+			
+			
 			//var xDist:Number = playerPos.x - enemyPos.x;
 			//var yDist:Number = playerPos.y - enemyPos.y;
 			//var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
@@ -110,12 +112,14 @@ package
 						
 						if (enemyPath && lostsight && enemyPath.nodes.length > 0) {
 							this.self.getHitbox().followPath(enemyPath, this.self.getEnemyRunSpeed());
+							lostsight = false;
 						}
 						
 						if (enemyPath && Utils.getDistance(self.getHitbox().getMidpoint(), enemyPath.head()) < 5) {
 							enemyPath.removeAt(0);
 							if (enemyPath.nodes.length == 0) {
-								enemyPath.destroy;
+								this.self.getHitbox().stopFollowingPath(true);
+								enemyPath == null;
 								pathcreated = false;
 							}
 						}

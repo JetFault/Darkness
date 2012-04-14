@@ -3,7 +3,9 @@ package
 	import org.flixel.FlxBasic;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
+	import org.flixel.FlxPath;
 	import org.flixel.FlxSprite;
+	
 	/**
 	 * ...
 	 * @author Darkness Team
@@ -34,6 +36,7 @@ package
 			FlxG.collide(player.getHitbox(), level);
 			
 			
+			
 			//Real enemies that tag player kill player
 			if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
@@ -48,7 +51,7 @@ package
 			}
 			
 			//Hallucinations that tag player die
-			if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {
+			/*if (FlxG.overlap(player, enemieshallucination) && player.isAlive()) {
 				for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
 					var e:Enemy = enemieshallucination.members[i] as Enemy;
 					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
@@ -56,20 +59,29 @@ package
 						enemieshallucination.remove(enemieshallucination.members[i]);
 					}
 				}
-			}
+			}*/
 			
 			//Real enemies that tag light are attracted to player
-			if (FlxG.overlap(light, enemiesreal)) {
+			//if (FlxG.overlap(light, enemiesreal)) {
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
-					if (e && FlxG.overlap(light, enemiesreal.members[i])) {
-						if (Utils.getDistance(light.getMidpoint(), e.getMidpoint()) < light.radius*light.scale.x) { //Assumes light.scale.x == light.scale.y
+					if (e){ //&& FlxG.overlap(light,enemiesreal.members[i])){//FlxG.overlap(light, enemiesreal.members[i])) {
+						var path:FlxPath = level.findPath(light.getMidpoint(), e.getMidpoint());
+						if (Utils.getPathDistance(path) < light.radius*light.scale.x) { //Assumes light.scale.x == light.scale.y
 							var ctrl:EnemyController = e.getController() as EnemyController;
 							ctrl.setPlayerVisible();
 						}
+					}else {
+						/*trace("not overlapping");
+						trace("enemy...");
+						trace(e.x);
+						trace(e.y);
+						trace("light...");
+						trace(light.x);
+						trace(light.y);*/
 					}
 				}
-			}
+			//}
 			
 			//Hallucinations that tag light die
 			/*if (FlxG.overlap(light, enemieshallucination)) {

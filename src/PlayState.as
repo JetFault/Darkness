@@ -40,6 +40,18 @@ package
 			this.levelNum = FlxG.level;
 
 			level = new Map(this.levelNum);
+			
+			/*var titlegroup:FlxGroup = new FlxGroup();
+			titlegroup.add(new FlxText(50, 50, 80, "D"));
+			titlegroup.add(new FlxText(50, 60, 10, "a"));
+			titlegroup.add(new FlxText(50, 70, 10, "r"));
+			titlegroup.add(new FlxText(50, 80, 10, "k"));
+			titlegroup.add(new FlxText(50, 90, 10, "e"));
+			titlegroup.add(new FlxText(50, 100, 10, "n"));
+			titlegroup.add(new FlxText(50, 110, 10, "s"));
+			titlegroup.add(new FlxText(50, 120, 10, "s"));*/
+			
+			
 
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
@@ -157,6 +169,7 @@ package
 					add(e.getEyeSprite());
 				}
 			}
+			//add(titlegroup);
 		}
 		
 		override public function update():void
