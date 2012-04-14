@@ -126,12 +126,14 @@ package
 			if (ai.visible) {
 				sirenSound.play();
 				enemy.play("raged");
+				enemy.getEyeSprite().play("raged");
 			/*} else if (Utils.getDistance(playerPos, enemyPos) < 50) {
 				sirenSound.play();
 				enemy.play("raged");*/
 			} else {
 				sirenSound.stop();
 				enemy.play("walk");
+				enemy.getEyeSprite().play("walk");
 			}
 			//End SIREN---
 			ai.doNextAction();
@@ -169,7 +171,9 @@ package
 			
 			theothersprite.x = thespritethatmatters.getMidpoint().x - theothersprite.width / 2;
 			theothersprite.y = thespritethatmatters.getMidpoint().y - theothersprite.height / 2;
-			
+			enemy.getEyeSprite().x = enemy.x;
+			enemy.getEyeSprite().y = enemy.y;
+			enemy.getEyeSprite().angle = enemy.angle;
 			super.update();
 		}
 		

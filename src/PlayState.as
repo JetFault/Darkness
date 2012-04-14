@@ -7,7 +7,8 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7-3.png")] protected var BgTexture7:Class;
-		[Embed(source = "../bin/data/Exit8.png")] protected var ImgExit:Class;
+		[Embed(source = "../bin/data/Exit.png")] protected var ImgExit:Class;
+		[Embed(source = "../bin/data/CloisterBlack.ttf", fontFamily = "TextFont", embedAsCFF="false")] protected var TextFont:String;
 		
 		//Model
 		private var player:Player;
@@ -37,9 +38,24 @@ package
 
 		override public function create():void
 		{
-			this.levelNum = FlxG.level + 1;
+			this.levelNum = FlxG.level;
 
 			level = new Map(this.levelNum);
+			
+			/*var titlegroup:FlxGroup = new FlxGroup();
+			titlegroup.add(new FlxText(50, 50, 80, "D"));
+			titlegroup.add(new FlxText(50, 60, 10, "a"));
+			titlegroup.add(new FlxText(50, 70, 10, "r"));
+			titlegroup.add(new FlxText(50, 80, 10, "k"));
+			titlegroup.add(new FlxText(50, 90, 10, "e"));
+			titlegroup.add(new FlxText(50, 100, 10, "n"));
+			titlegroup.add(new FlxText(50, 110, 10, "s"));
+			titlegroup.add(new FlxText(50, 120, 10, "s"));*/
+			
+			var levelText:FlxText = new FlxText(0, 0, 70, "Level: " + levelNum);
+			levelText.setFormat("TextFont", 16, 0xffffffff, "left");
+			levelText.scrollFactor.x = levelText.scrollFactor.y = 0;
+			
 
 			//Create background
 			backgroundtemplate = new FlxSprite(0, 0,BgTexture7);
@@ -144,6 +160,26 @@ package
 			add(darkness);
 			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
+			
+			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				var e:Enemy = enemiesreal.members[i] as Enemy;
+				if(e){  //Check for null reference in 2^n size array
+					add(e.getEyeSprite());
+				}
+			}
+			add(enemieshallucination);
+			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
+				var e:Enemy = enemieshallucination.members[i] as Enemy;
+				if(e){  //Check for null reference in 2^n size array
+					add(e.getEyeSprite());
+				}
+			}
+			//add(titlegroup);
+			
+			if (levelNum != 0)
+			{
+				add(levelText);
+			}
 		}
 		
 		override public function update():void
@@ -212,7 +248,7 @@ package
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*enemyLowerBoundSpawn, (validLocs.length - 1)*enemyUpperBoundSpawn)].loc;
 		
 				//Just set the hallucination argument to false
-				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.RANDOM_DFS, "loop");
+				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.RANDOM_DFS, "fromcurrentposition");
 				if(!enemy.isHallucination()) {
 					enemiesreal.add(enemy);
 				}
@@ -342,7 +378,7 @@ package
 				
 				exit = new FlxSprite(point.x, point.y, null);
 				//exit.makeGraphic(12, 16, 0xff8B8682);
-				exit.loadGraphic(ImgExit, true, true, 17, 16);
+				exit.loadGraphic(ImgExit);
 				var point:FlxPoint = Utils.getPointThatCentersObject(level, exit);
 				exit.x = point.x;
 				exit.y = point.y;

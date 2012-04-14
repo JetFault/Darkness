@@ -28,6 +28,7 @@ package
 		protected var timer:Number = 0;
 		protected var onpathcompletion:String = null;
 		protected var followingpath:Boolean = false;
+		protected var lostsight:Boolean = false;
 		
 		
 		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop") 
@@ -39,13 +40,15 @@ package
 			/*if (FlxG.level > 0) {
 				this.depth *= FlxG.level;
 			}*/
-			this.onpathcompletion = "loop";
+			this.onpathcompletion = onpathcompletion; //Values {"loop", "fromcurrentposition"}
 		}
 		
 		public function doNextAction():void {
 			var playerPos:FlxPoint = this.player.getMidpoint();
 			var enemyPos:FlxPoint = this.self.getHitbox().getMidpoint();
 			var distance:Number = Utils.getDistance(playerPos, enemyPos);
+			
+			
 			//var xDist:Number = playerPos.x - enemyPos.x;
 			//var yDist:Number = playerPos.y - enemyPos.y;
 			//var distance:Number = Math.sqrt(xDist * xDist + yDist * yDist);
@@ -68,6 +71,7 @@ package
 			var thepath:FlxPath = this.map.findPath(enemyPos, playerPos);
 			if (thepath && Utils.getPathDistance(thepath) >= visibledistance) {
 				this.visible = false;
+				this.lostsight = true;
 			}
 			if (thepath) {
 				thepath.destroy();
@@ -82,7 +86,18 @@ package
 				}else {*/
 					if (!pathcreated) {
 						currentindex = 0;
-						closed = getAutoPath(self.getHitbox().getMidpoint());
+						trace(this.onpathcompletion);
+						if (this.onpathcompletion == "loop") {
+							closed = getAutoPath(self.getOriginalPosition());
+							closed = closed.reverse();
+							var p = Utils.pointToTileCoords(map, self.getHitbox().getMidpoint());
+							var a:Array = new Array(p.x,p.y);
+							closed.push(a);
+							closed = closed.reverse();
+						}else if (this.onpathcompletion == "fromcurrentposition") {
+							closed = getAutoPath(self.getHitbox().getMidpoint());
+						}
+						trace(closed.length);
 						//currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						//trace(closed.length);
 						enemyPath = new FlxPath();
@@ -105,10 +120,17 @@ package
 						this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed(), FlxObject.PATH_FORWARD);
 						pathcreated = true;
 					}else {
+						
+						if (enemyPath && lostsight && enemyPath.nodes.length > 0) {
+							this.self.getHitbox().followPath(enemyPath, this.self.getEnemyRunSpeed());
+							lostsight = false;
+						}
+						
 						if (enemyPath && Utils.getDistance(self.getHitbox().getMidpoint(), enemyPath.head()) < 5) {
 							enemyPath.removeAt(0);
 							if (enemyPath.nodes.length == 0) {
-								enemyPath.destroy;
+								this.self.getHitbox().stopFollowingPath(true);
+								enemyPath == null;
 								pathcreated = false;
 							}
 						}

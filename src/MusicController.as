@@ -26,12 +26,12 @@ package
 		
 		public function MusicController(player:Player, enemy:Enemy, exit:FlxSprite) 
 		{
-			rainMusic =FlxG.loadSound(RainMusic, 0.04, true);
+			rainMusic =FlxG.loadSound(RainMusic, 0.0, true);
 			rainMusic.play();
-			windMusic = FlxG.loadSound(WindMusic, .06, true);
+			windMusic = FlxG.loadSound(WindMusic, .0, true);
 			windMusic.play();
 			staticMusic = FlxG.loadSound(StaticMusic, .01, true);
-			staticMusic.play();
+			//staticMusic.play();
 			ghostMusic = FlxG.loadSound(GhostMusic, .03, true);
 			ghostMusic.play();
 			
@@ -44,10 +44,18 @@ package
 		}
 		
 		override public function update():void {
+			var per:Number = (FlxG.level + 1)/8;
+			var windPer:Number = 1 - per;
+			var rainPer:Number = per;
+			
 			timePassed += FlxG.elapsed;
-			rainMusic.volume = 0.04 + (Math.sin(timePassed * 0.10) * 0.025); //2
-			windMusic.volume = 0.06 + (Math.sin(timePassed * 0.15) * 0.025); //3
-			staticMusic.volume=0.03 + (Math.sin(timePassed * 0.25) * 0.01);  //5
+			rainMusic.volume = (0.06 + (Math.sin(timePassed * 0.10) * 0.02)) * rainPer; //2
+			windMusic.volume = (0.1 + (Math.sin(timePassed * 0.15) * 0.02)) * windPer; //3
+			staticMusic.volume = 0.02 + (Math.sin(timePassed * 0.25) * 0.005);  //5
+			
+			//rainMusic.volume = 0.04 + (Math.sin(timePassed * 0.10) * 0.025); //2
+			//windMusic.volume = 0.06 + (Math.sin(timePassed * 0.15) * 0.025); //3
+			//staticMusic.volume=0.02 + (Math.sin(timePassed * 0.25) * 0.01);  //5
 			
 			
 			
