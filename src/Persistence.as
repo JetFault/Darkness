@@ -16,8 +16,6 @@ package
 		static public var startLocRatio:FlxPoint;
 		
 		public static function init():void {
-		
-		static function init():void {
 			numItems = 0;
 			for (var i:int = 0; i < inventory.length; i++)
 			{
