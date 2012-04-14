@@ -183,7 +183,7 @@ package
 					[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 				];
 			
-			var startPt:FlxPoint = new FlxPoint(4, 1);
+			var startPt:FlxPoint = new FlxPoint(1, 4);
 			var endPt:FlxPoint = new FlxPoint(4, level1Data[0].length - 2);
 			maze.generateFixedMaze(level1Data, startPt, endPt);
 		}		

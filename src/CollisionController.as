@@ -118,7 +118,7 @@ package
 		}
 		
 		private function resetLevel():void {
-			FlxG.level = 0;
+			FlxG.level = 1;
 			Persistence.init();
 			FlxG.switchState(new PlayState());
 		}

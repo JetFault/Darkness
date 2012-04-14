@@ -37,7 +37,7 @@ package
 
 		override public function create():void
 		{
-			this.levelNum = FlxG.level + 1;
+			this.levelNum = FlxG.level;
 
 			level = new Map(this.levelNum);
 
@@ -61,6 +61,7 @@ package
 			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
+			
 			
 			findValidLocations(level);
 /*TRACING			
