@@ -40,7 +40,7 @@ package
 			/*if (FlxG.level > 0) {
 				this.depth *= FlxG.level;
 			}*/
-			this.onpathcompletion = "loop";
+			this.onpathcompletion = onpathcompletion; //Values {"loop", "fromcurrentposition"}
 		}
 		
 		public function doNextAction():void {
@@ -86,7 +86,18 @@ package
 				}else {*/
 					if (!pathcreated) {
 						currentindex = 0;
-						closed = getAutoPath(self.getHitbox().getMidpoint());
+						trace(this.onpathcompletion);
+						if (this.onpathcompletion == "loop") {
+							closed = getAutoPath(self.getOriginalPosition());
+							closed = closed.reverse();
+							var p = Utils.pointToTileCoords(map, self.getHitbox().getMidpoint());
+							var a:Array = new Array(p.x,p.y);
+							closed.push(a);
+							closed = closed.reverse();
+						}else if (this.onpathcompletion == "fromcurrentposition") {
+							closed = getAutoPath(self.getHitbox().getMidpoint());
+						}
+						trace(closed.length);
 						//currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						//trace(closed.length);
 						enemyPath = new FlxPath();
