@@ -7,7 +7,7 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7-3.png")] protected var BgTexture7:Class;
-		[Embed(source = "../bin/data/Exit8.png")] protected var ImgExit:Class;
+		[Embed(source = "../bin/data/Exit.png")] protected var ImgExit:Class;
 		
 		//Model
 		private var player:Player;
@@ -51,6 +51,7 @@ package
 			titlegroup.add(new FlxText(50, 110, 10, "s"));
 			titlegroup.add(new FlxText(50, 120, 10, "s"));*/
 			
+			var levelText:FlxText = new FlxText(0, 0, 50, "Level: " + levelNum);
 			
 
 			//Create background
@@ -170,6 +171,8 @@ package
 				}
 			}
 			//add(titlegroup);
+			
+			add(levelText);
 		}
 		
 		override public function update():void
@@ -238,7 +241,7 @@ package
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*enemyLowerBoundSpawn, (validLocs.length - 1)*enemyUpperBoundSpawn)].loc;
 		
 				//Just set the hallucination argument to false
-				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.RANDOM_DFS, "loop");
+				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.DFS_PATHER, "loop");
 				if(!enemy.isHallucination()) {
 					enemiesreal.add(enemy);
 				}
