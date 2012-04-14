@@ -57,7 +57,8 @@ package
 					_width = 18;
 					_height = 14;
 					_factor = 0.08;
-					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;	
+					_wallsToRemove = (_height - 2) * (_width - 2) * _factor;
+					
 					break;
 				
 				case 2:
@@ -114,8 +115,18 @@ package
 					_height = 10;
 					_wallsToRemove = 0;	
 			}
-		
-			this.maze.generateRandMaze(_width, _height, _wallsToRemove);
+			
+			var ratioX:Number = Persistence.startLocRatio.x;
+			var ratioY:Number = Persistence.startLocRatio.y;
+			
+			
+			var _xStart:Number = ratioX * (_width as Number);
+			var _yStart:Number = ratioY * (_height as Number);
+			
+			
+			var _start:FlxPoint = new FlxPoint(_xStart, _yStart);
+			
+			this.maze.generateRandMaze(_width, _height, _wallsToRemove, _start);
 		}
 		
 		public function isWall(x:uint, y:uint):Boolean {
@@ -157,7 +168,7 @@ package
 		 * @return
 		 */
 		public function getStartTile():FlxPoint {
-			return this.maze.getStartTile();
+			return new FlxPoint(this.maze.getStartTile().y, this.maze.getStartTile().x);
 		}
 		
 		/**

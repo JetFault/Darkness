@@ -44,10 +44,17 @@ package
 			this.corners = new Array();
 		}
 		
-		public function generateRandMaze(width:uint, height:uint, numWallsRemove:uint):void {
+		public function generateRandMaze(width:uint, height:uint, numWallsRemove:uint, start:FlxPoint):void {
 			if (_maze == null) {
 				this._width = width;
 				this._height = height;
+				
+				var startX:uint = Math.min(start.x, this._width - 2);
+				startX = Math.max(startX, 1);
+				var startY:uint = Math.min(start.y, this._height - 2);
+				startY = Math.max(startY, 1);				
+				
+				this._start = new FlxPoint(startY as uint, startX as uint);
 				_generate(numWallsRemove);
 			}
 		}
@@ -58,7 +65,7 @@ package
 				this._width = levelData[0].length;
 				this._height = levelData.length;
 				
-				this._start = start;
+				this._start = new FlxPoint(start.y as uint, start.x as uint);
 				this._finish = end;
 				_findDeadEnds();
 				_findCorners();
@@ -82,7 +89,6 @@ package
 		}
 		
 		public function getFinishTile():FlxPoint {
-			trace("maze", this._finish.x, this._finish.y);
 			return this._finish;
 		}
 		
@@ -113,21 +119,20 @@ package
 			_initMaze();
 			_createMaze();
 			_removeRandWalls(numWalls);
-			_emptyOut(_start, 3, 3);
+			//_emptyOut(_start, 3, 3);
 			_findDeadEnds();
 			_findCorners();
 		}
  
 		private function _initMaze() : void {
 			
-			_start = new FlxPoint(1, 1);
 			_finish = new FlxPoint(_width - 3, _height - 3);
 			
-			_maze	= new Array(_width);
+			_maze	= new Array(_height);
 			
 			for ( var x : int = 0; x < _height; x++ )
 			{
-				_maze[x] = new Array(_height);
+				_maze[x] = new Array(_width);
  
 				for ( var y : int = 0; y < _width; y++ )
 				{
@@ -173,6 +178,7 @@ package
 				{
 					possibleDirections += EAST;
 				}
+				
 //BEGIN removal of walls				
 				if ((pos.y + 2 < _width) && (_maze[pos.x][pos.y + 2] == false)) 
 				{
@@ -188,12 +194,11 @@ package
 					{
 						_maze[pos.x - 1][pos.y] = 0;
 					}
-				}
-	
+				}	
 //END removal of walls
+
 				if ( possibleDirections.length > 0 )
 				{
-
 					move = Utils.randInt(0, (possibleDirections.length - 1));
  
 					switch ( possibleDirections.charAt(move) )
@@ -298,8 +303,8 @@ package
 		private function _removeRandWalls(numWalls:uint): void {
 			for ( var i:uint = 0; i < numWalls; i++) {
 				do {
-					var xWall:int = Utils.randInt(1, _height-3);
-					var yWall:int = Utils.randInt(1, _width-3);
+					var xWall:int = Utils.randInt(2, _height-3);
+					var yWall:int = Utils.randInt(2, _width-3);
 				} while (_maze[xWall][yWall] == 0);
 				_maze[xWall][yWall] = 0;
 			}

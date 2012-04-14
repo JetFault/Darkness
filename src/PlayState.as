@@ -80,6 +80,7 @@ package
 			
 			
 			findValidLocations(level);
+			
 /*TRACING			
 			for (var i:uint = 0; i < this.validLocs.length; i++) {
 				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
@@ -260,6 +261,8 @@ package
 		private function spawnEnemies(level:Map):void {
 			//Freaking switch-case :-P
 			switch(this.levelNum) {
+				case 0:
+					break;
 				case 1:
 					spawnEnemy(.20,.50,level, false);
 					break;
@@ -334,29 +337,31 @@ package
 		}
 		
 		private function spawnItems(level:Map):void {
-			if (Constants.itemSpawnPercent >= Utils.randInt(0, 100)) {
-				var randItem:Number = Utils.randInt(0, 2);
-				switch(randItem) {
-					case 0:
-						if(Persistence.itemsSeen.indexOf(0) == -1) {
-							spawnItem(level, ItemType.LANTERN);
-							Persistence.itemsSeen.push(0);
-						}
-						break;
-					case 1:
-						if(Persistence.itemsSeen.indexOf(1) == -1) {
-							spawnItem(level, ItemType.CLOCK);
-							Persistence.itemsSeen.push(1);
+			if(this.levelNum !=0) {
+				if (Constants.itemSpawnPercent >= Utils.randInt(0, 100)) {
+					var randItem:Number = Utils.randInt(0, 2);
+					switch(randItem) {
+						case 0:
+							if(Persistence.itemsSeen.indexOf(0) == -1) {
+								spawnItem(level, ItemType.LANTERN);
+								Persistence.itemsSeen.push(0);
+							}
+							break;
+						case 1:
+							if(Persistence.itemsSeen.indexOf(1) == -1) {
+								spawnItem(level, ItemType.CLOCK);
+								Persistence.itemsSeen.push(1);
 
-						}
-						break;
-					case 2:
-						if(Persistence.itemsSeen.indexOf(2) == -1) {
-							spawnItem(level, ItemType.UMBRELLA);
-							Persistence.itemsSeen.push(2);
+							}
+							break;
+						case 2:
+							if(Persistence.itemsSeen.indexOf(2) == -1) {
+								spawnItem(level, ItemType.UMBRELLA);
+								Persistence.itemsSeen.push(2);
 
-						}
-						break;
+							}
+							break;
+					}
 				}
 			}
 		}
@@ -364,7 +369,13 @@ package
 		private function loadExit(level:Map):void {			
 			if (this.validLocs.length > 0) {
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*Constants.exitPlacePercent, validLocs.length - 1)].loc;
-		
+
+				var mazeLoc:FlxPoint = Utils.pointToTileCoords(level, point);
+				
+				var propWidth:Number = mazeLoc.x / (level.getMaze().getWidth() - 2);
+				var propHeight:Number = mazeLoc.y / (level.getMaze().getHeight() - 2);
+				Persistence.startLocRatio.make(propWidth, propHeight);
+				
 				exit = new FlxSprite(point.x, point.y, null);
 				//exit.makeGraphic(12, 16, 0xff8B8682);
 				exit.loadGraphic(ImgExit);

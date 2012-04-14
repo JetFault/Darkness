@@ -9,19 +9,23 @@ package
 	{
 		/*Items*/
 		static public var numItems:uint;
-		static public var inventory:Array = new Array();
+		static public var inventory:Array = new Array();		
 		static public var itemsSeen:Array;
 		
-		static public var previousPlayerTilePosition:FlxPoint;
+		/*Level Stuff*/
+		static public var startLocRatio:FlxPoint;
+		
+		public static function init():void {
 		
 		static function init():void {
 			numItems = 0;
 			for (var i:int = 0; i < inventory.length; i++)
 			{
 				inventory.pop();
-			}
-			
+			}			
 			itemsSeen = new Array();
+			
+			startLocRatio = new FlxPoint(0, 0);
 		}		
 		
 	}
