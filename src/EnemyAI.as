@@ -28,6 +28,7 @@ package
 		protected var timer:Number = 0;
 		protected var onpathcompletion:String = null;
 		protected var followingpath:Boolean = false;
+		protected var lostsight:Boolean = false;
 		
 		
 		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop") 
@@ -68,6 +69,7 @@ package
 			var thepath:FlxPath = this.map.findPath(enemyPos, playerPos);
 			if (thepath && Utils.getPathDistance(thepath) >= visibledistance) {
 				this.visible = false;
+				this.lostsight = true;
 			}
 			if (thepath) {
 				thepath.destroy();
@@ -105,6 +107,11 @@ package
 						this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed(), FlxObject.PATH_FORWARD);
 						pathcreated = true;
 					}else {
+						
+						if (enemyPath && lostsight && enemyPath.nodes.length > 0) {
+							this.self.getHitbox().followPath(enemyPath, this.self.getEnemyRunSpeed());
+						}
+						
 						if (enemyPath && Utils.getDistance(self.getHitbox().getMidpoint(), enemyPath.head()) < 5) {
 							enemyPath.removeAt(0);
 							if (enemyPath.nodes.length == 0) {
