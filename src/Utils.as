@@ -318,8 +318,8 @@ package
 			while (true) {
 				var tilex:uint = p.x + uint(samplegauss(0, 5));
 				var tiley:uint = p.y + uint(samplegauss(0, 5));
-				if (tilex >= 0 && tilex < map.widthInTiles && 
-					tiley >= 0 && tiley < map.heightInTiles &&
+				if (tilex >= 0 && tilex < map.getMapWidthInTiles() && 
+					tiley >= 0 && tiley < map.getMapHeightInTiles() &&
 					map.getTile(tilex, tiley) == Constants.EMPTYTILEINDEX) {
 						var a:Array = createDFSPath(map, depth, Utils.tilePtToMidpoint(map, new FlxPoint(tilex, tiley)));
 						a = a.reverse();

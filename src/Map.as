@@ -136,7 +136,7 @@ package
 					|| (y >= this.maze.getHeight())
 					|| (y < 0)
 					|| (x < 0)
-					|| (mazeArr[x][y] == 1) ) {
+					|| (mazeArr[y][x] == 1) ) {
 				return true;
 			}
 			return false;
@@ -197,7 +197,15 @@ package
 			var startPt:FlxPoint = new FlxPoint(1, 4);
 			var endPt:FlxPoint = new FlxPoint(4, level1Data[0].length - 2);
 			maze.generateFixedMaze(level1Data, startPt, endPt);
-		}		
+		}
+		
+		public function getMapWidthInTiles():uint {
+			return this.maze.getWidth();
+		}
+		
+		public function getMapHeightInTiles():uint {
+			return this.maze.getHeight();
+		}
 	}
 
 }

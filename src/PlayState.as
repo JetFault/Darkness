@@ -42,6 +42,9 @@ package
 
 			level = new Map(this.levelNum);
 			
+			var textrenderer:TextRenderer = new TextRenderer();
+			textrenderer.renderText(new FlxText(10, 10, 100, "Darkness"), true, 3);
+			
 			/*var titlegroup:FlxGroup = new FlxGroup();
 			titlegroup.add(new FlxText(50, 50, 80, "D"));
 			titlegroup.add(new FlxText(50, 60, 10, "a"));
@@ -180,6 +183,7 @@ package
 			{
 				add(levelText);
 			}
+			add(textrenderer);
 		}
 		
 		override public function update():void
