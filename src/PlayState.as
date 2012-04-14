@@ -141,6 +141,20 @@ package
 			add(darkness);
 			lightning = new Lightning(darkness, player, enemiesreal,enemieshallucination);
 			add(lightning);
+			
+			for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				var e:Enemy = enemiesreal.members[i] as Enemy;
+				if(e){  //Check for null reference in 2^n size array
+					add(e.getEyeSprite());
+				}
+			}
+			add(enemieshallucination);
+			for (var i:uint = 0; i < enemieshallucination.members.length; i++) {
+				var e:Enemy = enemieshallucination.members[i] as Enemy;
+				if(e){  //Check for null reference in 2^n size array
+					add(e.getEyeSprite());
+				}
+			}
 		}
 		
 		override public function update():void
