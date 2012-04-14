@@ -32,7 +32,6 @@ package
 					continue;
 				}
 				textArray[i][3] += elapsedtime;
-				trace(textArray[i][3]);
 				thetext.alpha = Math.min(1, Math.max(0, textArray[i][4]((textArray[i][3]) / textArray[i][2])));
 				if (textArray[i][3] >= textArray[i][2]) {
 					thetext.kill();
