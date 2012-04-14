@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 
 	public class Enemy extends FlxSprite
@@ -14,6 +15,7 @@ package
 		private var enemyType:uint;
 		public var hitbox:FlxSprite;
 		private var eyeSprite:FlxSprite;
+		private var originalposition:FlxPoint;
 		
 		public function Enemy(x:Number, y:Number, player:Player, level:Map, hallucination:Boolean, enemyType:uint, onpathcompletion:String) 
 		{
@@ -25,6 +27,8 @@ package
 			hitbox.makeGraphic(6, 6, 0xffff0000);
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
 			hitbox.y = this.getMidpoint().y - hitbox.height / 2;
+			originalposition = new FlxPoint(hitbox.getMidpoint().x, hitbox.getMidpoint().y);
+
 			this.eyeSprite = new FlxSprite(0, 0, null);
 			
 			this.enemyRunSpeed = 44;
@@ -79,6 +83,10 @@ package
 		
 		public function getEyeSprite():FlxSprite {
 			return this.eyeSprite;
+		}
+		
+		public function getOriginalPosition():FlxPoint {
+			return this.originalposition
 		}
 		
 	}
