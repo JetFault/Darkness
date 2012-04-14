@@ -16,7 +16,7 @@ package
 			super(self, player, map, onpathcompletion);
 			this.xpos = 30;
 			this.ypos = 2;
-			this.depth = 2;
+			this.depth = 5;
 		}
 		
 		override protected function getAutoPath(currentpoint:FlxPoint):Array {
