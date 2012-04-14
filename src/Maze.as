@@ -78,7 +78,6 @@ package
 		}
 		
 		public function getStartTile():FlxPoint {
-			trace("maze", this._start.x, this._start.y);
 			return this._start;
 		}
 		

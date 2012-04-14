@@ -61,6 +61,7 @@ package
 			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
+			
 			findValidLocations(level);
 /*TRACING			
 			for (var i:uint = 0; i < this.validLocs.length; i++) {

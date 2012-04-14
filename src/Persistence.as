@@ -1,5 +1,6 @@
 package  
 {
+	import org.flixel.FlxPoint;
 	/**
 	 * ...
 	 * @author Darkness
@@ -9,8 +10,9 @@ package
 		/*Items*/
 		static public var numItems:uint;
 		static public var inventory:Array = new Array();
-		
 		static public var itemsSeen:Array;
+		
+		static public var previousPlayerTilePosition:FlxPoint;
 		
 		static function init():void {
 			numItems = 0;

@@ -17,11 +17,11 @@ package
 		public var deltaVel:FlxPoint;
 		
 		private var preChange:Number;
-		private var DarkScale:Number = 0.7;
-		private var DarkArmDis:Number = 5.0;
+		private var DarkScale:Number = 0.9;
+		private var DarkArmDis:Number = 10;
 		private var DarkFlic:Number = 0.05;
 		
-		private var LightScale:Number = 1.6;
+		private var LightScale:Number = 1.3;
 		private var LightArmDis:Number = 15.0;
 		private var LightFlic:Number = 0.2;
 		
