@@ -114,9 +114,13 @@ package
 			return tileToMidpoint(map, flxPoint.x, flxPoint.y);
 		}
 		
+		/**
+		 * Changes world coordinates to maze coordinates
+		 * @param	map
+		 * @param	point
+		 * @return
+		 */
 		public static function pointToTileCoords(map:Map, point:FlxPoint):FlxPoint {
-			//var tilewidth:Number = map.getTileWidth();
-			//var tileheight:Number = map.getTileHeight();
 			var tilewidth:Number = map.getTileWidthInPixels();
 			var tileheight:Number = map.getTileHeightInPixels();
 			if (point.x < 0 || point.y < 0 || point.x>= map.widthInTiles*tilewidth|| point.y > map.heightInTiles*tileheight) {
