@@ -66,7 +66,7 @@ package
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (e){ //&& FlxG.overlap(light,enemiesreal.members[i])){//FlxG.overlap(light, enemiesreal.members[i])) {
-						var path:FlxPath = level.findPath(light.getMidpoint(), e.getMidpoint());
+						var path:FlxPath = level.findPath(player.getMidpoint(), e.getMidpoint());
 						if (Utils.getPathDistance(path) < light.radius*light.scale.x) { //Assumes light.scale.x == light.scale.y
 							var ctrl:EnemyController = e.getController() as EnemyController;
 							ctrl.setPlayerVisible();
