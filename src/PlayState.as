@@ -8,7 +8,7 @@ package
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7-3.png")] protected var BgTexture7:Class;
 		[Embed(source = "../bin/data/Exit.png")] protected var ImgExit:Class;
-		[Embed(source = "../bin/data/BerkshireSwash-Regular.ttf", fontFamily = "Berkshire", embedAsCFF="false")] protected var TextFont:String;
+		[Embed(source = "../bin/data/CloisterBlack.ttf", fontFamily = "TextFont", embedAsCFF="false")] protected var TextFont:String;
 		
 		//Model
 		private var player:Player;
@@ -52,8 +52,8 @@ package
 			titlegroup.add(new FlxText(50, 110, 10, "s"));
 			titlegroup.add(new FlxText(50, 120, 10, "s"));*/
 			
-			var levelText:FlxText = new FlxText(0, 0, 50, "Level: " + levelNum);
-			levelText.setFormat("Berkshire", 12, 0xffffffff, "left");
+			var levelText:FlxText = new FlxText(0, 0, 70, "Level: " + levelNum);
+			levelText.setFormat("TextFont", 16, 0xffffffff, "left");
 			levelText.scrollFactor.x = levelText.scrollFactor.y = 0;
 			
 
@@ -175,7 +175,10 @@ package
 			}
 			//add(titlegroup);
 			
-			add(levelText);
+			if (levelNum != 0)
+			{
+				add(levelText);
+			}
 		}
 		
 		override public function update():void
