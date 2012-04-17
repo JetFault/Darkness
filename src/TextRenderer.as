@@ -91,13 +91,13 @@ package
 			//drawMonologue("U MAD?");//Sleep
 		}
 		public function LighterText():void {
-			drawMonologue("Lighter does not vanish");
+			drawMonologue("Your view becomes clearer.");
 		}
 		public function UmbrellaText():void {
-			drawMonologue("Crumbling Umbrella, charged night air");
+			drawMonologue("The storm seems to be getting worse...");
 		}
 		public function ClockText():void {
-			drawMonologue("Vanishing Clock, feels brisk");
+			drawMonologue("You feel quicker...");
 		}
 		
 	}
