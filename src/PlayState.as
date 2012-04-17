@@ -379,20 +379,6 @@ package
 					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
 					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
 					break;
-					
-				case 7:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.70,.90,level, false);
-					spawnEnemy(.70,.90,level, false);
-					break;
-					
-				case 8:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.70,.90,level, false);
-					spawnEnemy(.70,.90,level, false);
-					break;
-
 				default:
 			}
 			
