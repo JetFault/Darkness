@@ -67,7 +67,7 @@ package
 			
 			//Real enemies that tag light are attracted to player
 			//if (FlxG.overlap(light, enemiesreal)) {
-				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				/*for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (e){ //&& FlxG.overlap(light,enemiesreal.members[i])){//FlxG.overlap(light, enemiesreal.members[i])) {
 						var path:FlxPath = level.findPath(player.getMidpoint(), e.getMidpoint());
@@ -82,9 +82,9 @@ package
 						trace(e.y);
 						trace("light...");
 						trace(light.x);
-						trace(light.y);*/
+						trace(light.y);
 					}
-				}
+				}*/
 			//}
 			
 			//Hallucinations that tag light die

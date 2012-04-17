@@ -184,9 +184,9 @@ package
 			super.destroy();
 		}
 		
-		public function setPlayerVisible(): void {
+		/*public function setPlayerVisible(): void {
 			this.ai.setPlayerVisible();
-		}
+		}*/
 	}
 
 }
