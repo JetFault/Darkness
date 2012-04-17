@@ -11,12 +11,11 @@ package
 	 */
 	public class RandomDFSAI extends EnemyAI 
 	{		
-		public function RandomDFSAI(self:Enemy, player:Player, map:Map, onpathcompletion:String) 
+		public function RandomDFSAI(self:Enemy, player:Player, map:Map, onpathcompletion:String, depth:Number) 
 		{
-			super(self, player, map, onpathcompletion);
+			super(self, player, map, onpathcompletion, depth);
 			this.xpos = 30;
 			this.ypos = 2;
-			this.depth = 5;
 		}
 		
 		override protected function getAutoPath(currentpoint:FlxPoint):Array {

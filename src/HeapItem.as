@@ -31,7 +31,7 @@ package
 	
 		public function compare(other:Object):int {
 			var o:HeapItem = other as HeapItem;
-			return (this.value) - (o.value);
+			return (o.value) - (this.value);
 			//return (this.value + this.distancetraveled) - (o.value + o.distancetraveled);
 		}
 		

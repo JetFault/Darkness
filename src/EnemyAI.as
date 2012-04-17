@@ -31,12 +31,13 @@ package
 		protected var lostsight:Boolean = false;
 		
 		
-		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop") 
+		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop", depth:Number = 50) 
 		{
 			this.self = self;
 			this.player = player;
 			this.map = map;
 			this.visible = false;
+			this.depth = depth;
 			/*if (FlxG.level > 0) {
 				this.depth *= FlxG.level;
 			}*/
@@ -86,7 +87,6 @@ package
 				}else {*/
 					if (!pathcreated) {
 						currentindex = 0;
-						trace(this.onpathcompletion);
 						if (this.onpathcompletion == "loop") {
 							closed = getAutoPath(self.getOriginalPosition());
 							closed = closed.reverse();
@@ -97,7 +97,7 @@ package
 						}else if (this.onpathcompletion == "fromcurrentposition") {
 							closed = getAutoPath(self.getHitbox().getMidpoint());
 						}
-						trace(closed.length);
+						trace(closed);
 						//currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
 						//trace(closed.length);
 						enemyPath = new FlxPath();
