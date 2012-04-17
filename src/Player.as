@@ -119,8 +119,8 @@ package
 			return this.bloodSprite;
 		}
 		
-		public function setAngle(currentPosition:FlxPoint, adjacentTile:FlxPoint):FlxSprite {
-			this.angle = FlxU.getAngle(p1, p2);
+		public function setAngle(currentPosition:FlxPoint, adjacentTile:FlxPoint):void {
+			this.angle = FlxU.getAngle(currentPosition, adjacentTile);
 			this.getHitbox().angle = this.angle;
 		}
 		
