@@ -69,14 +69,7 @@ package
 			
 			
 			//Lose sight of player if too far
-			var thepath:FlxPath = this.map.findPath(enemyPos, playerPos);
-			if (thepath && Utils.getPathDistance(thepath) >= visibledistance) {
-				this.visible = false;
-				this.lostsight = true;
-			}
-			if (thepath) {
-				thepath.destroy();
-			}
+			setPlayerVisible();
 			
 			//If found, just follow.  Else, go around predetermined path
 			if (!this.visible) {
