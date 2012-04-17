@@ -27,7 +27,7 @@ package
 			this.enemyType = enemyType;
 			//Make hitbox
 			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
-			hitbox.makeGraphic(6, 6, 0xffff0000);
+			hitbox.makeGraphic(6, 6, 0x00ff0000);
 			hitbox.x = this.getMidpoint().x - hitbox.width / 2;
 			hitbox.y = this.getMidpoint().y - hitbox.height / 2;
 			originalposition = new FlxPoint(hitbox.getMidpoint().x, hitbox.getMidpoint().y);
@@ -37,7 +37,7 @@ package
 			this.enemyRunSpeed = 44;
 			
 			if (this.enemyType == EnemyType.UCS_PATHER) {
-				this.enemyRunSpeed = 25;
+				this.enemyRunSpeed = 35;
 			}
 			loadEnemy();
 			//Hallucination code

@@ -22,7 +22,7 @@ package
 		protected var enemyPath:FlxPath;
 		protected var currentPoint:FlxPoint = new FlxPoint(0, 0);
 		protected var pathcreated:Boolean;  //Is this guy doing a tree search?
-		protected var visibledistance:Number = 50;
+		protected var visibledistance:Number = 30;
 		protected var losesightdistance:Number = 100;
 		protected var depth:Number = 50;
 		protected var time:Number = 1;
