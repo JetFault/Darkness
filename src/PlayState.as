@@ -243,7 +243,11 @@ package
 			}
 			if (FlxG.keys.N && Constants.debug) {
 				FlxG.level++;
-				FlxG.switchState(new PlayState());
+				if(FlxG.level <= 8){
+					FlxG.switchState(new PlayState());
+				}else {
+					FlxG.switchState(new EndState());
+				}
 			}	
 			super.update();			
 		}
