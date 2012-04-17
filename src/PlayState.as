@@ -29,6 +29,7 @@ package
 		private var namestimer:Number = 0;
 		private var namesrendered = false;
 		private var textrenderer:TextRenderer;
+		private var introTitleCounter:int = 0;
 		
 		//Controllers
 		private var controllers:GameControllers;
@@ -183,17 +184,20 @@ package
 			}
 			//add(titlegroup);
 			
+			
 			if (levelNum != 0)
 			{
 				textrenderer.monoLevel(levelNum);//add(levelText);
-			}else {
-				textrenderer.renderText(new FlxText(170, 10, 200, "Night Tower"), true, timetonames);
+			//}else {
+			//	textrenderer.renderText(new FlxText(170, 10, 200, "Night Tower"), true, timetonames);
 			}
 			add(textrenderer);
+			
 		}
 		
 		override public function update():void
 		{
+			/*
 			if (FlxG.level == 0) {
 				namestimer += FlxG.elapsed;
 				if (!namesrendered && namestimer >= timetonames) {
@@ -204,6 +208,39 @@ package
 					textrenderer.renderText(new FlxText(140, 40, 200, "Jerry Reptak - Map generation"), true, timetonames);
 				}
 			}
+			*/
+			
+			if (levelNum == 0)
+			{
+				if (player.x < 40 && introTitleCounter == 0)
+				{
+					textrenderer.renderText(new FlxText(40, 50, 200, "Darkness"), true, 4);
+					introTitleCounter++;
+				}
+				if (player.x > 90 && player.x < 100 && introTitleCounter == 1)
+				{
+					textrenderer.renderText(new FlxText(100, 200, 200, "Elliot Goodzeit"), true, 3);
+					introTitleCounter++;
+				}
+				if (player.x > 190 && player.x < 200 && introTitleCounter == 2)
+				{
+					textrenderer.renderText(new FlxText(155, 50, 200, "Matt Mitsui"), true, 3);
+					introTitleCounter++;
+				}
+				if (player.x > 240 && player.x < 250 && introTitleCounter == 3)
+				{
+					textrenderer.renderText(new FlxText(195, 210, 200, "Alex Kuribayashi"), true, 3);
+					introTitleCounter++;
+				}
+				if (player.x > 330 && player.x < 340 && introTitleCounter == 4)
+				{
+					textrenderer.renderText(new FlxText(275, 60, 200, "Jerry Reptak"), true, 3);
+					introTitleCounter++;
+				}
+				
+				
+			}
+			
 			//Debug input
 			if (FlxG.keys.ENTER && Constants.debug) {
 				FlxG.resetState();
