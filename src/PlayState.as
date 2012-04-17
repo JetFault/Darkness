@@ -224,7 +224,7 @@ package
 				}
 				if (player.x > 190 && player.x < 200 && introTitleCounter == 2)
 				{
-					textrenderer.renderText(new FlxText(155, 50, 200, "Matt Mitsui"), true, 3);
+					textrenderer.renderText(new FlxText(155, 70, 200, "Matt Mitsui"), true, 3);
 					introTitleCounter++;
 				}
 				if (player.x > 240 && player.x < 250 && introTitleCounter == 3)
@@ -235,10 +235,8 @@ package
 				if (player.x > 330 && player.x < 340 && introTitleCounter == 4)
 				{
 					textrenderer.renderText(new FlxText(275, 60, 200, "Jerry Reptak"), true, 3);
-					introTitleCounter++;
+					introTitleCounter = null;
 				}
-				
-				
 			}
 			
 			//Debug input
