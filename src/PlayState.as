@@ -357,9 +357,7 @@ package
 				case 4:
 					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
 					spawnEnemy(.50, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.50, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.50, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.50, .90,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 5:
@@ -369,11 +367,9 @@ package
 					break;
 					
 				case 6:
-					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.50, .70,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.20, .50,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 7:
@@ -381,17 +377,14 @@ package
 					spawnEnemy(.20, .50,level, EnemyType.RANDOM_DFS);
 					spawnEnemy(.60,  1, level, EnemyType.RANDOM_DFS);
 					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
-					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 8:
-					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
-					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.40, .60,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.20, .50,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.60,  1, level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.50, .70,level, EnemyType.UCS_PATHER);
 					break;
 				default:
 			}

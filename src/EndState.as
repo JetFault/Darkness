@@ -27,7 +27,7 @@ package
 			titlegroup.add(new FlxText(50, 110, 10, "s"));
 			titlegroup.add(new FlxText(50, 120, 10, "s"));*/
 			
-			var levelText:FlxText = new FlxText(0, 0, 70, "Level: End");
+			var levelText:FlxText = new FlxText(0, 0, 70, "You have reached safety.");
 			levelText.x = FlxG.width/ 2 - 25;
 			levelText.y = FlxG.height / 2 - 25;
 			levelText.color = 0xff9696FF;
