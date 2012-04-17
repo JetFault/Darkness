@@ -306,14 +306,15 @@ package
 				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
 			}
 			else if (!level.isWall(levelStart.x, levelStart.y + 1)) { //BOTTOM
-				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+				finalTile = Utils.tileToMidpoint(level, levelStart.x, levelStart.y + 1);
 			}
 			else if (!level.isWall(levelStart.x - 1, levelStart.y)) { //LEFT
-				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+				finalTile = Utils.tileToMidpoint(level, levelStart.x - 1, levelStart.y);
 			}
 			else if (!level.isWall(levelStart.x, levelStart.y - 1)) { //UP
-				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+				finalTile = Utils.tileToMidpoint(level, levelStart.x, levelStart.y - 1);
 			}
+			this.player.setAngle(finalTile);
 		}
 		
 		private function spawnEnemy(enemyLowerBoundSpawn:Number, enemyUpperBoundSpawn:Number, level:Map, enemyType:uint = 1):void {
