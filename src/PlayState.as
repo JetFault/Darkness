@@ -1,5 +1,6 @@
 package  
 {
+	import flash.text.engine.BreakOpportunity;
 	import org.flixel.*;
 	
 	public class PlayState extends FlxState
@@ -84,7 +85,6 @@ package
 			//add player
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			player = new Player(playerStart.x - 5, playerStart.y - 5);
-			
 			
 			findValidLocations(level);
 			

@@ -23,7 +23,7 @@ package
 			return Utils.createUCSPath(map, depth, currentpoint, player);
 		}
 		
-		override public function setPlayerVisible():void {
+		override public function setPlayerVisible(isVisible:Boolean):void {
 			this.visible = true;
 		}
 	}
