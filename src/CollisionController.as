@@ -144,7 +144,6 @@ package
 		}
 		
 		private function nextLevel():void {		
-				player.kill();
 				FlxG.level++;
 				FlxG.switchState(new PlayState());
 		}
