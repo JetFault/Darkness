@@ -194,7 +194,7 @@ package
 			
 			var scale:Number = 1.0;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
-				scale = 2.0;
+				scale = 5.0;
 			}
 			if (criteria == "enemyeuclidean") {
 				var c:Number = Math.random();
