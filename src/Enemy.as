@@ -8,6 +8,8 @@ package
 		//[Embed(source = "../bin/data/Enemy.png")] protected var ImgEnemy:Class;
 		[Embed(source = "../bin/data/EnemyAnimation4.png")] protected var ImgEnemy:Class;
 		[Embed(source = "../bin/data/EnemyEyeAnimation.png")] protected var ImgEye:Class;
+		[Embed(source = "../bin/data/EnemyAnimationGreen.png")] protected var ImgEnemyGreen:Class;
+		[Embed(source = "../bin/data/EnemyEyeAnimationGreen.png")] protected var ImgEyeGreen:Class;
 		
 		public var controller:EnemyController;
 		private var enemyRunSpeed:Number;
@@ -22,6 +24,7 @@ package
 			super(0, 0, null);
 			super.x = x;
 			super.y = y;
+			this.enemyType = enemyType;
 			//Make hitbox
 			this.hitbox = new FlxSprite(this.getMidpoint().x, this.getMidpoint().y);
 			hitbox.makeGraphic(6, 6, 0xffff0000);
@@ -32,6 +35,10 @@ package
 			this.eyeSprite = new FlxSprite(0, 0, null);
 			
 			this.enemyRunSpeed = 44;
+			
+			if (this.enemyType == EnemyType.UCS_PATHER) {
+				this.enemyRunSpeed = 25;
+			}
 			loadEnemy();
 			//Hallucination code
 			this.hallucination = hallucination;
@@ -40,7 +47,7 @@ package
 			}else{
 				this.controller = new EnemyController(this, player, level, enemyRunSpeed, enemyType, onpathcompletion, depth);
 			}
-			this.enemyType = enemyType;
+			
 			//Add animations
 			addAnimation("raged", [0, 1, 2], 10);//30
 			addAnimation("walk", [3, 4, 5, 4], 2);//30
@@ -56,8 +63,13 @@ package
 		
 		private function loadEnemy():void
 		{
-			loadGraphic(ImgEnemy, true, true, 32, 33);
-			this.eyeSprite.loadGraphic(ImgEye, true, true, 32, 33);
+			if(this.enemyType != EnemyType.UCS_PATHER){
+				loadGraphic(ImgEnemy, true, true, 32, 33);
+				this.eyeSprite.loadGraphic(ImgEye, true, true, 32, 33);
+			}else {
+				loadGraphic(ImgEnemyGreen, true, true, 32, 33);
+				this.eyeSprite.loadGraphic(ImgEyeGreen, true, true, 32, 33);
+			}
 			//makeGraphic(15, 15, 0xff000000);
 		}
 		
