@@ -80,19 +80,12 @@ package
 			}
 
 
-			//add player
-			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
-			player = new Player(playerStart.x - 5, playerStart.y - 5);
-			
+			//Spawn player
+			spawnPlayer(level);
+
 			
 			findValidLocations(level);
 			
-/*TRACING			
-			for (var i:uint = 0; i < this.validLocs.length; i++) {
-				trace("Pt x", validLocs[i].loc.x, " Pt y", validLocs[i].loc.y);
-				trace("Dist", validLocs[i].distance);
-			}
-*/
 
 			//add enemies
 			enemiesreal = new FlxGroup();
@@ -109,8 +102,11 @@ package
 			add(backgroundgroup);
 			add(level);
 					
+			
 			//Load Exit
 			loadExit(level);
+			
+			
 			//Load Items
 			spawnItems(level);
 			
@@ -259,12 +255,33 @@ package
 			validLocs.sortOn('distance', Array.NUMERIC);
 		}
 		
-		private function spawnEnemy(enemyLowerBoundSpawn:Number, enemyUpperBoundSpawn:Number, level:Map, hallucination:Boolean = false):void {
+		private function spawnPlayer(level:Map) {
+			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
+			this.player = new Player(playerStart.x - 5, playerStart.y - 5);
+			
+			//Rotate player
+			var levelStart:FlxPoint = level.getStartTile();
+			var finalTile:FlxPoint;
+			if (!level.isWall(levelStart.x + 1, levelStart.y)) { //RIGHT
+				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+			}
+			else if (!level.isWall(levelStart.x, levelStart.y + 1)) { //BOTTOM
+				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+			}
+			else if (!level.isWall(levelStart.x - 1, levelStart.y)) { //LEFT
+				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+			}
+			else if (!level.isWall(levelStart.x, levelStart.y - 1)) { //UP
+				finalTile = Utils.tileToMidpoint(level, levelStart.x + 1, levelStart.y);
+			}
+		}
+		
+		private function spawnEnemy(enemyLowerBoundSpawn:Number, enemyUpperBoundSpawn:Number, level:Map, enemyType:uint = 1):void {
 			if (this.validLocs.length > 0) {
 				var point:FlxPoint = this.validLocs[Utils.randInt(validLocs.length*enemyLowerBoundSpawn, (validLocs.length - 1)*enemyUpperBoundSpawn)].loc;
 		
 				//Just set the hallucination argument to false
-				enemy = new Enemy(point.x, point.y, this.player, level, false, EnemyType.RANDOM_DFS, "fromcurrentposition");
+				enemy = new Enemy(point.x, point.y, this.player, level, false, enemyType, "fromcurrentposition");
 				if(!enemy.isHallucination()) {
 					enemiesreal.add(enemy);
 				}
@@ -280,46 +297,48 @@ package
 				case 0:
 					break;
 				case 1:
-					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.40,.70,level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 2:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.50,.90,level, true);
+					spawnEnemy(.40,.70,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.50,.90,level, EnemyType.DFS_PATHER);
 					break;
 					
 				case 3:
-					spawnEnemy(.20,.50,level, false);
+				//	spawnEnemy(.50, .90, level, EnemyType.UCS_PATHER);
+					spawnEnemy(.30, .80, level, EnemyType.DFS_PATHER);
 					break;
 					
 				case 4:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.50,.90,level, true);
+					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
+					spawnEnemy(.20, .50,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.50, .90,level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 5:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
+					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
+				//	spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
 					break;
 					
 				case 6:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.40, .60,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.20, .50,level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.60,  1, level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 7:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
+					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
+				//	spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
 					break;
 					
 				case 8:
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.20,.50,level, false);
-					spawnEnemy(.70,.90,level, false);
+				//	spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
+				//	spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
 					break;
 
 				default:

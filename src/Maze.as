@@ -66,7 +66,7 @@ package
 				this._height = levelData.length;
 				
 				this._start = new FlxPoint(start.y as uint, start.x as uint);
-				this._finish = end;
+				this._finish = new FlxPoint(end.y, end.x);
 				_findDeadEnds();
 				_findCorners();
 			}
@@ -119,7 +119,7 @@ package
 			_initMaze();
 			_createMaze();
 			_removeRandWalls(numWalls);
-			//_emptyOut(_start, 3, 3);
+			_emptyOut(_start, 3, 3);
 			_findDeadEnds();
 			_findCorners();
 		}
@@ -252,12 +252,15 @@ package
 		 * @param	y Number of tiles along y direction to remove
 		 */
 		private function _emptyOut(location:FlxPoint, x:uint, y:uint) : void {
-			var beginX:uint = location.x;
-			var beginY:uint = location.y;
+			var beginX:uint = location.y - (y/2);
+			var beginY:uint = location.x - (x/2);
 			
-			for ( var i: uint = beginY; (i < beginY + y) && (i < getHeight()); i++) {
-				for ( var j: uint = beginX; (j < beginX + x) && (j < getWidth()); j++) {
-					_maze[i][j] = 0;
+			for ( var i: uint = beginY; (i < beginY + x) && (i < getHeight() - 1); i++) {
+				for ( var j: uint = beginX; (j < beginX + y) && (j < getWidth() - 1); j++) {
+					
+					if(i >= 1 && j >= 1) {
+						_maze[i][j] = 0;
+					}
 				}
 			}
 		}
