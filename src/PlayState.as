@@ -329,6 +329,7 @@ package
 					
 				case 3:
 					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
 					break;
 					
 				case 4:
@@ -347,17 +348,25 @@ package
 					spawnEnemy(.20,.50,level, false);
 					spawnEnemy(.20,.50,level, false);
 					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 					
 				case 7:
 					spawnEnemy(.20,.50,level, false);
 					spawnEnemy(.20,.50,level, false);
 					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 					
 				case 8:
 					spawnEnemy(.20,.50,level, false);
 					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
 					spawnEnemy(.70,.90,level, false);
 					break;
 
