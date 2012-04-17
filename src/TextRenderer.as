@@ -12,6 +12,8 @@ package
 	public class TextRenderer extends FlxGroup 
 	{
 		
+		//[Embed(source = "../bin/data/Font1.ttf", fontFamily = "TextFont", embedAsCFF = "false")] protected var TextFont:String;
+		
 		private var textArray:Array;
 		private var monoFadeTime:Number = 3;
 		private var monoX:Number = 180;
@@ -31,6 +33,7 @@ package
 		}
 		public function drawMonologue(text:String):void {
 			var fText:FlxText = new FlxText(monoX, monoY, 150, text);
+			//fText.setFormat("TextFont", 20, 0xffffffff, "left");
 			fText.color = 0xff9696FF;
 			fText.shadow = 0xff333333;
 			renderText(fText, false, monoFadeTime);
