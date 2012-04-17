@@ -26,6 +26,10 @@ package
 		private var controlScheme:int;
 		private var currentAngle:Number = 0;
 		
+		private var bloodScale:Number = 0;
+		private var bloodSpeed:Number = 0;
+		private var bloodAcc:Number = 0.5;
+		
 		public function PlayerController(player:Player, controlScheme:int) 
 		{
 			playerStep1 = FlxG.loadSound(PlayerStepSound1, 0.1);
@@ -38,6 +42,30 @@ package
 		
 		override public function update():void 
 		{
+			if (player.isDying) {
+				player.timeTillDeath -= FlxG.elapsed;
+			}
+			if (player.timeTillDeath <= 0) {
+				player.kill();
+			}
+			
+			
+			if (player.isDying) {
+				if (bloodScale + (bloodSpeed * FlxG.elapsed) <= 1) {
+					bloodScale += bloodSpeed * FlxG.elapsed;
+					bloodSpeed += bloodAcc;
+				} else {
+					bloodScale = 1;
+				}
+			}
+			player.getBloodSprite().scale.x = bloodScale;
+			player.getBloodSprite().scale.y = bloodScale;
+			player.getBloodSprite().x = player.x - 41 + 7;
+			player.getBloodSprite().y = player.y - 41 + 7;
+			//player.getBloodSprite().angle = player.angle;
+			
+			
+			
 			//var whattomove:FlxSprite = player;
 			var whattomove:FlxSprite = player.getHitbox();
 			/*
@@ -78,22 +106,23 @@ package
 				//player.velocity.x = 0;
 				//player.velocity.y = 0;
 				
-				
-				if (FlxG.keys.RIGHT || FlxG.keys.D)
-				{
-					whattomove.velocity.x = player.maxVelocity.x;
-				}
-				if (FlxG.keys.LEFT || FlxG.keys.A)
-				{
-					whattomove.velocity.x = -player.maxVelocity.x;
-				}
-				if (FlxG.keys.DOWN || FlxG.keys.S)
-				{
-					whattomove.velocity.y = player.maxVelocity.y;
-				}
-				if (FlxG.keys.UP || FlxG.keys.W)
-				{
-					whattomove.velocity.y = -player.maxVelocity.y;
+				if (!player.isDying) {
+					if (FlxG.keys.RIGHT || FlxG.keys.D)
+					{
+						whattomove.velocity.x = player.maxVelocity.x;
+					}
+					if (FlxG.keys.LEFT || FlxG.keys.A)
+					{
+						whattomove.velocity.x = -player.maxVelocity.x;
+					}
+					if (FlxG.keys.DOWN || FlxG.keys.S)
+					{
+						whattomove.velocity.y = player.maxVelocity.y;
+					}
+					if (FlxG.keys.UP || FlxG.keys.W)
+					{
+						whattomove.velocity.y = -player.maxVelocity.y;
+					}
 				}
 				var length:Number = Utils.getDistance(new FlxPoint(0, 0), whattomove.velocity);
 				if (length != 0) {

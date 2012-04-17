@@ -114,6 +114,7 @@ package
 			//Load Items
 			spawnItems(level);
 			
+			add(player.getBloodSprite());
 			add(player);
 			add(player.getHitbox());						
 			add(enemiesreal);
@@ -140,7 +141,7 @@ package
 
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
-			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light, level);
+			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light, level, textrenderer);
 
 			//Add controllers (player controller, enemy controllers, etc.)
 			add(controllers);
@@ -184,9 +185,9 @@ package
 			
 			if (levelNum != 0)
 			{
-				add(levelText);
+				textrenderer.monoLevel(levelNum);//add(levelText);
 			}else {
-				textrenderer.renderText(new FlxText(10, 10, 100, "Darkness"), true, timetonames);
+				textrenderer.renderText(new FlxText(170, 10, 200, "Night Tower"), true, timetonames);
 			}
 			add(textrenderer);
 		}
@@ -197,7 +198,10 @@ package
 				namestimer += FlxG.elapsed;
 				if (!namesrendered && namestimer >= timetonames) {
 					namesrendered = true;
-					textrenderer.renderText(new FlxText(10, 10, 100, "Elliot Goodzeit Alex Kuribayashi Matthew Mitsui Jerry Reptak"), true, 6);
+					textrenderer.renderText(new FlxText(140, 10, 200, "Elliot Goodzeit - Design"), true, timetonames);
+					textrenderer.renderText(new FlxText(140, 20, 200, "Alex Kuribayashi - Art n Sound"), true, timetonames);
+					textrenderer.renderText(new FlxText(140, 30, 200, "Matthew Mitsui - AI n Graphics"), true, timetonames);
+					textrenderer.renderText(new FlxText(140, 40, 200, "Jerry Reptak - Map generation"), true, timetonames);
 				}
 			}
 			//Debug input

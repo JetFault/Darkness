@@ -9,6 +9,7 @@ package
 		//Sprite sheet
 		[Embed(source = "../bin/data/PlayerAnimation.png")] protected var ImgPlayer:Class;
 		[Embed(source = "../bin/data/PlayerLightAnimation.png")] protected var ImgPlayerLight:Class;
+		[Embed(source = "../bin/data/BloodSprite2.png")] protected var ImgBlood:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;
@@ -18,8 +19,16 @@ package
 		public var inventory:Array;
 		public var hitbox:FlxSprite;
 		
+		private var bloodSprite:FlxSprite;
+		
+		public var isDying:Boolean = false;
+		public var timeTillDeath:Number = 1.0;
+		
 		public function Player(x:Number, y:Number)
 		{
+			
+			this.bloodSprite = new FlxSprite(0, 0, null);
+			
 			super(x, y, null);
 			this.x = x;
 			this.y = y;
@@ -31,6 +40,7 @@ package
 			
 			this.playerAlive = true;
 			loadPlayer();
+			
 			
 			//velocity/controls parameters
 			maxVelocity.x = 52;
@@ -56,6 +66,7 @@ package
 		private function loadPlayer():void
 		{
 			loadGraphic(ImgPlayer, true, true, 15, 15);
+			this.bloodSprite.loadGraphic(ImgBlood, true, true, 82, 82);
 			//super.makeGraphic(10, 10, 0xff007fff);
 		}
 		public function loadLantern():void {
@@ -65,12 +76,6 @@ package
 		
 		public function isAlive():Boolean {
 			return this.playerAlive;
-		}
-		
-		override public function kill():void {
-			this.playerAlive = false;
-			this.getHitbox().kill();
-			super.kill();
 		}
 		 
 		public function getController(): BaseController {
@@ -90,6 +95,28 @@ package
 		
 		public function getHitbox():FlxSprite {
 			return this.hitbox;
+		}
+		public function startDemise(eMidPoint:FlxPoint):void {
+			if (!isDying) {
+				bloodSprite.angle = FlxU.getAngle(eMidPoint, this.getMidpoint()) + 180;
+			}
+			FlxG.shake(0.005, 0.5, null, false, 0);
+			isDying = true;
+		}
+		
+		override public function kill():void {
+			
+			this.playerAlive = false;
+			this.getHitbox().kill();
+			super.kill();
+
+			FlxG.level = 1;
+			Persistence.init();
+			FlxG.switchState(new PlayState());
+		}
+		
+		public function getBloodSprite():FlxSprite {
+			return this.bloodSprite;
 		}
 		
 	}
