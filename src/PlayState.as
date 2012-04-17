@@ -1,5 +1,6 @@
 package  
 {
+	import flash.text.engine.BreakOpportunity;
 	import org.flixel.*;
 	
 	public class PlayState extends FlxState
@@ -29,6 +30,7 @@ package
 		private var namestimer:Number = 0;
 		private var namesrendered = false;
 		private var textrenderer:TextRenderer;
+		private var introTitleCounter:int = 0;
 		
 		//Controllers
 		private var controllers:GameControllers;
@@ -110,6 +112,7 @@ package
 			//Load Items
 			spawnItems(level);
 			
+			add(player.getBloodSprite());
 			add(player);
 			add(player.getHitbox());						
 			add(enemiesreal);
@@ -136,7 +139,7 @@ package
 
 			controllers = new GameControllers();
 			musicController = new MusicController(player, enemy, exit);
-			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light, level);
+			collisionController = new CollisionController(player, enemiesreal, enemieshallucination, exit, item, light, level, textrenderer);
 
 			//Add controllers (player controller, enemy controllers, etc.)
 			add(controllers);
@@ -178,24 +181,61 @@ package
 			}
 			//add(titlegroup);
 			
+			
 			if (levelNum != 0)
 			{
-				add(levelText);
-			}else {
-				textrenderer.renderText(new FlxText(10, 10, 100, "Darkness"), true, timetonames);
+				textrenderer.monoLevel(levelNum);//add(levelText);
+			//}else {
+			//	textrenderer.renderText(new FlxText(170, 10, 200, "Night Tower"), true, timetonames);
 			}
 			add(textrenderer);
+			
 		}
 		
 		override public function update():void
 		{
+			/*
 			if (FlxG.level == 0) {
 				namestimer += FlxG.elapsed;
 				if (!namesrendered && namestimer >= timetonames) {
 					namesrendered = true;
-					textrenderer.renderText(new FlxText(10, 10, 100, "Elliot Goodzeit Alex Kuribayashi Matthew Mitsui Jerry Reptak"), true, 6);
+					textrenderer.renderText(new FlxText(140, 10, 200, "Elliot Goodzeit - Design"), true, timetonames);
+					textrenderer.renderText(new FlxText(140, 20, 200, "Alex Kuribayashi - Art n Sound"), true, timetonames);
+					textrenderer.renderText(new FlxText(140, 30, 200, "Matthew Mitsui - AI n Graphics"), true, timetonames);
+					textrenderer.renderText(new FlxText(140, 40, 200, "Jerry Reptak - Map generation"), true, timetonames);
 				}
 			}
+			*/
+			
+			if (levelNum == 0)
+			{
+				if (player.x < 40 && introTitleCounter == 0)
+				{
+					textrenderer.renderText(new FlxText(40, 50, 200, "Darkness"), true, 4);
+					introTitleCounter++;
+				}
+				if (player.x > 90 && player.x < 100 && introTitleCounter == 1)
+				{
+					textrenderer.renderText(new FlxText(100, 200, 200, "Elliot Goodzeit"), true, 3);
+					introTitleCounter++;
+				}
+				if (player.x > 190 && player.x < 200 && introTitleCounter == 2)
+				{
+					textrenderer.renderText(new FlxText(155, 70, 200, "Matt Mitsui"), true, 3);
+					introTitleCounter++;
+				}
+				if (player.x > 240 && player.x < 250 && introTitleCounter == 3)
+				{
+					textrenderer.renderText(new FlxText(195, 210, 200, "Alex Kuribayashi"), true, 3);
+					introTitleCounter++;
+				}
+				if (player.x > 330 && player.x < 340 && introTitleCounter == 4)
+				{
+					textrenderer.renderText(new FlxText(275, 60, 200, "Jerry Reptak"), true, 3);
+					introTitleCounter = null;
+				}
+			}
+			
 			//Debug input
 			if (FlxG.keys.ENTER && Constants.debug) {
 				FlxG.resetState();
@@ -292,7 +332,6 @@ package
 		}
 		
 		private function spawnEnemies(level:Map):void {
-			//Freaking switch-case :-P
 			switch(this.levelNum) {
 				case 0:
 					break;
@@ -306,7 +345,7 @@ package
 					break;
 					
 				case 3:
-				//	spawnEnemy(.50, .90, level, EnemyType.UCS_PATHER);
+					spawnEnemy(.50, .90, level, EnemyType.UCS_PATHER);
 					spawnEnemy(.30, .80, level, EnemyType.DFS_PATHER);
 					break;
 					
@@ -319,7 +358,7 @@ package
 				case 5:
 					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
 					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
-				//	spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
 					break;
 					
 				case 6:
@@ -332,13 +371,26 @@ package
 				case 7:
 					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
 					spawnEnemy(.20, .50,level, EnemyType.DFS_PATHER);
-				//	spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.70, .90,level, EnemyType.UCS_PATHER);
 					break;
 					
 				case 8:
-				//	spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
-				//	spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
+					spawnEnemy(.20, .50,level, EnemyType.UCS_PATHER);
 					spawnEnemy(.70, .90,level, EnemyType.RANDOM_DFS);
+					break;
+					
+				case 7:
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
+					break;
+					
+				case 8:
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.20,.50,level, false);
+					spawnEnemy(.70,.90,level, false);
+					spawnEnemy(.70,.90,level, false);
 					break;
 
 				default:

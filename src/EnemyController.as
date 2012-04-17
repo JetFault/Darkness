@@ -38,7 +38,7 @@ package
 		//private var runLength:Number = 30;
 		private var prePosition:FlxPoint;
 		
-		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint, onpathcompletion:String) 
+		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint, onpathcompletion:String, depth:Number) 
 		{
 			//load sounds
 			enemyStep1 = FlxG.loadSound(EnemyStepSound1);
@@ -54,13 +54,13 @@ package
 			this.enemyRunSpeed = enemyRunSpeed;
 			this.runTimer = 0;
 			if(enemyType == EnemyType.DFS_PATHER){
-				this.ai = new DFSSearchAI(enemy, player, level, onpathcompletion);
+				this.ai = new DFSSearchAI(enemy, player, level, onpathcompletion, depth);
 			}else if (enemyType == EnemyType.UCS_PATHER) {
-				this.ai = new UCSSearchAI(enemy, player, level, onpathcompletion);
+				this.ai = new UCSSearchAI(enemy, player, level, onpathcompletion, depth);
 			}else if (enemyType == EnemyType.DO_NOTHING) {
-				this.ai = new DoNothingAI(enemy, player, level, onpathcompletion);
+				this.ai = new DoNothingAI(enemy, player, level, onpathcompletion, depth);
 			}else if (enemyType == EnemyType.RANDOM_DFS) {
-				this.ai = new RandomDFSAI(enemy, player, level, onpathcompletion);
+				this.ai = new RandomDFSAI(enemy, player, level, onpathcompletion, depth);
 			}
 			
 			prePosition = enemy.getMidpoint();
@@ -184,9 +184,9 @@ package
 			super.destroy();
 		}
 		
-		public function setPlayerVisible(): void {
+		/*public function setPlayerVisible(): void {
 			this.ai.setPlayerVisible();
-		}
+		}*/
 	}
 
 }

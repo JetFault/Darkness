@@ -19,7 +19,9 @@ package
 		private var item:Item;
 		private var light:Light;
 		private var level:Map;
-		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, exit:FlxSprite, item:Item, light:Light, level:Map) 
+		private var textRenderer:TextRenderer;
+		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, 
+											exit:FlxSprite, item:Item, light:Light, level:Map, textR:TextRenderer) 
 		{
 			this.player = player;
 			this.enemiesreal = enemiesreal;
@@ -28,6 +30,7 @@ package
 			this.item = item;
 			this.light = light;
 			this.level = level;
+			this.textRenderer = textR;
 			super();
 		}
 		
@@ -43,8 +46,9 @@ package
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
 						//TAG
-						killPlayerByEnemy();
-						FlxG.fade(0xff000000, .25, resetLevel);
+						//killPlayerByEnemy();
+						player.startDemise(e.getMidpoint());
+						textRenderer.deathText();
 						//...no tagbacks XD
 					}
 				}
@@ -63,7 +67,7 @@ package
 			
 			//Real enemies that tag light are attracted to player
 			//if (FlxG.overlap(light, enemiesreal)) {
-				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
+				/*for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (e){ //&& FlxG.overlap(light,enemiesreal.members[i])){//FlxG.overlap(light, enemiesreal.members[i])) {
 						var path:FlxPath = level.findPath(player.getMidpoint(), e.getMidpoint());
@@ -78,9 +82,9 @@ package
 						trace(e.y);
 						trace("light...");
 						trace(light.x);
-						trace(light.y);*/
+						trace(light.y);
 					}
-				}
+				}*/
 			//}
 			
 			//Hallucinations that tag light die
@@ -103,11 +107,17 @@ package
 				{
 					light.loadLantern();
 					player.loadLantern();
+					textRenderer.LighterText();
 				}
 				if (item.getItemType() == ItemType.CLOCK)
 				{
 					player.maxVelocity.x = 62;
 					player.maxVelocity.y = 62;
+					textRenderer.ClockText();
+				}
+				if (item.getItemType() == ItemType.UMBRELLA)
+				{
+					textRenderer.UmbrellaText();
 				}
 				item.kill();
 				player.inventory.push(item);
@@ -115,10 +125,8 @@ package
 			}
 			
 			//Exit level
-			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {				
-				player.kill();
-				FlxG.level++;
-				FlxG.switchState(new PlayState());
+			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {	
+				FlxG.fade(0xff000000, .25, nextLevel);
 			}
 			super.update();
 		}
@@ -133,6 +141,11 @@ package
 			FlxG.level = 1;
 			Persistence.init();
 			FlxG.switchState(new PlayState());
+		}
+		
+		private function nextLevel():void {		
+				FlxG.level++;
+				FlxG.switchState(new PlayState());
 		}
 	}
 

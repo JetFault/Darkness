@@ -32,9 +32,13 @@ package
 			windMusic.play();
 			staticMusic = FlxG.loadSound(StaticMusic, .01, true);
 			//staticMusic.play();
-			ghostMusic = FlxG.loadSound(GhostMusic, .03, true);
-			ghostMusic.play();
-			
+			//ghostMusic = FlxG.loadSound(GhostMusic, .03, true);
+			//ghostMusic.play();
+			if(FlxG.level == 0){
+				ghostMusic = FlxG.loadSound(GhostMusic, .03, true);
+				ghostMusic.play();
+				ghostMusic.survive = true;
+            }
 			
 			this.player = player;
 			this.enemy = enemy;

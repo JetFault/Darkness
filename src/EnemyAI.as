@@ -22,7 +22,8 @@ package
 		protected var enemyPath:FlxPath;
 		protected var currentPoint:FlxPoint = new FlxPoint(0, 0);
 		protected var pathcreated:Boolean;  //Is this guy doing a tree search?
-		protected var visibledistance:Number = 100;
+		protected var visibledistance:Number = 50;
+		protected var losesightdistance:Number = 100;
 		protected var depth:Number = 50;
 		protected var time:Number = 1;
 		protected var timer:Number = 0;
@@ -31,12 +32,13 @@ package
 		protected var lostsight:Boolean = false;
 		
 		
-		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop") 
+		public function EnemyAI(self:Enemy, player:Player, map:Map, onpathcompletion:String="loop", depth:Number = 50) 
 		{
 			this.self = self;
 			this.player = player;
 			this.map = map;
 			this.visible = false;
+			this.depth = depth;
 			/*if (FlxG.level > 0) {
 				this.depth *= FlxG.level;
 			}*/
@@ -68,14 +70,7 @@ package
 			
 			
 			//Lose sight of player if too far
-			var thepath:FlxPath = this.map.findPath(enemyPos, playerPos);
-			if (thepath && Utils.getPathDistance(thepath) >= visibledistance) {
-				this.visible = false;
-				this.lostsight = true;
-			}
-			if (thepath) {
-				thepath.destroy();
-			}
+			setPlayerVisible(visible);
 			
 			//If found, just follow.  Else, go around predetermined path
 			if (!this.visible) {
@@ -86,7 +81,6 @@ package
 				}else {*/
 					if (!pathcreated) {
 						currentindex = 0;
-						trace(this.onpathcompletion);
 						if (this.onpathcompletion == "loop") {
 							closed = getAutoPath(self.getOriginalPosition());
 							closed = closed.reverse();
@@ -97,14 +91,11 @@ package
 						}else if (this.onpathcompletion == "fromcurrentposition") {
 							closed = getAutoPath(self.getHitbox().getMidpoint());
 						}
-						trace(closed.length);
 						//currentPoint = Utils.tileToMidpoint(map, closed[currentindex][0], closed[currentindex][1]);	
-						//trace(closed.length);
 						enemyPath = new FlxPath();
 						for (var i:uint = 0; i < closed.length; i++) {
 							closed[i] = Utils.tileToMidpoint(map, closed[i][0], closed[i][1]);
 						}
-						//trace(closed.length);
 						
 						for (var i:uint = 0; i < closed.length - 1; i++) {
 							var p1:FlxPoint = closed[i] as FlxPoint;
@@ -120,14 +111,12 @@ package
 						this.self.getHitbox().followPath(enemyPath, self.getEnemyRunSpeed(), FlxObject.PATH_FORWARD);
 						pathcreated = true;
 					}else {
-						
 						if (enemyPath && lostsight && enemyPath.nodes.length > 0) {
 							this.self.getHitbox().followPath(enemyPath, this.self.getEnemyRunSpeed());
 							lostsight = false;
 						}
 						
-						if (enemyPath && Utils.getDistance(self.getHitbox().getMidpoint(), enemyPath.head()) < 5) {
-							enemyPath.removeAt(0);
+						if (enemyPath && Utils.getDistance(self.getHitbox().getMidpoint(), enemyPath.head()) < 5) {							enemyPath.removeAt(0);
 							if (enemyPath.nodes.length == 0) {
 								this.self.getHitbox().stopFollowingPath(true);
 								enemyPath == null;
@@ -186,17 +175,28 @@ package
 			return null;
 		}
 		
-		public function setPlayerVisible():void {
+		public function setPlayerVisible(isvisible:Boolean):void {
+			
+			
 			var thepath:FlxPath = this.map.findPath(this.self.getMidpoint(), this.player.getMidpoint());
-			if (thepath && Utils.getPathDistance(thepath) <= visibledistance) {
-				this.visible = true;
+			var metric:Number = 0;
+			if (isvisible) {
+				metric = losesightdistance;
 			}else {
-				this.visible = false;
+				var hearingdistance:Number = Utils.getDistance(new FlxPoint(0, 0), this.player.getHitbox().velocity);
+				metric = Math.min(losesightdistance*4/5, visibledistance + hearingdistance);
 			}
-			if (thepath) {
-				thepath.destroy();
+			if (thepath && Utils.getPathDistance(thepath) <= metric) {
+				this.visible = true;
+				}else {
+					this.visible = false;
+					this.lostsight = true;
+				}
+				if (thepath) {
+					thepath.destroy();
+				}
 			}
-		}
+		
 		
 	}
 

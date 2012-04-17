@@ -242,6 +242,8 @@ package
 				 */
 				//Base case: depth
 				if (numnodes >= depth) {
+					trace("NUMNODES");
+					trace(numnodes);
 					break;
 				}
 					
@@ -252,6 +254,8 @@ package
 					
 				//Node has not been visited.  Push to closed	
 				closed.push(node);
+				trace("CLOSED");
+				trace(closed);
 				//Get neighbors
 				for each(var dx:Number in new Array( -1, 0, 1)) {
 					for each(var dy:Number in new Array( -1, 0, 1)) {
@@ -303,6 +307,8 @@ package
 				var theitem:HeapItem = closed[index] as HeapItem;
 				closedarrayofarrays.push(new Array(theitem.getTileLocation().x, theitem.getTileLocation().y, theitem.getDepth()));
 			}
+			trace("DONE UCS");
+			trace(closedarrayofarrays);
 			return closedarrayofarrays;
 		}
 		

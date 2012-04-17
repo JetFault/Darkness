@@ -17,15 +17,20 @@ package
 		public var deltaVel:FlxPoint;
 		
 		private var preChange:Number;
-		private var DarkScale:Number = 0.9;
+		private var DarkScale:Number = 1.1;
 		private var DarkArmDis:Number = 10;
 		private var DarkFlic:Number = 0.05;
 		
-		private var LightScale:Number = 1.3;
+		private var LightScale:Number = 1.5;
 		private var LightArmDis:Number = 15.0;
 		private var LightFlic:Number = 0.2;
 		
 		private var LargeScale:Number;
+		
+		private var dropAcc:Number = 0.1;//0.3
+		private var dropSpeed:Number = 0;//2
+		private var dropPerc:Number = 1;
+		private var dropExag:Number = 1;
 		
 		public function LightController(light:Light, player:Player) 
 		{
@@ -116,6 +121,16 @@ package
 				flic = LightFlic;
 			}
 			var scaleValue:Number = Math.max(0, Math.min(LargeScale,(1.0 - Math.abs(deltaChange * 0.05) - (Math.random() * flic)) * LargeScale) -.1);
+			
+			if (player.isDying) {
+				if (0 < dropPerc - (dropSpeed * FlxG.elapsed)) {
+					dropPerc -= dropSpeed * FlxG.elapsed;
+					dropSpeed += dropAcc;
+				} else {
+					dropPerc = 0;
+				}
+				scaleValue = dropPerc * (scaleValue + dropExag);
+			}
 			
 			light.scale.x = scaleValue;
 			light.scale.y = scaleValue;
