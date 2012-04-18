@@ -18,6 +18,8 @@ package
 		private var monoFadeTime:Number = 3;
 		private var monoX:Number = 180;
 		private var monoY:Number = 200;
+		private var monoColor:uint = 0xff9696FF;
+		private var monoShadow:uint = 0xff333333;
 		
 		private var timetonames:Number = 6;
 		
@@ -34,8 +36,8 @@ package
 		public function drawMonologue(text:String):void {
 			var fText:FlxText = new FlxText(monoX, monoY, 150, text);
 			//fText.setFormat("TextFont", 20, 0xffffffff, "left");
-			fText.color = 0xff9696FF;
-			fText.shadow = 0xff333333;
+			fText.color = monoColor;
+			fText.shadow = monoShadow;
 			renderText(fText, false, monoFadeTime);
 		}
 		public function drawTitle(text:String):void {
@@ -88,7 +90,28 @@ package
 			}
 		}
 		public function deathText():void {
-			//drawMonologue("U MAD?");//Sleep
+			var maxFloorLuint = 8;
+			var myfloor:uint = maxFloor - (FlxG.level - 1);
+			
+			var suffix:String = "";
+			if (myfloor == 1) {
+				suffix = "1st floor";
+			}else if (myfloor == 2) {
+				suffix = "2nd floor";
+			}else if (myfloor == 3) {
+				suffix = "3rd floor";
+			}else if (myfloor > 3) {
+				suffix = String(myfloor) + "th floor";
+			}
+			suffix = "You died on:\n" + suffix;
+			var thetext:FlxText = new FlxText(FlxG.width / 2 - 0, FlxG.height / 2 - 0, 100, suffix);
+			thetext.scale.x = thetext.scale.y = 2;
+			thetext.color = monoColor;
+			thetext.shadow = monoShadow;
+			thetext.x = FlxG.width / 2 ;//- thetext.width*thetext.scale.x/2;
+			thetext.y = FlxG.height / 2 - thetext.height*thetext.scale.y;
+			renderText(thetext, true, 6);
+			//drawMonologue(suffix);//Sleep
 		}
 		public function LighterText():void {
 			drawMonologue("Your view becomes clearer.");

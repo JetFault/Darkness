@@ -17,16 +17,6 @@ package
 		{
 			textrenderer = new TextRenderer();
 
-			/*var titlegroup:FlxGroup = new FlxGroup();
-			titlegroup.add(new FlxText(50, 50, 80, "D"));
-			titlegroup.add(new FlxText(50, 60, 10, "a"));
-			titlegroup.add(new FlxText(50, 70, 10, "r"));
-			titlegroup.add(new FlxText(50, 80, 10, "k"));
-			titlegroup.add(new FlxText(50, 90, 10, "e"));
-			titlegroup.add(new FlxText(50, 100, 10, "n"));
-			titlegroup.add(new FlxText(50, 110, 10, "s"));
-			titlegroup.add(new FlxText(50, 120, 10, "s"));*/
-			
 			var levelText:FlxText = new FlxText(0, 0, 70, "You have reached safety.");
 			levelText.x = FlxG.width/ 2 - 25;
 			levelText.y = FlxG.height / 2 - 25;
