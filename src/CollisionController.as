@@ -98,7 +98,11 @@ package
 		
 		private function nextLevel():void {		
 				FlxG.level++;
-				FlxG.switchState(new PlayState());
+				if(FlxG.level <= 8){
+					FlxG.switchState(new PlayState());
+				}else {
+					FlxG.switchState(new EndState());
+				}
 		}
 	}
 
