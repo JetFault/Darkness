@@ -85,12 +85,12 @@ package
 					drawMonologue("1st floor");
 					break;
 				default:
-					drawMonologue("TROLOLOLOLOLOLOL");
+					drawMonologue("You died on the " + Persistence.floorPlayerDiedOn + "th floor");
 					break;
 			}
 		}
 		public function deathText():void {
-			var maxFloorLuint = 8;
+			/*var maxFloor:uint = 8;
 			var myfloor:uint = maxFloor - (FlxG.level - 1);
 			
 			var suffix:String = "";
@@ -111,7 +111,7 @@ package
 			thetext.x = FlxG.width / 2 ;//- thetext.width*thetext.scale.x/2;
 			thetext.y = FlxG.height / 2 - thetext.height*thetext.scale.y;
 			renderText(thetext, true, 6);
-			//drawMonologue(suffix);//Sleep
+			//drawMonologue(suffix);//Sleep*/
 		}
 		public function LighterText():void {
 			drawMonologue("Your view becomes clearer.");

@@ -112,7 +112,7 @@ package
 				flashtimer += FlxG.elapsed;
 			}	
 			
-			if(flashtimer >=Constants.flashduration && soundplayedtimer >=soundcutofftime + Math.max(Constants.rumbletime, Constants.crashtime)){
+			if(flashtimer >=Constants.flashduration && soundplayedtimer >=(soundcutofftime + Math.max(Constants.rumbletime, Constants.crashtime))/2){
 				flashing = false;
 				bufferfull = false;
 			}
@@ -136,10 +136,14 @@ package
 					crashflxsound.play();
 					soundcutofftime = Constants.crashduration;
 					soundplayed = true;
+					crashflxsound.autoDestroy = true;
+					crashflxsound = FlxG.loadSound(CrashSound);
 				}else if (distance >= Constants.soundthreshold && soundtimer >= Constants.rumbletime) {
 					rumbleflxsound.play();
 					soundcutofftime = Constants.rumbleduration;
 					soundplayed = true;
+					rumbleflxsound.autoDestroy = true;
+					rumbleflxsound = FlxG.loadSound(RumbleSound);
 				}
 			}
 		}

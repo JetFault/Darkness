@@ -109,8 +109,9 @@ package
 			this.playerAlive = false;
 			this.getHitbox().kill();
 			super.kill();
-
-			FlxG.level = 1;
+			Persistence.floorPlayerDiedOn = 9 - FlxG.level;
+			Persistence.playerIsDead = true;
+			FlxG.level = 9;
 			Persistence.init();
 			FlxG.switchState(new PlayState());
 		}

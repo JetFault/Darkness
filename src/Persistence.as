@@ -11,6 +11,8 @@ package
 		static public var numItems:uint;
 		static public var inventory:Array = new Array();		
 		static public var itemsSeen:Array;
+		static public var playerIsDead:Boolean = false;
+		static public var floorPlayerDiedOn:uint = 0;
 		
 		/*Level Stuff*/
 		static public var startLocRatio:FlxPoint;

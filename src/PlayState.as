@@ -45,7 +45,7 @@ package
 		override public function create():void
 		{
 			this.levelNum = FlxG.level;
-
+			
 			level = new Map(this.levelNum);
 			
 			textrenderer = new TextRenderer();

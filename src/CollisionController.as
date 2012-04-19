@@ -78,7 +78,12 @@ package
 			}
 			
 			//Exit level
-			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {	
+			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {
+				if (Persistence.playerIsDead = true)
+				{
+					FlxG.level = 0;
+					Persistence.playerIsDead = false;
+				}
 				FlxG.fade(0xff000000, .25, nextLevel);
 			}
 			super.update();
