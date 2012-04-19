@@ -90,7 +90,9 @@ package
 			}
 		}
 		public function deathText():void {
+
 			/*var maxFloor:uint = 8;
+
 			var myfloor:uint = maxFloor - (FlxG.level - 1);
 			
 			var suffix:String = "";
