@@ -49,7 +49,10 @@ package
 		public var lightningcolor:uint = 0x00d5d7ff; //0x00ffffff 0x00b5b7ff
 		private var firstflashed:Boolean = false;
 		private var firstflashedtimer:Number = 0;
-
+		private var howlongsincelast:Number = 0;
+		private var cutoffscale:Number = 1;
+		private var flashedwhenobtainedumbrellaupdate:Boolean = false;
+		private var flashedwhenobtainedumbrellashouldflash:Boolean = false;
 		
 		
 		public function Lightning(darkness:FlxSprite,player:Player, enemiesreal:FlxGroup,enemieshallucination:FlxGroup) 
@@ -85,6 +88,10 @@ package
 			//Umbrella check
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
+				if (!flashedwhenobtainedumbrellaupdate) {
+					flashedwhenobtainedumbrellaupdate = true;
+					flashing = false;
+				}
 			}else {
 				lightningcolor = Constants.WITHOUTUMBRELLACOLOR;
 			}
@@ -112,9 +119,10 @@ package
 				flashtimer += FlxG.elapsed;
 			}	
 			
-			if(flashtimer >=Constants.flashduration && soundplayedtimer >=(soundcutofftime + Math.max(Constants.rumbletime, Constants.crashtime))/2){
+			if(flashtimer >=Constants.flashduration && soundplayedtimer >=(soundcutofftime + Math.max(Constants.rumbletime, Constants.crashtime))*cutoffscale){
 				flashing = false;
 				bufferfull = false;
+				//trace((soundcutofftime + Math.max(Constants.rumbletime, Constants.crashtime))*cutoffscale);
 			}
 			
 			if(Constants.periodic){
@@ -123,8 +131,11 @@ package
 				}
 			}else {
 				if (!flashing) {
+					howlongsincelast += FlxG.elapsed;
 					if (shouldflash("enemyeuclidean")) {
 						startFlashing();
+						trace(howlongsincelast);
+						howlongsincelast = 0;
 					}
 				}
 			}
@@ -134,7 +145,7 @@ package
 			if (!soundplayed) {
 				if (distance < Constants.soundthreshold && soundtimer >= Constants.crashtime) {
 					crashflxsound.play();
-					soundcutofftime = Constants.crashduration;
+					soundcutofftime = Constants.rumbleduration;
 					soundplayed = true;
 					crashflxsound.autoDestroy = true;
 					crashflxsound = FlxG.loadSound(CrashSound);
@@ -181,14 +192,13 @@ package
 		}
 		
 		private function shouldflash(criteria:String):Boolean {
-			
 			if (flashdebug) {
 				flashdebug = false;
 				return true;
 			}
 			//First flash
 			if (!firstflashed) {
-				if(firstflashedtimer >= 0.5){
+				if (firstflashedtimer >= 0.5) {
 					firstflashed = true;
 					return true;
 				}else {
@@ -196,9 +206,27 @@ package
 				}
 			}
 			
-			var scale:Number = 1.0;
+			//Introlevel.  Flash once then don't flash again
+			if (FlxG.level == 0) {
+				return false;
+			}
+			
+			var scale:Number = 1.2;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
-				scale = 5.0;
+				scale = 9;
+				this.cutoffscale = 6 / 9;
+				if (!flashedwhenobtainedumbrellashouldflash) {
+					flashedwhenobtainedumbrellashouldflash = true;
+					return true;
+				}
+				if (howlongsincelast >= 3) {
+					return true;
+				}
+			}else {
+				this.cutoffscale = 7 / 9;
+				if (howlongsincelast >= 6) {
+					return true;
+				}
 			}
 			if (criteria == "enemyeuclidean") {
 				var c:Number = Math.random();
