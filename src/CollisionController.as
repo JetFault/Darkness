@@ -79,7 +79,7 @@ package
 			
 			//Exit level
 			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {
-				if (Persistence.playerIsDead = true)
+				if (Persistence.playerIsDead == true)
 				{
 					FlxG.level = 0;
 					Persistence.playerIsDead = false;

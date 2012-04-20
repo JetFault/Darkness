@@ -134,7 +134,6 @@ package
 					howlongsincelast += FlxG.elapsed;
 					if (shouldflash("enemyeuclidean")) {
 						startFlashing();
-						trace(howlongsincelast);
 						howlongsincelast = 0;
 					}
 				}
