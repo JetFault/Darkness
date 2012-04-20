@@ -85,10 +85,24 @@ package
 					drawMonologue("1st floor");
 					break;
 				default:
-					drawMonologue("You died on the " + Persistence.floorPlayerDiedOn + "th floor");
+					drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor");
 					break;
 			}
 		}
+		
+		private function getFloorString(floor:Number):String {
+			if (floor == 1) {
+				return "1st";
+			}else if (floor == 2) {
+				return "2nd";
+			}else if (floor == 3) {
+				return "3rd";
+			}else if (floor > 3) {
+				return String(floor) + "th";
+			}
+			return "GETFLOORSTRING: INVALID FLOOR";
+		}
+		
 		public function deathText():void {
 
 			/*var maxFloor:uint = 8;
