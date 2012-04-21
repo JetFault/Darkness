@@ -103,6 +103,9 @@ package
 		
 		private function nextLevel():void {		
 				FlxG.level++;
+				if (Persistence.maxFloorReached > (8 - FlxG.level)) {
+					Persistence.maxFloorReached = (8 - FlxG.level);
+				}
 				if(FlxG.level <= 8){
 					FlxG.switchState(new PlayState());
 				}else {

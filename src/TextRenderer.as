@@ -15,9 +15,9 @@ package
 		//[Embed(source = "../bin/data/Font1.ttf", fontFamily = "TextFont", embedAsCFF = "false")] protected var TextFont:String;
 		
 		private var textArray:Array;
-		private var monoFadeTime:Number = 3;
 		private var monoX:Number = 180;
 		private var monoY:Number = 200;
+		private var monoFadeTime:Number = 3;
 		private var monoColor:uint = 0xff9696FF;
 		private var monoShadow:uint = 0xff333333;
 		
@@ -28,18 +28,23 @@ package
 			textArray = new Array();
 		}
 		
-		public function renderText(text:FlxText,fade:Boolean = false , timetofade:Number = 1) {
+		public function renderText(text:FlxText,fade:Boolean = false , timetofade:Number = 1):void {
 			textArray.push(new Array(text, fade, timetofade, 0, Utils.hill));
 			this.add(text);
 			text.scrollFactor.x = text.scrollFactor.y = 0;
 		}
-		public function drawMonologue(text:String):void {
+		
+		public function drawMonologue(text:String, fadeTime:Number = -1):void {
 			var fText:FlxText = new FlxText(monoX, monoY, 150, text);
 			//fText.setFormat("TextFont", 20, 0xffffffff, "left");
 			fText.color = monoColor;
 			fText.shadow = monoShadow;
-			renderText(fText, false, monoFadeTime);
+			if (fadeTime == -1) {
+				fadeTime = this.monoFadeTime;
+			}
+			renderText(fText, false, fadeTime);
 		}
+		
 		public function drawTitle(text:String):void {
 			renderText(new FlxText(10, 10, 200, text), true, timetonames);
 		}
@@ -84,8 +89,8 @@ package
 				case 8:
 					drawMonologue("1st floor");
 					break;
-				default:
-					drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor");
+				case Constants.purgatoryLevel:
+					drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor", 5);
 					break;
 			}
 		}

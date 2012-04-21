@@ -27,6 +27,7 @@ package
 		public static var periodic:Boolean = false;
 		public static var crashduration:Number = 6;
 		public static var rumbleduration:Number = 8;
+		
 		//Player variables
 		public static var controlScheme:int  = 2;
 		
@@ -52,6 +53,8 @@ package
 		
 		public static var EMPTYTILEINDEX:Number = 0;
 		
+		
+		public static var purgatoryLevel:uint = 99;
 		
 	}
 

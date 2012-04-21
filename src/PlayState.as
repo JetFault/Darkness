@@ -28,7 +28,7 @@ package
 		private var currentExitPoint:FlxPoint;
 		private var timetonames:Number = 6;
 		private var namestimer:Number = 0;
-		private var namesrendered = false;
+		private var namesrendered:Boolean = false;
 		private var textrenderer:TextRenderer;
 		private var introTitleCounter:int = 0;
 		
@@ -45,6 +45,11 @@ package
 		override public function create():void
 		{
 			this.levelNum = FlxG.level;
+			
+			//Re-Init Items that were held
+			if (this.levelNum == 1) {
+				Persistence.initItemsHeld();
+			}
 			
 			level = new Map(this.levelNum);
 			
@@ -289,7 +294,7 @@ package
 			validLocs.sortOn('distance', Array.NUMERIC);
 		}
 		
-		private function spawnPlayer(level:Map) {
+		private function spawnPlayer(level:Map):void {
 			var playerStart:FlxPoint = Utils.tilePtToMidpoint(level, level.getStartTile());
 			this.player = new Player(playerStart.x - 5, playerStart.y - 5);
 			

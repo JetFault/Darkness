@@ -84,7 +84,7 @@ package
 						if (this.onpathcompletion == "loop") {
 							closed = getAutoPath(self.getOriginalPosition());
 							closed = closed.reverse();
-							var p = Utils.pointToTileCoords(map, self.getHitbox().getMidpoint());
+							var p:FlxPoint = Utils.pointToTileCoords(map, self.getHitbox().getMidpoint());
 							var a:Array = new Array(p.x,p.y);
 							closed.push(a);
 							closed = closed.reverse();

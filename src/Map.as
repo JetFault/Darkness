@@ -34,6 +34,9 @@ package
 			if(levelNum == 0) {
 				loadLevel1Data();
 			}
+			else if (levelNum == Constants.purgatoryLevel) {
+				loadPurgatoryData();
+			}
 			else {				
 				mazeDifficulty();
 			}
@@ -197,6 +200,22 @@ package
 			var startPt:FlxPoint = new FlxPoint(1, 4);
 			var endPt:FlxPoint = new FlxPoint(4, level1Data[0].length - 2);
 			maze.generateFixedMaze(level1Data, startPt, endPt);
+		}
+		
+		private function loadPurgatoryData():void
+		{
+			var purgatoryData:Array = [
+					[1, 1, 1, 1, 1, 1, 1, 1, 1],
+					[1, 0, 0, 0, 0, 0, 0, 0, 1],
+					[1, 0, 0, 0, 0, 0, 0, 0, 1],
+					[1, 0, 0, 0, 0, 0, 0, 0, 1],
+					[1, 0, 0, 0, 0, 0, 0, 0, 1],
+					[1, 1, 1, 1, 1, 1, 1, 1, 1]
+				];
+			
+			var startPt:FlxPoint = new FlxPoint(1, 1);
+			var endPt:FlxPoint = new FlxPoint(purgatoryData.length - 1, purgatoryData[0].length - 1);
+			maze.generateFixedMaze(purgatoryData, startPt, endPt);
 		}
 		
 		public function getMapWidthInTiles():uint {

@@ -9,7 +9,7 @@ package
 	 */
 	public class EndState extends FlxState 
 	{
-		var textrenderer:TextRenderer;
+		public var textrenderer:TextRenderer;
 		[Embed(source = "../bin/data/CloisterBlack.ttf", fontFamily = "TextFont", embedAsCFF="false")] protected var TextFont:String;
 		
 		

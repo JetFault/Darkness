@@ -111,7 +111,7 @@ package
 			super.kill();
 			Persistence.floorPlayerDiedOn = 9 - FlxG.level;
 			Persistence.playerIsDead = true;
-			FlxG.level = 9;
+			FlxG.level = Constants.purgatoryLevel;
 			Persistence.init();
 			FlxG.switchState(new PlayState());
 		}
