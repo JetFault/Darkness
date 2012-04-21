@@ -29,8 +29,7 @@ package
 			numItems = 0;
 
 			while (inventory.length > 0) {
-				var item:Item = inventory.pop();
-				itemsHeld.push(item.getItemType());
+				inventory.pop();
 			}		
 
 			itemsSeen = new Array();
@@ -40,6 +39,12 @@ package
 		
 		public static function initItemsHeld():void {
 			itemsHeld = new Array();
+		}
+		
+		public static function fillItemsHeld():void {
+			for each(var item:Item in inventory) {
+				itemsHeld.push(item.getItemType());
+			}
 		}
 		
 	}

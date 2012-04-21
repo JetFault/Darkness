@@ -21,6 +21,8 @@ package
 		private var monoColor:uint = 0xff9696FF;
 		private var monoShadow:uint = 0xff333333;
 		
+		private var statsColor:uint = 0xff888888;
+		
 		private var timetonames:Number = 6;
 		
 		public function TextRenderer() 
@@ -50,10 +52,63 @@ package
 			renderText(new FlxText(10, 10, 200, text), true, timetonames);
 		}
 		
+		public function drawStats():void {
+			//drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor", 5);
+			
+			//Level reached
+			var deathLevel:String = "Died at the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor";
+			var deathFlx:FlxText = new FlxText(20, 20, 150, deathLevel);
+			deathFlx.color = monoColor;
+			deathFlx.shadow = monoShadow;
+			deathFlx.size = 8;
+			renderText(deathFlx);
+			
+			//Lowest level reached
+			var reached:String = "Lowest floor reached: " + getFloorString(Persistence.maxFloorReached) + " floor";
+			var reachedFlx:FlxText = new FlxText(20, 30, 200, reached);
+			reachedFlx.color = monoColor;
+			reachedFlx.shadow = monoShadow;
+			reachedFlx.size = 8;
+			renderText(reachedFlx);
+			
+			//Items used
+			var items:String = "";
+			
+			trace(Persistence.itemsHeld.length);
+			
+			while (Persistence.itemsHeld.length > 0) {
+				var it:ItemType = Persistence.itemsHeld.pop();
+				trace(it);
+				
+				if(it == ItemType.LANTERN) {
+						items = items + "Lantern ";
+				}
+				else if(it == ItemType.CLOCK) {
+						items = items + "Clock ";
+				}
+				else if(it == ItemType.UMBRELLA) {
+						items = items + "Umbrella ";
+				}
+			}
+			var itemsText:String = "";
+			if (items == "") {
+				itemsText = "No items used";
+			}
+			else {
+				itemsText = "Items found " + items
+			}			
+			var itemFlx:FlxText = new FlxText(20, 40, 250, itemsText);
+			itemFlx.color = monoColor;
+			itemFlx.shadow = monoShadow;
+			itemFlx.size = 8;
+			renderText(itemFlx);
+			
+		}
+		
 		override public function update():void {
 			var elapsedtime:Number = FlxG.elapsed;
 			for (var i:uint = 0; i < textArray.length; i++) {
-				if (!textArray[i][1])
+				if (!textArray[i][1]) //Don't need to fade
 					continue;
 				var thetext:FlxText = textArray[i][0] as FlxText;
 				if (!thetext.alive) {
@@ -93,7 +148,7 @@ package
 					drawMonologue("1st floor");
 					break;
 				case Constants.purgatoryLevel:
-					statsText();
+					drawStats();
 					break;
 			}
 		}
@@ -109,35 +164,6 @@ package
 				return String(floor) + "th";
 			}
 			return "GETFLOORSTRING: INVALID FLOOR";
-		}
-		
-		public function statsText():void {
-			drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor", 5);
-			var items:String = "";
-			while (Persistence.itemsHeld.length > 0) {
-				var it:ItemType = Persistence.itemsHeld.pop();
-				switch(it) {
-					case ItemType.LANTERN:
-						items.concat("Lantern ");
-						break;
-						
-					case ItemType.CLOCK:
-						items.concat("Clock ");
-						break;
-						
-					case ItemType.UMBRELLA:
-						items.concat("Umbrella ");
-						break;
-				}
-			}
-			
-			var itemsText:String = "";
-			if (items == "") {
-				itemsText = "No items used";
-			}
-			else {
-				itemsText = "Items held" + items
-			}
 		}
 		
 		public function deathText():void {

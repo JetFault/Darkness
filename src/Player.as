@@ -102,6 +102,7 @@ package
 		public function getHitbox():FlxSprite {
 			return this.hitbox;
 		}
+		
 		public function startDemise(eMidPoint:FlxPoint):void {
 			if (!isDying) {
 				bloodSprite.angle = FlxU.getAngle(eMidPoint, this.getMidpoint()) + 180;
@@ -118,6 +119,7 @@ package
 			Persistence.floorPlayerDiedOn = 9 - FlxG.level;
 			Persistence.playerIsDead = true;
 			FlxG.level = Constants.purgatoryLevel;
+			Persistence.fillItemsHeld();
 			Persistence.init();
 			FlxG.switchState(new PlayState());
 		}
