@@ -5,6 +5,7 @@ package
 	import org.flixel.FlxG;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxSound;
 	
 	/**
 	 * ...
@@ -20,9 +21,18 @@ package
 		private var light:Light;
 		private var level:Map;
 		private var textRenderer:TextRenderer;
+		
+		[Embed(source = "../bin/data/DoorSlam3.mp3")] protected var DoorSound:Class;
+		private var doorSound:FlxSound;
+		[Embed(source = "../bin/data/GrandfatherChime.mp3")] protected var ItemSound:Class;
+		private var itemSound:FlxSound;
+		
 		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, 
 											exit:FlxSprite, item:Item, light:Light, level:Map, textR:TextRenderer) 
 		{
+			doorSound = FlxG.loadSound(DoorSound, 1.0, false, true);
+			itemSound = FlxG.loadSound(ItemSound, 1.0, false, true);
+			
 			this.player = player;
 			this.enemiesreal = enemiesreal;
 			this.exit = exit;
@@ -56,6 +66,7 @@ package
 			
 			//Grab item
 			if (FlxG.overlap(player.getHitbox(), item) && player.isAlive()) {
+				itemSound.play();
 				if (item.getItemType() == ItemType.LANTERN)
 				{
 					light.loadLantern();
@@ -84,7 +95,8 @@ package
 					FlxG.level = 0;
 					Persistence.playerIsDead = false;
 				}
-				FlxG.fade(0xff000000, .25, nextLevel);
+				doorSound.play();	
+				FlxG.fade(0xff000000, .5, nextLevel);
 			}
 			super.update();
 		}
