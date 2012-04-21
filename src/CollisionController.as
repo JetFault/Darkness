@@ -21,6 +21,7 @@ package
 		private var light:Light;
 		private var level:Map;
 		private var textRenderer:TextRenderer;
+		private var doorsoundplayed:Boolean = false;
 		
 		[Embed(source = "../bin/data/DoorSlam3.mp3")] protected var DoorSound:Class;
 		private var doorSound:FlxSound;
@@ -52,6 +53,7 @@ package
 			
 			//Real enemies that tag player kill player
 			//if (FlxG.overlap(player, enemiesreal) && player.isAlive()) {
+			if(!player.exiting){
 				for (var i:uint = 0; i < enemiesreal.members.length; i++) {
 					var e:Enemy = enemiesreal.members[i] as Enemy;
 					if (e && FlxG.overlap(player.getHitbox(), e.getHitbox())) {
@@ -62,6 +64,7 @@ package
 						//...no tagbacks XD
 					}
 				}
+			}
 			//}
 			
 			//Grab item
@@ -90,12 +93,17 @@ package
 			
 			//Exit level
 			if (FlxG.overlap(player.getHitbox(), exit) && player.isAlive()) {
+				player.exiting = true;
+				//From purgatory, go back to 8th floor
 				if (Persistence.playerIsDead == true)
 				{
 					FlxG.level = 0;
 					Persistence.playerIsDead = false;
 				}
-				doorSound.play();	
+				if(!doorsoundplayed){
+					doorsoundplayed = true;
+					doorSound.play();	
+				}
 				FlxG.fade(0xff000000, .5, nextLevel);
 			}
 			super.update();

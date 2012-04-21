@@ -43,7 +43,7 @@ package
 			if (fadeTime == -1) {
 				fadeTime = this.monoFadeTime;
 			}
-			renderText(fText, false, fadeTime);
+			renderText(fText, true, fadeTime);
 		}
 		
 		public function drawTitle(text:String):void {

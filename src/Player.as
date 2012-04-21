@@ -18,6 +18,7 @@ package
 		public var deltaPosition:FlxPoint;
 		public var inventory:Array;
 		public var hitbox:FlxSprite;
+		public var exiting:Boolean;
 		
 		private var bloodSprite:FlxSprite;
 		
@@ -39,6 +40,7 @@ package
 			hitbox.y = this.getMidpoint().y - hitbox.height / 2;
 			
 			this.playerAlive = true;
+			this.exiting = false;
 			loadPlayer();
 			
 			
