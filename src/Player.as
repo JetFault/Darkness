@@ -19,6 +19,8 @@ package
 		public var inventory:Array;
 		public var hitbox:FlxSprite;
 		public var exiting:Boolean;
+		public var walkingtoexit:Boolean;
+		public var godmode:Boolean;
 		
 		private var bloodSprite:FlxSprite;
 		
@@ -41,6 +43,8 @@ package
 			
 			this.playerAlive = true;
 			this.exiting = false;
+			this.walkingtoexit = false;
+			this.godmode = false;
 			loadPlayer();
 			
 			

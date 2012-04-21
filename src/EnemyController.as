@@ -20,6 +20,10 @@ package
 		private var sirenSound:FlxSound;
 		private var stepPlayed:Number;
 		
+		private var dancing:Boolean;
+		private var dancingtimer = 0;
+		private var danceangle = 0;
+		
 		
 		private var player:Player;
 		private var enemy:Enemy;
@@ -52,6 +56,8 @@ package
 			this.enemy = enemy;
 			this.level = level;
 			this.enemyRunSpeed = enemyRunSpeed;
+			this.dancing = false;
+			
 			this.runTimer = 0;
 			if(enemyType == EnemyType.DFS_PATHER){
 				this.ai = new DFSSearchAI(enemy, player, level, onpathcompletion, depth);
@@ -73,6 +79,27 @@ package
 				this.destroy();
 				return;
 			}
+			
+			
+			if (this.dancing) {
+				enemy.play("raged");
+				this.dancingtimer += FlxG.elapsed;
+				this.enemy.velocity.x = this.enemy.velocity.y = 0;
+				this.enemy.getHitbox().velocity.x = this.enemy.getHitbox().velocity.y = 0;
+				if (this.dancingtimer >= 2) {
+					this.danceangle = FlxG.getRandom(new Array(0, 45, 90, 135, 180, 225, 270, 315, 360));
+					this.enemy.angle = danceangle;
+					
+					this.dancingtimer -= 2;
+				}
+				this.enemy.angle = this.danceangle + (Math.random() - 0.7) * 110
+				
+				enemy.getEyeSprite().x = enemy.x;
+				enemy.getEyeSprite().y = enemy.y;
+				enemy.getEyeSprite().angle = enemy.angle;
+				return;
+			}
+			
 			
 			
 			var playerPos:FlxPoint = player.getMidpoint();
@@ -187,6 +214,10 @@ package
 		/*public function setPlayerVisible(): void {
 			this.ai.setPlayerVisible();
 		}*/
+		
+		public function dance():void {
+			this.dancing = true;
+		}
 	}
 
 }

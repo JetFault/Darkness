@@ -101,6 +101,11 @@ package
 			return this.originalposition
 		}
 		
+		
+		public function dance():void {
+			this.controller.dance();
+		}
+		
 	}
 
 }
