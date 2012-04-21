@@ -106,7 +106,7 @@ package
 				//player.velocity.x = 0;
 				//player.velocity.y = 0;
 				
-				if (!player.isDying) {
+				if (!player.isDying && !player.exiting) {
 					if (FlxG.keys.RIGHT || FlxG.keys.D)
 					{
 						whattomove.velocity.x = player.maxVelocity.x;

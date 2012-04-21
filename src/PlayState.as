@@ -229,6 +229,11 @@ package
 					textrenderer.renderText(new FlxText(275, 60, 200, "Jerry Reptak"), true, 3);
 					introTitleCounter++;
 				}
+				if (player.x > 400 && introTitleCounter == 5)
+				{
+					textrenderer.renderText(new FlxText(200, 230, 200, "Lonesome Wyatt and the Holy Spooks - \"So Far Away\""), true, 6);
+					introTitleCounter++;
+				}
 			}
 			
 			//Debug input
