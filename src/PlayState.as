@@ -222,7 +222,7 @@ package
 				if (player.x > 330 && player.x < 340 && introTitleCounter == 4)
 				{
 					textrenderer.renderText(new FlxText(275, 60, 200, "Jerry Reptak"), true, 3);
-					introTitleCounter = null;
+					introTitleCounter++;
 				}
 			}
 			

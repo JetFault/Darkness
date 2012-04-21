@@ -38,7 +38,7 @@ package
 			//fText.setFormat("TextFont", 20, 0xffffffff, "left");
 			fText.color = monoColor;
 			fText.shadow = monoShadow;
-			renderText(fText, false, monoFadeTime);
+			renderText(fText, true, monoFadeTime);
 		}
 		public function drawTitle(text:String):void {
 			renderText(new FlxText(10, 10, 200, text), true, timetonames);
@@ -47,6 +47,8 @@ package
 		override public function update():void {
 			var elapsedtime:Number = FlxG.elapsed;
 			for (var i:uint = 0; i < textArray.length; i++) {
+				if (!textArray[i][1])
+					continue;
 				var thetext:FlxText = textArray[i][0] as FlxText;
 				if (!thetext.alive) {
 					continue;
