@@ -78,8 +78,8 @@ package
 				}
 				if (item.getItemType() == ItemType.CLOCK)
 				{
-					player.maxVelocity.x = 62;
-					player.maxVelocity.y = 62;
+					player.maxVelocity.x = 58;
+					player.maxVelocity.y = 58;
 					player.setStepLength(20);
 					textRenderer.ClockText();
 				}
