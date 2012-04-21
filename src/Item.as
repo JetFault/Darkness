@@ -10,9 +10,9 @@ package
 		[Embed(source = "../bin/data/UmbrellaItem.png")] protected var ImgUmbrella:Class;
 		[Embed(source = "../bin/data/LighterItem.png")] protected var ImgLighter:Class;
 		[Embed(source = "../bin/data/ClockItem.png")] protected var ImgClock:Class;
-		[Embed(source = "../bin/data/Bamboo.mp3")] protected var SoundUmbrella:Class;
+		[Embed(source = "../bin/data/Bamboo2.mp3")] protected var SoundUmbrella:Class;
 		[Embed(source = "../bin/data/Chant.mp3")] protected var SoundLighter:Class;
-		[Embed(source = "../bin/data/GrandfatherClock.mp3")] protected var SoundClock:Class;
+		[Embed(source = "../bin/data/ClockTick2.mp3")] protected var SoundClock:Class;
 		
 		private var umbrellaSound:FlxSound;
 		private var lighterSound:FlxSound;
@@ -62,7 +62,7 @@ package
 			 
 			if (itemType == ItemType.LANTERN)
 			{
-				lighterSound.volume = Utils.getVolume(100, this.getMidpoint(), player.getMidpoint()) * 0.1;
+				lighterSound.volume = Utils.getVolume(100, this.getMidpoint(), player.getMidpoint()) * 0.2;
 				lighterSound.play();
 			}	
 			if (itemType == ItemType.UMBRELLA)
@@ -73,7 +73,7 @@ package
 					
 			if (itemType == ItemType.CLOCK)
 			{
-				clockSound.volume = Utils.getVolume(100, this.getMidpoint(), player.getMidpoint()) * 0.1;
+				clockSound.volume = Utils.getVolume(100, this.getMidpoint(), player.getMidpoint()) * 0.2;
 				clockSound.play();
 			}
 		

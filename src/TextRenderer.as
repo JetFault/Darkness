@@ -39,6 +39,7 @@ package
 			//fText.setFormat("TextFont", 20, 0xffffffff, "left");
 			fText.color = monoColor;
 			fText.shadow = monoShadow;
+
 			if (fadeTime == -1) {
 				fadeTime = this.monoFadeTime;
 			}
@@ -52,6 +53,8 @@ package
 		override public function update():void {
 			var elapsedtime:Number = FlxG.elapsed;
 			for (var i:uint = 0; i < textArray.length; i++) {
+				if (!textArray[i][1])
+					continue;
 				var thetext:FlxText = textArray[i][0] as FlxText;
 				if (!thetext.alive) {
 					continue;

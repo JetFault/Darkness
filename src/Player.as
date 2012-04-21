@@ -9,7 +9,7 @@ package
 		//Sprite sheet
 		[Embed(source = "../bin/data/PlayerAnimation.png")] protected var ImgPlayer:Class;
 		[Embed(source = "../bin/data/PlayerLightAnimation.png")] protected var ImgPlayerLight:Class;
-		[Embed(source = "../bin/data/BloodSprite2.png")] protected var ImgBlood:Class;
+		[Embed(source = "../bin/data/BloodSprite6.png")] protected var ImgBlood:Class;
 		
 		private var _runspeed:Number;
 		private var controller:PlayerController;

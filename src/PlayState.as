@@ -8,7 +8,7 @@ package
 		[Embed(source = "../bin/data/Background.png")] protected var BgTexture:Class;
 		[Embed(source = "../bin/data/Background2.png")] protected var BgTexture2:Class;
 		[Embed(source = "../bin/data/Background7-3.png")] protected var BgTexture7:Class;
-		[Embed(source = "../bin/data/Exit.png")] protected var ImgExit:Class;
+		[Embed(source = "../bin/data/Exit4.png")] protected var ImgExit:Class;
 		[Embed(source = "../bin/data/CloisterBlack.ttf", fontFamily = "TextFont", embedAsCFF="false")] protected var TextFont:String;
 		
 		//Model
@@ -227,7 +227,7 @@ package
 				if (player.x > 330 && player.x < 340 && introTitleCounter == 4)
 				{
 					textrenderer.renderText(new FlxText(275, 60, 200, "Jerry Reptak"), true, 3);
-					introTitleCounter = null;
+					introTitleCounter++;
 				}
 			}
 			

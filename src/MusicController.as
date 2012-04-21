@@ -31,11 +31,9 @@ package
 			windMusic = FlxG.loadSound(WindMusic, .0, true);
 			windMusic.play();
 			staticMusic = FlxG.loadSound(StaticMusic, .01, true);
-			//staticMusic.play();
-			//ghostMusic = FlxG.loadSound(GhostMusic, .03, true);
-			//ghostMusic.play();
+			staticMusic.play();
 			if(FlxG.level == 0){
-				ghostMusic = FlxG.loadSound(GhostMusic, .03, true);
+				ghostMusic = FlxG.loadSound(GhostMusic, .05, true);
 				ghostMusic.play();
 				ghostMusic.survive = true;
             }
@@ -55,7 +53,7 @@ package
 			timePassed += FlxG.elapsed;
 			rainMusic.volume = (0.06 + (Math.sin(timePassed * 0.10) * 0.02)) * rainPer; //2
 			windMusic.volume = (0.1 + (Math.sin(timePassed * 0.15) * 0.02)) * windPer; //3
-			staticMusic.volume = 0.02 + (Math.sin(timePassed * 0.25) * 0.005);  //5
+			staticMusic.volume = 0.02 + (Math.sin(timePassed * 0.25) * 0.0025);  //5
 			
 			//rainMusic.volume = 0.04 + (Math.sin(timePassed * 0.10) * 0.025); //2
 			//windMusic.volume = 0.06 + (Math.sin(timePassed * 0.15) * 0.025); //3

@@ -27,13 +27,12 @@ package
 		
 		public static function init():void {
 			numItems = 0;
-			
-			for (var i:int = 0; i < inventory.length; i++)
-			{
+
+			while (inventory.length > 0) {
 				var item:Item = inventory.pop();
 				itemsHeld.push(item.getItemType());
-			}			
-			
+			}		
+
 			itemsSeen = new Array();
 			
 			startLocRatio = new FlxPoint(0, 0);
