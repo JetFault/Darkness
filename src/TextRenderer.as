@@ -93,7 +93,7 @@ package
 					drawMonologue("1st floor");
 					break;
 				case Constants.purgatoryLevel:
-					drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor", 5);
+					statsText();
 					break;
 			}
 		}
@@ -109,6 +109,35 @@ package
 				return String(floor) + "th";
 			}
 			return "GETFLOORSTRING: INVALID FLOOR";
+		}
+		
+		public function statsText():void {
+			drawMonologue("You died on the " + getFloorString(Persistence.floorPlayerDiedOn) + " floor", 5);
+			var items:String = "";
+			while (Persistence.itemsHeld.length > 0) {
+				var it:ItemType = Persistence.itemsHeld.pop();
+				switch(it) {
+					case ItemType.LANTERN:
+						items.concat("Lantern ");
+						break;
+						
+					case ItemType.CLOCK:
+						items.concat("Clock ");
+						break;
+						
+					case ItemType.UMBRELLA:
+						items.concat("Umbrella ");
+						break;
+				}
+			}
+			
+			var itemsText:String = "";
+			if (items == "") {
+				itemsText = "No items used";
+			}
+			else {
+				itemsText = "Items held" + items
+			}
 		}
 		
 		public function deathText():void {
