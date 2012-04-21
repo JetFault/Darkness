@@ -10,8 +10,11 @@ package
 	 */
 	public class Map extends FlxTilemap
 	{
-		[Embed(source = "../bin/data/autotiles3.png")] public var MapTiles:Class;
-//		[Embed(source = "../bin/data/large_tiles.png")] public var MapTiles:Class;
+		[Embed(source = "../bin/data/autotiles2.png")] public var MapTiles1:Class;
+		[Embed(source = "../bin/data/autotiles3.png")] public var MapTiles2:Class;
+		[Embed(source = "../bin/data/autotiles5.png")] public var MapTiles3:Class;
+		[Embed(source = "../bin/data/autotiles10.png")] public var MapTiles4:Class;
+		[Embed(source = "../bin/data/autotiles4.png")] public var MapTiles5:Class;
 		
 		public var levelNum:Number;
 
@@ -39,7 +42,33 @@ package
 			}
 			
 			var levelArray:Array = maze.to1DArray();
-			loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles, 0, 0, FlxTilemap.AUTO);
+			switch(this.levelNum) {
+				case 0:
+					loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles1, 0, 0, FlxTilemap.AUTO);
+					break;
+				case 1:
+				case 2:
+					loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles2, 0, 0, FlxTilemap.AUTO);
+					break;
+					
+				case 3:
+				case 4:
+					loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles3, 0, 0, FlxTilemap.AUTO);
+					break;
+					
+				case 5:
+				case 6:
+					loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles4, 0, 0, FlxTilemap.AUTO);
+					break;
+					
+				case 7:
+				case 8:
+					loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles5, 0, 0, FlxTilemap.AUTO);
+					break;
+				default:
+					loadMap(arrayToCSV(levelArray, maze.getWidth()), MapTiles1, 0, 0, FlxTilemap.AUTO);
+					break;
+			}
 			
 			this.deadEnds = maze.getDeadEnds();
 			this.corners = maze.getCorners();
