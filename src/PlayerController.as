@@ -19,7 +19,7 @@ package
 		private var preStep:Boolean = false;
 		
 		private var stepDis:Number = 0;
-		private var stepLength:Number = 25;
+		public var stepLength:Number = 25;
 		private var prePosition:FlxPoint;
 		
 		private var player:Player;

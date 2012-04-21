@@ -127,6 +127,9 @@ package
 			this.angle = FlxU.getAngle(currentPosition, adjacentTile);
 			this.getHitbox().angle = this.angle;
 		}
+		public function setStepLength(step:Number):void {
+			controller.stepLength = step;
+		}
 		
 	}
 

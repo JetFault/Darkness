@@ -80,6 +80,7 @@ package
 				{
 					player.maxVelocity.x = 62;
 					player.maxVelocity.y = 62;
+					player.setStepLength(20);
 					textRenderer.ClockText();
 				}
 				if (item.getItemType() == ItemType.UMBRELLA)
