@@ -231,7 +231,7 @@ package
 				}
 				if (player.x > 400 && introTitleCounter == 5)
 				{
-					textrenderer.renderText(new FlxText(200, 230, 200, "Lonesome Wyatt and the Holy Spooks - \"So Far Away\""), true, 6);
+					textrenderer.renderText(new FlxText(150, 230, 200, "Lonesome Wyatt and the Holy Spooks - \"So Far Away\""), true, 10);
 					introTitleCounter++;
 				}
 			}
