@@ -21,8 +21,8 @@ package
 		private var stepPlayed:Number;
 		
 		private var dancing:Boolean;
-		private var dancingtimer = 0;
-		private var danceangle = 0;
+		private var dancingtimer:Number = 0;
+		private var danceangle:Number = 0;
 		
 		
 		private var player:Player;
@@ -87,7 +87,7 @@ package
 				this.enemy.velocity.x = this.enemy.velocity.y = 0;
 				this.enemy.getHitbox().velocity.x = this.enemy.getHitbox().velocity.y = 0;
 				if (this.dancingtimer >= 2) {
-					this.danceangle = FlxG.getRandom(new Array(0, 45, 90, 135, 180, 225, 270, 315, 360));
+					this.danceangle = FlxG.getRandom(new Array(0, 45, 90, 135, 180, 225, 270, 315, 360)) as Number;
 					this.enemy.angle = danceangle;
 					
 					this.dancingtimer -= 2;
