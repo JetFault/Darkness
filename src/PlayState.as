@@ -206,7 +206,10 @@ package
 			{
 				if (player.x < 40 && introTitleCounter == 0)
 				{
-					textrenderer.renderText(new FlxText(40, 50, 200, "Relentless Night"), true, 4);
+					var txt:FlxText = new FlxText(150, 50, 200, "Relentless Night");
+					txt.scale.x = 2.0;
+					txt.scale.y = 2.0;
+					textrenderer.renderText(txt, true, 10);
 					introTitleCounter++;
 				}
 				if (player.x > 90 && player.x < 100 && introTitleCounter == 1)
@@ -216,7 +219,7 @@ package
 				}
 				if (player.x > 190 && player.x < 200 && introTitleCounter == 2)
 				{
-					textrenderer.renderText(new FlxText(155, 70, 200, "Matt Mitsui"), true, 3);
+					textrenderer.renderText(new FlxText(170, 90, 200, "Matt Mitsui"), true, 3);
 					introTitleCounter++;
 				}
 				if (player.x > 240 && player.x < 250 && introTitleCounter == 3)
@@ -231,7 +234,7 @@ package
 				}
 				if (player.x > 400 && introTitleCounter == 5)
 				{
-					textrenderer.renderText(new FlxText(150, 230, 200, "Lonesome Wyatt and the Holy Spooks - \"So Far Away\""), true, 10);
+					textrenderer.renderText(new FlxText(150, 230, 200, "Lonesome Wyatt and the Holy Spooks - \"So Far Away\""), true, 8);
 					introTitleCounter++;
 				}
 			}
