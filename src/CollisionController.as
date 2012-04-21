@@ -24,7 +24,7 @@ package
 		
 		[Embed(source = "../bin/data/DoorSlam3.mp3")] protected var DoorSound:Class;
 		private var doorSound:FlxSound;
-		[Embed(source = "../bin/data/GrandfatherChime.mp3")] protected var ItemSound:Class;
+		[Embed(source = "../bin/data/GrandfatherChime2.mp3")] protected var ItemSound:Class;
 		private var itemSound:FlxSound;
 		
 		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, 
