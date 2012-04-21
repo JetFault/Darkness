@@ -50,6 +50,12 @@ package
 			var windPer:Number = 1 - per;
 			var rainPer:Number = per;
 			
+			if (FlxG.level == Constants.purgatoryLevel)
+			{
+				windPer = 0;
+				rainPer = 0;
+			}
+			
 			timePassed += FlxG.elapsed;
 			rainMusic.volume = (0.06 + (Math.sin(timePassed * 0.10) * 0.02)) * rainPer; //2
 			windMusic.volume = (0.1 + (Math.sin(timePassed * 0.15) * 0.02)) * windPer; //3
