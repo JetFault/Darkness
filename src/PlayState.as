@@ -206,7 +206,7 @@ package
 			{
 				if (player.x < 40 && introTitleCounter == 0)
 				{
-					textrenderer.renderText(new FlxText(40, 50, 200, "Darkness"), true, 4);
+					textrenderer.renderText(new FlxText(40, 50, 200, "Relentless Night"), true, 4);
 					introTitleCounter++;
 				}
 				if (player.x > 90 && player.x < 100 && introTitleCounter == 1)
