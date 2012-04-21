@@ -210,6 +210,10 @@ package
 				return false;
 			}
 			
+			if (FlxG.level == Constants.purgatoryLevel) {
+				return false;
+			}
+			
 			var scale:Number = 1.2;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
 				scale = 9;
