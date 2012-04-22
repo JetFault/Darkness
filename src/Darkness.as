@@ -6,7 +6,7 @@ package
 	
 	public class Darkness extends FlxGame
 	{
-		
+		[Frame(factoryClass="Preloader")]
 		public function Darkness() 
 		{
 			Persistence.init();

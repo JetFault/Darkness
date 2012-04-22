@@ -92,7 +92,7 @@ package
 			}
 			var itemsText:String = "";
 			if (items == "") {
-				itemsText = "No items used";
+				itemsText = "No items found.";
 			}
 			else {
 				itemsText = "Items found: " + items
