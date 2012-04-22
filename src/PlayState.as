@@ -39,6 +39,7 @@ package
 		//Collision controller
 		private var collisionController:CollisionController;
 		
+		private var EndColor:Number = 0xffffffff;
 		
 		private var validLocs:Array;
 
@@ -241,7 +242,7 @@ package
 			
 			if (levelNum == 9 && player.y > FlxG.height - 60)
 			{
-				FlxG.fade(0xffffffff, 3, switchToEndStateOnFadeComplete);
+				FlxG.fade(EndColor, 3, switchToEndStateOnFadeComplete);
 			}
 			
 			//Debug input

@@ -24,16 +24,16 @@ package
 		
 		public function EndState() 
 		{
-			FlxG.bgColor = 0xffffffff;
+			FlxG.bgColor = 0xffffffff;//F0F0D2
 			textrenderer = new TextRenderer();
 
-			var levelText:FlxText = new FlxText(0, 0, 150, "You have reached safety.");
-			levelText.x = FlxG.width/ 2 - 75;
-			levelText.y = FlxG.height / 2 - 50;
+			var levelText:FlxText = new FlxText(0, 0, 150, "You have escaped the tower.");
+			levelText.x = FlxG.width/ 2 - 65;
+			levelText.y = FlxG.height / 2 - 10;
 			levelText.color = 0xff000000;
 			levelText.scrollFactor.x = levelText.scrollFactor.y = 0;
 
-			textrenderer.renderText(levelText, true, 4);
+			textrenderer.renderText(levelText, true, 8);
 			
 			add(textrenderer);
 		}
@@ -42,18 +42,18 @@ package
 		override public function update():void
 		{
 			textTimer += FlxG.elapsed;
-			if (textTimer > 4 && !renderedteamname)
+			if (textTimer > 8 && !renderedteamname)
 			{
 				var text:FlxText = new FlxText(0, 0, 150, "Thank you for playing. \n -Relentless Night Team");
-				text.x = FlxG.width / 2 - 75;
-				text.y = FlxG.height / 2 - 25;
+				text.x = FlxG.width / 2 - 60;
+				text.y = FlxG.height / 2 + 20;
 				text.color = 0xff000000;
-				textrenderer.renderText(text, true, 6);
+				textrenderer.renderText(text, true, 15);
 				renderedteamname = true;
 				
 			}
-			if (textTimer > 7 && !dancerrendered) {
-				var thedancer:Enemy = new Enemy(FlxG.width / 2-30, FlxG.height / 2 - 60 , null, null, false, EnemyType.DO_NOTHING, "fromcurrentposition");
+			if (textTimer > 8 && !dancerrendered) {
+				var thedancer:Enemy = new Enemy(FlxG.width / 2-10, FlxG.height / 2 - 40 , null, null, false, EnemyType.DO_NOTHING, "fromcurrentposition");
 				thedancer.dance();
 				add(thedancer);
 				add(thedancer.getController());
