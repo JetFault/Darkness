@@ -20,6 +20,7 @@ package
 		private var playerController:PlayerController;
 		private var textTimer:Number = 0;
 		private var renderedteamname:Boolean = false;
+		private var dancerrendered:Boolean = false;
 		
 		public function EndState() 
 		{
@@ -41,7 +42,7 @@ package
 		override public function update():void
 		{
 			textTimer += FlxG.elapsed;
-			if (textTimer > 6 && !renderedteamname)
+			if (textTimer > 4 && !renderedteamname)
 			{
 				var text:FlxText = new FlxText(0, 0, 150, "Thank you for playing. \n -Relentless Night Team");
 				text.x = FlxG.width / 2 - 75;
@@ -50,6 +51,13 @@ package
 				textrenderer.renderText(text, true, 6);
 				renderedteamname = true;
 				
+			}
+			if (textTimer > 7 && !dancerrendered) {
+				var thedancer:Enemy = new Enemy(FlxG.width / 2-30, FlxG.height / 2 - 60 , null, null, false, EnemyType.DO_NOTHING, "fromcurrentposition");
+				thedancer.dance();
+				add(thedancer);
+				add(thedancer.getController());
+				dancerrendered = true;
 			}
 			
 			super.update();
