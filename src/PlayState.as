@@ -236,6 +236,11 @@ package
 				}
 			}
 			
+			if (levelNum == 9 && player.y > FlxG.height - 60)
+			{
+				FlxG.fade(0xffffffff, 3, switchToEndStateOnFadeComplete);
+			}
+			
 			//Debug input
 			if (FlxG.keys.ENTER && Constants.debug) {
 				FlxG.resetState();
@@ -243,13 +248,14 @@ package
 			}
 			if (FlxG.keys.N && Constants.debug) {
 				FlxG.level++;
-				if(FlxG.level <= 8){
+				if(FlxG.level <= 9){
 					FlxG.switchState(new PlayState());
 				}else {
 					FlxG.switchState(new EndState());
 				}
 			}	
-			super.update();			
+			
+			super.update();
 		}
 		
 		override public function draw():void
@@ -462,7 +468,10 @@ package
 				var point:FlxPoint = Utils.getPointThatCentersObject(level, exit);
 				exit.x = point.x;
 				exit.y = point.y;
+				if (levelNum != 9)
+				{
 				add(exit);
+				}
 			}
 		}		
 
@@ -494,6 +503,11 @@ package
 				player.maxVelocity.x = 62;
 				player.maxVelocity.y = 62;
 			}
+		}
+		
+		private function switchToEndStateOnFadeComplete():void
+		{
+			FlxG.switchState(new EndState());
 		}
 	}
 

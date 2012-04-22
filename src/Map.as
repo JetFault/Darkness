@@ -1,5 +1,6 @@
 package  
 {
+	import adobe.utils.CustomActions;
 	import flash.display.Bitmap;
 	import flash.geom.Point;
 	import org.flixel.FlxPoint;
@@ -40,9 +41,13 @@ package
 			else if (levelNum == Constants.purgatoryLevel) {
 				loadPurgatoryData();
 			}
-			else {				
+			else if (levelNum == Constants.finalLevel){
+				loadFinalLevelData();
+			}				
+			else {
 				mazeDifficulty();
 			}
+			
 			
 			var levelArray:Array = maze.to1DArray();
 			switch(this.levelNum) {
@@ -247,6 +252,25 @@ package
 			maze.generateFixedMaze(purgatoryData, startPt, endPt);
 		}
 		
+		private function loadFinalLevelData():void
+		{
+			var finalLevelData:Array = [
+					[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+					[1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+					[1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+					[1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+					[1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+					[1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+					[1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+					[1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+					[1, 1, 1, 0, 0, 0, 1, 1, 1, 1],
+				];
+			
+			var startPt:FlxPoint = new FlxPoint(4, 1);
+			var endPt:FlxPoint = new FlxPoint(4, 6);
+			maze.generateFixedMaze(finalLevelData, startPt, endPt);
+			
+		}
 		public function getMapWidthInTiles():uint {
 			return this.maze.getWidth();
 		}

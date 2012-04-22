@@ -56,6 +56,8 @@ package
 		
 		public static var purgatoryLevel:uint = 99;
 		
+		public static var finalLevel:uint = 9;
+		
 	}
 
 }

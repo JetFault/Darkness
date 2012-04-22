@@ -129,10 +129,10 @@ package
 					Persistence.maxFloorReached = (8 - FlxG.level + 1);
 				}
 				
-				if(FlxG.level <= 8){
+				if(FlxG.level <= 9){
 					FlxG.switchState(new PlayState());
 				}else {
-					FlxG.switchState(new EndState());
+					//FlxG.switchState(new EndState());
 				}
 		}
 	}
