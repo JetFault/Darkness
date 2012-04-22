@@ -95,7 +95,7 @@ package
 				itemsText = "No items used";
 			}
 			else {
-				itemsText = "Items found " + items
+				itemsText = "Items found: " + items
 			}			
 			var itemFlx:FlxText = new FlxText(20, 40, 250, itemsText);
 			itemFlx.color = monoColor;
