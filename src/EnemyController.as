@@ -87,12 +87,17 @@ package
 				this.enemy.velocity.x = this.enemy.velocity.y = 0;
 				this.enemy.getHitbox().velocity.x = this.enemy.getHitbox().velocity.y = 0;
 				if (this.dancingtimer >= 2) {
-					this.danceangle = FlxG.getRandom(new Array(0, 45, 90, 135, 180, 225, 270, 315, 360)) as Number;
+					while(true){
+						this.danceangle = FlxG.getRandom(new Array(0, 45, 90, 135, 180, 225, 270, 315, 360)) as Number;
+						if (this.danceangle != this.enemy.angle) {
+							break;
+						}
+					}
 					this.enemy.angle = danceangle;
 					
 					this.dancingtimer -= 2;
 				}
-				this.enemy.angle = this.danceangle + (Math.random() - 0.7) * 110
+				//this.enemy.angle = this.danceangle + (Math.random() - 0.7) * 110
 				
 				enemy.getEyeSprite().x = enemy.x;
 				enemy.getEyeSprite().y = enemy.y;
