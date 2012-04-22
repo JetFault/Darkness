@@ -19,6 +19,7 @@ package
 		private var controllers:GameControllers;
 		private var playerController:PlayerController;
 		private var textTimer:Number = 0;
+		private var renderedteamname:Boolean = false;
 		
 		public function EndState() 
 		{
@@ -36,20 +37,24 @@ package
 			add(textrenderer);
 		}
 		
-		/*
+		
 		override public function update():void
 		{
 			textTimer += FlxG.elapsed;
-			if (textTimer > 6)
+			if (textTimer > 6 && !renderedteamname)
 			{
 				var text:FlxText = new FlxText(0, 0, 150, "Thank you for playing. \n -Relentless Night Team");
 				text.x = FlxG.width / 2 - 75;
 				text.y = FlxG.height / 2 - 25;
 				text.color = 0xff000000;
-				//textrenderer.renderText(text, true, 6);
+				textrenderer.renderText(text, true, 6);
+				renderedteamname = true;
+				
 			}
+			
+			super.update();
 		}
-		*/
+		
 		
 	}
 
