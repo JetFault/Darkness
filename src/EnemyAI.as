@@ -162,7 +162,7 @@ package
 				enemyPath = this.map.findPath(enemyPos, playerPos);
 				//If no path found, just sit still for that frame.  Otherwise, follow the path.
 				if (enemyPath == null) {
-					trace("No Path found");
+					//trace("No Path found");
 					this.self.getHitbox().stopFollowingPath(true);
 				}
 				else  {

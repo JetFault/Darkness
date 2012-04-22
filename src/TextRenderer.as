@@ -74,11 +74,11 @@ package
 			//Items used
 			var items:String = "";
 			
-			trace(Persistence.itemsHeld.length);
+			//trace(Persistence.itemsHeld.length);
 			
 			while (Persistence.itemsHeld.length > 0) {
 				var it:ItemType = Persistence.itemsHeld.pop();
-				trace(it);
+				//trace(it);
 				
 				if(it == ItemType.LANTERN) {
 						items = items + "Lantern ";
