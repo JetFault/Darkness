@@ -22,7 +22,7 @@ package
 		protected var enemyPath:FlxPath;
 		protected var currentPoint:FlxPoint = new FlxPoint(0, 0);
 		protected var pathcreated:Boolean;  //Is this guy doing a tree search?
-		protected var visibledistance:Number = 30;
+		protected var visibledistance:Number = 40;
 		protected var losesightdistance:Number = 100;
 		protected var depth:Number = 50;
 		protected var time:Number = 1;
@@ -184,7 +184,7 @@ package
 				metric = losesightdistance;
 			}else {
 				var hearingdistance:Number = Utils.getDistance(new FlxPoint(0, 0), this.player.getHitbox().velocity);
-				metric = Math.min(losesightdistance*4/5, visibledistance + hearingdistance);
+				metric = Math.min(losesightdistance * 8.5 / 10, visibledistance + hearingdistance);
 			}
 			if (thepath && Utils.getPathDistance(thepath) <= metric) {
 				this.visible = true;

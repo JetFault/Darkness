@@ -197,7 +197,7 @@ package
 				scale = 9;
 				this.cutoffscale = 6.5 / 9;
 			}else {
-				this.cutoffscale = 9 / 9;
+				this.cutoffscale = 9.5 / 9;
 			}
 			
 			
