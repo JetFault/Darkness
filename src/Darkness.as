@@ -3,10 +3,12 @@ package
 	import flash.events.Event;
 	import org.flixel.*;
 	import flash.display.*;
+	import org.flixel.system.FlxPreloader;
 	
+	[Frame(factoryClass="Preloader")]
 	public class Darkness extends FlxGame
 	{
-		[Frame(factoryClass="Preloader")]
+		
 		public function Darkness() 
 		{
 			Persistence.init();

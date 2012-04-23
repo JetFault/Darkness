@@ -4,8 +4,6 @@ package
 	 * ...
 	 * @author Darkness Team
 	 */
-	public class Preloader 
-	{
 		
 	import org.flixel.system.*;
  
@@ -18,6 +16,6 @@ package
 		}
 	}
 		
-	}
 
 }
+
