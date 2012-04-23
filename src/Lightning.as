@@ -144,13 +144,13 @@ package
 			if (!soundplayed) {
 				if (distance < Constants.soundthreshold && soundtimer >= Constants.crashtime) {
 					crashflxsound.play();
-					soundcutofftime = Constants.rumbleduration;
+					soundcutofftime = Constants.crashduration;
 					soundplayed = true;
 					crashflxsound.autoDestroy = true;
 					crashflxsound = FlxG.loadSound(CrashSound);
 				}else if (distance >= Constants.soundthreshold && soundtimer >= Constants.rumbletime) {
 					rumbleflxsound.play();
-					soundcutofftime = Constants.rumbleduration;
+					soundcutofftime = Constants.crashduration;
 					soundplayed = true;
 					rumbleflxsound.autoDestroy = true;
 					rumbleflxsound = FlxG.loadSound(RumbleSound);
@@ -191,6 +191,16 @@ package
 		}
 		
 		private function shouldflash(criteria:String):Boolean {
+			
+			var scale:Number = 1.2;
+			if (player.playerHasItem(ItemType.UMBRELLA)) {
+				scale = 9;
+				this.cutoffscale = 6.5 / 9;
+			}else {
+				this.cutoffscale = 9 / 9;
+			}
+			
+			
 			if (flashdebug) {
 				flashdebug = false;
 				return true;
@@ -214,20 +224,16 @@ package
 				return false;
 			}
 			
-			var scale:Number = 1.2;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
-				scale = 9;
-				this.cutoffscale = 6 / 9;
 				if (!flashedwhenobtainedumbrellashouldflash) {
 					flashedwhenobtainedumbrellashouldflash = true;
 					return true;
 				}
-				if (howlongsincelast >= 3) {
+				if (howlongsincelast >= 1) {
 					return true;
 				}
 			}else {
-				this.cutoffscale = 7 / 9;
-				if (howlongsincelast >= 6) {
+				if (howlongsincelast >= 2) {
 					return true;
 				}
 			}
