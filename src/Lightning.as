@@ -195,7 +195,7 @@ package
 			var scale:Number = 1.2;
 			if (player.playerHasItem(ItemType.UMBRELLA)) {
 				scale = 9;
-				this.cutoffscale = 6.5 / 9;
+				this.cutoffscale = 7 / 9;
 			}else {
 				this.cutoffscale = 9.5 / 9;
 			}
