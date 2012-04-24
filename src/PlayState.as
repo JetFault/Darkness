@@ -185,6 +185,7 @@ package
 			//	textrenderer.renderText(new FlxText(170, 10, 200, "Night Tower"), true, timetonames);
 			}
 			add(textrenderer);
+			FlxG.flash(0xff000000, .75);
 			
 		}
 		
