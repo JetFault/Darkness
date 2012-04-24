@@ -43,7 +43,7 @@ package
 		private var prePosition:FlxPoint;
 		
 		private var fade:Number = 1;
-		private var fadeSpeed:Number = -0.01;
+		private var fadeSpeed:Number = -0.013;
 		
 		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint, onpathcompletion:String, depth:Number) 
 		{
