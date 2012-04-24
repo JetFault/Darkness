@@ -31,7 +31,7 @@ package
 			windMusic = FlxG.loadSound(WindMusic, .0, true);
 			windMusic.play();
 			staticMusic = FlxG.loadSound(StaticMusic, .01, true);
-			staticMusic.play();
+			//staticMusic.play();
 			if(FlxG.level == 0){
 				ghostMusic = FlxG.loadSound(GhostMusic, .05, true);
 				ghostMusic.play();
