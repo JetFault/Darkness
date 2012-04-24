@@ -5,7 +5,8 @@ package
 	import flash.display.*;
 	import org.flixel.system.FlxPreloader;
 	
-	[Frame(factoryClass="Preloader")]
+	[Frame(factoryClass = "Preloader")]
+	
 	public class Darkness extends FlxGame
 	{
 		
