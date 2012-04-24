@@ -25,7 +25,7 @@ package
 		private var bloodSprite:FlxSprite;
 		
 		public var isDying:Boolean = false;
-		public var timeTillDeath:Number = 2.0;//1.0
+		public var timeTillDeath:Number = 1.50;//1.0
 		
 		public function Player(x:Number, y:Number)
 		{
