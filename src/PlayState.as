@@ -360,8 +360,9 @@ package
 					break;
 					
 				case 3:
-					spawnEnemy(.50, .90, level, EnemyType.RANDOM_DFS);
-					spawnEnemy(.30, .80, level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.70, .90, level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.40, .60, level, EnemyType.RANDOM_DFS);
+					spawnEnemy(.20, .40, level, EnemyType.RANDOM_DFS);
 					break;
 					
 				case 4:
