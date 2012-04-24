@@ -46,7 +46,6 @@ package
 		override public function create():void
 		{
 			this.levelNum = FlxG.level;
-			
 			//Re-Init Items that were held
 			if (this.levelNum == 1) {
 				Persistence.initItemsHeld();
