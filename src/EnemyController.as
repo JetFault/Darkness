@@ -131,7 +131,7 @@ package
 			var y:Number = (m * x) + b;
 			*/
 			
-			if (player.isDying) {
+			if (player.isDying || player.exiting) {
 				if (fade + fadeSpeed >= 0) {
 					fade += fadeSpeed;
 				} else {
