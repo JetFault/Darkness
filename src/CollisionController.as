@@ -23,7 +23,7 @@ package
 		private var textRenderer:TextRenderer;
 		private var doorsoundplayed:Boolean = false;
 		
-		[Embed(source = "../bin/data/DoorSlam3.mp3")] protected var DoorSound:Class;
+		[Embed(source = "../bin/data/DoorSlam7.mp3")] protected var DoorSound:Class;
 		private var doorSound:FlxSound;
 		[Embed(source = "../bin/data/GrandfatherChime2.mp3")] protected var ItemSound:Class;
 		private var itemSound:FlxSound;
@@ -106,7 +106,7 @@ package
 					doorsoundplayed = true;
 					doorSound.play();	
 				}
-				FlxG.fade(0xff000000, .5, nextLevel);
+				FlxG.fade(0xff000000, 1.1, nextLevel);
 			}
 			super.update();
 		}
