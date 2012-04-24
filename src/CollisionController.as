@@ -31,7 +31,7 @@ package
 		public function CollisionController(player:Player, enemiesreal:FlxGroup, enemieshallucination:FlxGroup, 
 											exit:FlxSprite, item:Item, light:Light, level:Map, textR:TextRenderer) 
 		{
-			doorSound = FlxG.loadSound(DoorSound, 1.0, false, true);
+			doorSound = FlxG.loadSound(DoorSound, 0.8, false, true);
 			itemSound = FlxG.loadSound(ItemSound, 1.0, false, true);
 			
 			this.player = player;
