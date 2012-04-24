@@ -42,6 +42,9 @@ package
 		//private var runLength:Number = 30;
 		private var prePosition:FlxPoint;
 		
+		private var fade:Number = 1;
+		private var fadeSpeed:Number = -0.01;
+		
 		public function EnemyController(enemy:Enemy, player:Player, level:Map, enemyRunSpeed:Number, enemyType:uint, onpathcompletion:String, depth:Number) 
 		{
 			//load sounds
@@ -127,7 +130,16 @@ package
 			var x:Number = distance;
 			var y:Number = (m * x) + b;
 			*/
-			highStaticSound.volume = Utils.getVolume(40, playerPos, enemyPos);
+			
+			if (player.isDying) {
+				if (fade + fadeSpeed >= 0) {
+					fade += fadeSpeed;
+				} else {
+					fade = 0;
+				}
+			}
+			
+			highStaticSound.volume = Utils.getVolume(40, playerPos, enemyPos) * fade;
 			highStaticSound.play();
 			
 			var Volume:Number = Utils.getVolume(100, playerPos, enemyPos);
@@ -137,10 +149,11 @@ package
 			} else {
 				shake = 0;
 			}
-			enemyStep1.volume = Volume;
-			enemyStep2.volume = Volume;
-			enemyStep3.volume = Volume;
-			sirenSound.volume = Volume;
+			
+			enemyStep1.volume = Volume * fade;
+			enemyStep2.volume = Volume * fade;
+			enemyStep3.volume = Volume * fade;
+			sirenSound.volume = Volume * fade;
 			
 			stepDis += Utils.getDistance(prePosition, enemy.getMidpoint());
 			if (stepDis >= stepLength) {

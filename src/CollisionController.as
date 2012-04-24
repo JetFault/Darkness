@@ -61,6 +61,7 @@ package
 						//killPlayerByEnemy();
 						player.startDemise(e.getMidpoint());
 						textRenderer.deathText();
+						FlxG.fade(0xff000000, 1.8);
 						//...no tagbacks XD
 					}
 				}
