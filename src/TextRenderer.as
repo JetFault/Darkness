@@ -18,7 +18,7 @@ package
 		private var monoX:Number = 180;
 		private var monoY:Number = 200;
 		private var monoFadeTime:Number = 3;
-		private var monoColor:uint = 0xff6366FF;// 9696FF 6366FF
+		private var monoColor:uint = 0xff9696FF;// 9696FF 6366FF
 		private var monoShadow:uint = 0xff000000;//333333
 		
 		private var statsColor:uint = 0xff888888;
