@@ -2,6 +2,7 @@ Darkness.as3proj
 bin/expressInstall.swf
 bin/index.html
 bin/js/swfobject.js
-obj/
-lib/
 bin/Darkness.swf
+lib/
+obj/
+bin/data/LWHS-SoFarAway.mp3
