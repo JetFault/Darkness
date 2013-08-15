@@ -2,10 +2,10 @@ Game Design Final Group Project at Rutgers University
 
 Written in ActionScript3 using the Flixel framework.
 
-	
-Class Wiki Page:
+[Play Here!](http://jreptak.com/relentlessnight.html)
 
-https://sakai.rutgers.edu/wiki/cs673-spring2012/Relentless%20Night.html
+	
+[Class Wiki Page](https://sakai.rutgers.edu/wiki/cs673-spring2012/Relentless%20Night.html)
 
 IDE: FlashDevelop 3
 
