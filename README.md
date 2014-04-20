@@ -2,7 +2,7 @@ Game Design Final Group Project at Rutgers University
 
 Written in ActionScript3 using the Flixel framework.
 
-[Play Here!](http://jreptak.com/relentlessnight.html)
+[Play Here!](http://jetfault.github.io/Darkness)
 
 	
 [Class Wiki Page](https://sakai.rutgers.edu/wiki/cs673-spring2012/Relentless%20Night.html)
